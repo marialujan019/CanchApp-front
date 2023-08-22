@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
- import Ingreso from './components/ingresar/Ingreso';
+import Ingreso from './components/ingresar/Ingreso';
 import Registro from './components/registrarse/Registro';
 import './App.css';
+
+// cosas de july
+import Header from './components/Header/Header';
+import Inicio from './components/Inicio/Inicio';
+import Footer from './components/Footer/Footer';
+import FormularioRegistro from './components/FormularioRegistro/FormularioRegistro'
+
+//React-router-doom
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const initialState = {
   input: '',
@@ -43,13 +52,22 @@ class App extends Component {
   render() {
     const { route } = this.state;
     return (
+      
       <div className="App">
-        {
-             route === 'signin'
-             ? <Ingreso loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-             : <Registro loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-        
-        }
+        <BrowserRouter>
+          <Header/>
+          <FormularioRegistro/>
+          <Routes>
+            <Route path='/' element={<Inicio/>}/>
+            <Route path='/ingreso' element={
+              route === 'signin'
+              ? <Ingreso loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+              : <Registro loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+          }/>
+          </Routes>
+
+          <Footer/>
+        </BrowserRouter>
       </div>
     );
   }

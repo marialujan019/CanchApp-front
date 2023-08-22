@@ -60,7 +60,7 @@ class Ingreso extends React.Component {
               </button>
             </div>
             <p className='text-right'> 
-              Olvide <a href=''>la contrasena</a>
+               <a href=''>Olvide la contraseña</a>
             </p>
             <p className='text-right'>
               <a href=''>Registrarse</a>
