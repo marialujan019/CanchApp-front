@@ -2,9 +2,9 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    font-family: 'Coolvetica regular', sans-serif;
-    background-color: #FEBE3F;
+    background-color: #383838;
     height: 50px;
+    color: white;
 }
 
 .derechosFooter{
@@ -15,13 +15,15 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
 }
 .redesFooter p {
     margin: 0 78px 0 0 ;
 }
-.imagenFooter {
-    margin-left: 5px;
-    margin-right: 5px;
+.iconoFooter {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
 }
 
   

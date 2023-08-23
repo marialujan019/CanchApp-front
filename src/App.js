@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import Ingreso from './components/ingresar/Ingreso';
 import Registro from './components/registrarse/Registro';
 import './App.css';
@@ -56,7 +55,6 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
           <Header/>
-          <FormularioRegistro/>
           <Routes>
             <Route path='/' element={<Inicio/>}/>
             <Route path='/ingreso' element={
@@ -64,6 +62,7 @@ class App extends Component {
               ? <Ingreso loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
               : <Registro loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
           }/>
+            <Route path='/ingreso/registro' element={<FormularioRegistro/>}/>
           </Routes>
 
           <Footer/>

@@ -2,10 +2,7 @@
 
 }
 /* Seccion 1 */
-.sombreadoInicioSeccion1 {
-    background-color: rgba(0, 0, 0, 0.377);
-    z-index: 100;
-}
+
 .inicioSeccion1 {
     height: 90vh;
     display: flex;
@@ -13,25 +10,33 @@
     align-items: self-start;
     justify-content: center;
     padding-left: 30px;
-    background-image: url(/public/images/Futbol.jpeg);
+    background-image: url(/public/images/image.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    color: white;
 }
 
 
 .inicioSeccion1 h1 {
-    font-size: 10rem;
+    font-size: 7rem;
+    font-family: "bBigerOver";
 }
 
 .inicioSeccion1 p{
     text-align: start;
     font-size: 4rem;
-    margin: 0
 }
 
 /* Seccion 2  */
-
+.inicioSeccion2 {
+    color: white;
+    background-color: #4D4D4D;
+}
+.inicioSeccion2Titulo {
+    padding-top: 20px;
+    font-size: 4rem;
+}
 .inicioCardsContainer {
     display: flex;
     flex-wrap: wrap;
@@ -41,6 +46,10 @@
 .inicioCard {
     width: 350px;
     margin: 20px;
-    border: 2px black solid;
     padding: 10px;
+}
+
+.inicioCard img {
+    height: 150px;
+    width: 150px;
 }

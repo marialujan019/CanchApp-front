@@ -73,53 +73,7 @@ const FormularioRegistro = () => {
             
             <form onSubmit={consultarFormulario} ref={datosFormulario}>
                 {isAdmin ? 
-                <div>
                     <div>
-                        <label htmlFor="nombre">Nombre</label>
-                        <input type="text" name="nombre" id="nombre" />
-                    </div>
-                    <div>
-                        <label htmlFor="apellido">Apellido</label>
-                        <input type="text" name="apellido" id="apellido" />
-                    </div>
-                    <div>
-                        <label htmlFor="sexo">Sexo</label>
-                        <div>
-                            <input type="radio" name="sexo" id="hombre" value="Hombre" />
-                            <label htmlFor="hombre">Hombre</label>
-                        </div>
-                        <div>
-                            <input type="radio" name="sexo" id="mujer" value="Mujer" />
-                            <label htmlFor="mujer">Mujer</label>
-                        </div>
-                    </div>
-                    <div>
-                        <label htmlFor="nacimiento">Nacimiento</label>
-                        <input type="date" name="nacimiento" id="nacimiento" />
-                    </div>
-                    <div>
-                        <label htmlFor="email">Ingrese su correo electronico</label>
-                        <input type="email" name="email" id="email" />
-                    </div>
-                    <div>
-                        <label htmlFor="repetirEmail">Repetir Correo Electronico</label>
-                        <input type="email" name="repetirEmail" id="repetirEmail" />
-                    </div>
-                    <div>
-                        <label htmlFor="telefono">Ingrese su numero de telefono o celular</label>
-                        <input type="number" name="telefono" id="telefono" />
-                    </div>
-                    <div>
-                        <label htmlFor="contrasenia">Contraseña</label>
-                        <input type="password" name="contrasenia" id="contrasenia" />
-                    </div>
-                    <div>
-                        <label htmlFor="repetirContrasenia">Repetir Contraseña</label>
-                        <input type="password" name="repetirContrasenia" id="repetirContrasenia" />
-                    </div>
-                </div> : 
-                
-                <div>
                     <h2>Datos del complejo</h2>
                         <div>
                             <label htmlFor="nombreDelComplejo">Nombre del complejo</label>
@@ -154,6 +108,52 @@ const FormularioRegistro = () => {
                     <div>
                         <label htmlFor="apellido">Apellido</label>
                         <input type="text" name="apellido" id="apellido" />
+                    </div>
+                    <div>
+                        <label htmlFor="email">Ingrese su correo electronico</label>
+                        <input type="email" name="email" id="email" />
+                    </div>
+                    <div>
+                        <label htmlFor="repetirEmail">Repetir Correo Electronico</label>
+                        <input type="email" name="repetirEmail" id="repetirEmail" />
+                    </div>
+                    <div>
+                        <label htmlFor="telefono">Ingrese su numero de telefono o celular</label>
+                        <input type="number" name="telefono" id="telefono" />
+                    </div>
+                    <div>
+                        <label htmlFor="contrasenia">Contraseña</label>
+                        <input type="password" name="contrasenia" id="contrasenia" />
+                    </div>
+                    <div>
+                        <label htmlFor="repetirContrasenia">Repetir Contraseña</label>
+                        <input type="password" name="repetirContrasenia" id="repetirContrasenia" />
+                    </div>
+                </div>
+                : 
+                <div>
+                    <div>
+                        <label htmlFor="nombre">Nombre</label>
+                        <input type="text" name="nombre" id="nombre" />
+                    </div>
+                    <div>
+                        <label htmlFor="apellido">Apellido</label>
+                        <input type="text" name="apellido" id="apellido" />
+                    </div>
+                    <div>
+                        <label htmlFor="sexo">Sexo</label>
+                        <div>
+                            <input type="radio" name="sexo" id="hombre" value="Hombre" />
+                            <label htmlFor="hombre">Hombre</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="sexo" id="mujer" value="Mujer" />
+                            <label htmlFor="mujer">Mujer</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label htmlFor="nacimiento">Nacimiento</label>
+                        <input type="date" name="nacimiento" id="nacimiento" />
                     </div>
                     <div>
                         <label htmlFor="email">Ingrese su correo electronico</label>

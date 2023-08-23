@@ -1,29 +1,28 @@
-import React from 'react';
-import './style.css'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import './style.css';
 
-class Ingreso extends React.Component {
-    //Datos que necesita el user para ingresar
+class Ingreso extends Component {
   constructor(props) {
     super(props);
     this.state = {
       signInEmail: '',
       signInPassword: ''
-    }
+    };
   }
 
   onEmailChange = (event) => {
-    this.setState({signInEmail: event.target.value})
+    this.setState({ signInEmail: event.target.value });
   }
 
   onPasswordChange = (event) => {
-    this.setState({signInPassword: event.target.value})
+    this.setState({ signInPassword: event.target.value });
   }
 
   onSubmitSignIn = () => {
-    //completar el fetch con el link a la consulta de la db
     fetch('http://localhost:3000/ingreso', {
       method: 'post',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         mail: this.state.signInEmail,
         pass: this.state.signInPassword
@@ -32,10 +31,10 @@ class Ingreso extends React.Component {
       .then(response => response.json())
       .then(user => {
         if (user.id) {
-          this.props.loadUser(user)
+          this.props.loadUser(user);
           this.props.onRouteChange('home');
         }
-      })
+      });
   }
 
   render() {
@@ -48,22 +47,32 @@ class Ingreso extends React.Component {
             </h3>
             <div className='mb-2'>
               <label htmlFor="email">Mail</label>
-              <input type="email" placeholder='Ingrese el mail' className='form-control' />
+              <input
+                type="email"
+                placeholder='Ingrese el mail'
+                className='form-control'
+                onChange={this.onEmailChange}
+              />
             </div>
             <div className='mb-2'>
               <label htmlFor="password">Contraseña</label>
-              <input type="password" placeholder='Ingrese contrasena' className='form-control' />
+              <input
+                type="password"
+                placeholder='Ingrese contrasena'
+                className='form-control'
+                onChange={this.onPasswordChange}
+              />
             </div>
             <div>
-              <button>
+              <button onClick={this.onSubmitSignIn}>
                 Ingresar
               </button>
             </div>
-            <p className='text-right'> 
-               <a href=''>Olvide la contraseña</a>
+            <p className='text-right'>
+              <Link to=''>Olvidé la contraseña</Link>
             </p>
             <p className='text-right'>
-              <a href=''>Registrarse</a>
+              <Link to={"registro"}>Registrarse</Link>
             </p>
           </form>
         </div>
