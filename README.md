@@ -1,3 +1,12 @@
+#Librerias usadas
+
+##React-router-dom
+Instalacion mediante: npm i react-router-dom
+
+##React-boostrap
+Instalacion mediante: npm install react-bootstrap bootstrap
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
