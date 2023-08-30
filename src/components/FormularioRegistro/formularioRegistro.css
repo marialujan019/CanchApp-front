@@ -1,0 +1,172 @@
+/* Contenedor de formulario - sirve para centrarlo en la pagina*/
+.formularioContainer {
+    display: flex;
+    justify-content: center;
+    background-color: #e5e5e5;
+    min-height: 84.2vh;
+    padding-bottom: 30px;
+}
+/* Estructura grid del formulario */
+.formularioRegistroInputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 20px;
+    width: 80vw;
+}
+
+@media (max-width: 800px) {
+    .formularioRegistroInputs {
+        grid-template-columns: 1fr
+    }
+   
+}
+
+/* Titulo e input general para cada input */
+.formularioLabel {
+    display: block;
+    padding: 10px;
+    min-height: 40px;
+    cursor: pointer;
+}
+
+.formularioGrupoInput {
+    position: relative;
+    z-index: 90;
+    margin: 0 10px;
+}
+
+.formularioInput {
+    width: 100%;
+    background-color: white;
+    border-radius: 3px;
+    height: 45px;
+    line-height: 45px;
+    padding: 0 40px 0 10px;
+    transition: .3s ease all;
+    border: solid transparent;
+}
+.formularioInput:focus {
+    border: 3px solid rgb(0, 255, 0);
+    outline: none;
+    box-shadow: 3px 0px 30px rgba(163,163,163, 0.4);
+}
+
+.formularioInputFalso:focus {
+    border: 3px solid rgb(255, 0, 0);
+    outline: none;
+    box-shadow: 3px 0px 30px rgba(163,163,163, 0.4);
+}
+
+/* Input especiales - sexo y fecha */
+.formularioInputEspecial{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 86px;
+    padding: 0 20%;
+}
+
+@media (max-width: 890px) {
+    .formularioInputEspecial{
+        display: flex;
+        flex-direction: column;
+        margin: 20px 0;
+        min-height: 56px;
+    }
+   
+}
+/* Iconos del input */
+.formularioIconoInput {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 100;
+    font-size: 20px;
+    opacity: 0;
+}
+
+.formularioIconoInput {
+    opacity: 0;
+}
+  
+input[value]:not([value=""]) + .formularioIconoInput {
+    opacity: 1;
+} 
+
+.bi-check-circle {
+    color: green;
+}
+.bi-x-circle {
+    color: red;
+}
+
+
+
+/* Mensaje por si el input está mal escrito */
+.leyendaError {
+    color: red;
+}
+/* Boton enviar del formulario */
+.formularioBotonSubmitcontainer {
+    margin-top: 30px;
+}
+
+
+
+/* Swich administrador */
+.switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+  }
+  
+  .formularioLabelCheckAdmin {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .formularioInputCheckAdmin {
+    display: none;
+  }
+  
+  .switch {
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+    margin-left: 10px;
+    position: relative;
+    transition: background-color 0.3s;
+  }
+  
+  .formularioInputCheckAdmin:checked + .switch {
+    background-color: #66bb6a; /* Color del fondo cuando está marcado */
+  }
+  
+  .switch::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 4px;
+    transition: left 0.3s;
+  }
+  
+  .formularioInputCheckAdmin:checked + .switch::before {
+    left: 20px;
+  }
+  
+
+/* Titulos de los formularios  */
+.formularioTituloRegistro {
+    margin-top: 40px;
+}

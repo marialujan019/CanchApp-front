@@ -1,32 +1,26 @@
-
-import "./header.css"
-import { Link } from "react-router-dom";
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './header.css'; // Asegúrate de tener un archivo CSS para el estilo
 
 const Header = () => {
-  const [navActive, setNavActive] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleNav = () => {
-    setNavActive(!navActive);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
-
-    return (
-      <header>
-        <div className="container">
-        <Link to={"/"} className="logo">Canchap</Link>
-          <div className={`menu-toggle ${navActive ? 'active' : ''}`} onClick={toggleNav}>
-            <div className="bar"></div>
-            <div className="bar"></div>
-            <div className="bar"></div>
-          </div>
-          <ul className={`nav-links ${navActive ? 'active' : ''}`}>
-            <Link to={"/"}>Inicio</Link>
-            <Link to={"/ingreso"}>Ingresar</Link>
-          </ul>
-        </div>
-      </header>
-    );
-}
+  return (
+    <header className="header">
+      <div className="logo">Logo</div>
+      <button className="menu-button" onClick={toggleMenu}>
+        <i class="bi bi-list"></i>
+      </button>
+      <nav className={`nav ${menuOpen ? 'open' : ''}`}>
+        <Link to="/" className="nav-link">Inicio</Link>
+        <Link to="/ingreso" className="nav-link">Registrarse</Link>
+      </nav>
+    </header>
+  );
+};
 
 export default Header;

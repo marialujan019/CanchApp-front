@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
-import Ingreso from './components/ingresar/Ingreso';
-import Registro from './components/registrarse/Registro';
 import './App.css';
-
-// cosas de july
-import Header from './components/Header/Header';
-import Inicio from './components/Inicio/Inicio';
-import Footer from './components/Footer/Footer';
-import FormularioRegistro from './components/FormularioRegistro/FormularioRegistro'
-
 //React-router-doom
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+//React-boostrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+// Componentes permanentes
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+
+//Inicio
+import Inicio from './components/Inicio/Inicio';
+
+// Formularios
+import FormularioRegistro from './components/FormularioRegistro/FormularioRegistro'
+import Ingreso from './components/ingresar/Ingreso';
+import Registro from './components/registrarse/Registro';
+import RecuperarContrasenia from './components/RecuperarContrasenia/RecuperarContrasenia';
+
 
 const initialState = {
   input: '',
@@ -63,8 +71,8 @@ class App extends Component {
               : <Registro loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
           }/>
             <Route path='/ingreso/registro' element={<FormularioRegistro/>}/>
+            <Route path='/ingreso/recuperar' element={<RecuperarContrasenia/>}/>
           </Routes>
-
           <Footer/>
         </BrowserRouter>
       </div>

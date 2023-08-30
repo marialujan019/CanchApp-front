@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './style.css';
+import './ingreso.css';
+import Button from 'react-bootstrap/Button';
 
 class Ingreso extends Component {
   constructor(props) {
@@ -39,43 +40,42 @@ class Ingreso extends Component {
 
   render() {
     return (
-      <div className='login template d-flex justify-content-center align-items-center 100-w vh-100 bg-primary'>
-        <div className='form_container 40-w p-5 rounded bg-white'>
+      <div className='formularioIngresoContainer'>
+        
           <form>
-            <h3>
-              Bienvenido a Canchapp
-            </h3>
-            <div className='mb-2'>
-              <label htmlFor="email">Mail</label>
+            <h3> Bienvenido a Canchapp</h3>
+            
+            <div className="formularioIngreso">
+              <label htmlFor="email" className='formularioLabel'>Mail</label>
               <input
                 type="email"
                 placeholder='Ingrese el mail'
-                className='form-control'
+                className='formularioInput'
                 onChange={this.onEmailChange}
+                required
               />
             </div>
-            <div className='mb-2'>
-              <label htmlFor="password">Contraseña</label>
+          
+            <div className='formularioIngreso'>
+              <label htmlFor="password" className='formularioLabel'>Contraseña</label>
               <input
                 type="password"
                 placeholder='Ingrese contrasena'
-                className='form-control'
+                className='formularioInput'
                 onChange={this.onPasswordChange}
+                required
               />
             </div>
-            <div>
-              <button onClick={this.onSubmitSignIn}>
-                Ingresar
-              </button>
+
+            <div className='formularioBotonSubmitcontainer'>
+              <Button variant="outline-primary" onClick={this.onSubmitSignIn}>Ingresar</Button>{' '}
             </div>
-            <p className='text-right'>
-              <Link to=''>Olvidé la contraseña</Link>
-            </p>
-            <p className='text-right'>
-              <Link to={"registro"}>Registrarse</Link>
-            </p>
+
+            <div className='ingresoRutas'>
+              <Link to={'recuperar'} className='ingresoRuta'>Olvidé la contraseña</Link>
+              <Link to={"registro"} className='ingresoRuta'>Registrarse</Link>
+            </div>
           </form>
-        </div>
       </div>
     );
   }
