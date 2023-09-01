@@ -19,6 +19,8 @@ import Ingreso from './components/ingresar/Ingreso';
 import Registro from './components/registrarse/Registro';
 import RecuperarContrasenia from './components/RecuperarContrasenia/RecuperarContrasenia';
 
+//Home page - en construccion
+import Home from './components/Home/Home'
 
 const initialState = {
   input: '',
@@ -72,6 +74,7 @@ class App extends Component {
           }/>
             <Route path='/ingreso/registro' element={<FormularioRegistro/>}/>
             <Route path='/ingreso/recuperar' element={<RecuperarContrasenia/>}/>
+            <Route path= '/home' element={<Home />}/>
           </Routes>
           <Footer/>
         </BrowserRouter>

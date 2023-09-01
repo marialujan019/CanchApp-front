@@ -1,48 +1,40 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './ingreso.css';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
-class Ingreso extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      signInEmail: '',
-      signInPassword: ''
-    };
-  }
+export default function Login() {
+  const [values, setValues] = useState({
+    mail: '',
+    pass: ''
+  })
 
-  onEmailChange = (event) => {
-    this.setState({ signInEmail: event.target.value });
-  }
+  const navigate = useNavigate()
 
-  onPasswordChange = (event) => {
-    this.setState({ signInPassword: event.target.value });
-  }
+  axios.defaults.withCredentials = true;
 
-  onSubmitSignIn = () => {
-    fetch('http://localhost:3000/ingreso', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        mail: this.state.signInEmail,
-        pass: this.state.signInPassword
+  const handleSumit = (e) => {
+      e.preventDefault();
+      console.log(values.mail)
+      axios.post('http://localhost:3001/ingreso', {
+          mail: values.mail,
+          pass: values.pass
       })
-    })
-      .then(response => response.json())
-      .then(user => {
-        if (user.id) {
-          this.props.loadUser(user);
-          this.props.onRouteChange('home');
-        }
-      });
+      .then(res => {
+          console.log(res)
+          if(res.data.Status === "Respuesta ok" ){
+              navigate('/home')
+          } else {
+              alert(res.data.Message)
+          }
+      })
+      .catch(err => console.log(err))
   }
 
-  render() {
     return (
-      <div className='formularioIngresoContainer'>
-        
-          <form>
+      <div className='formularioIngresoContainer'>   
+          <form onSubmit={handleSumit}>
             <h3> Bienvenido a Canchapp</h3>
             
             <div className="formularioIngreso">
@@ -51,7 +43,7 @@ class Ingreso extends Component {
                 type="email"
                 placeholder='Ingrese el mail'
                 className='formularioInput'
-                onChange={this.onEmailChange}
+                onChange={e=> setValues({...values, mail: e.target.value})}
                 required
               />
             </div>
@@ -62,13 +54,13 @@ class Ingreso extends Component {
                 type="password"
                 placeholder='Ingrese contrasena'
                 className='formularioInput'
-                onChange={this.onPasswordChange}
+                onChange={e=> setValues({...values, pass: e.target.value})}
                 required
               />
             </div>
 
             <div className='formularioBotonSubmitcontainer'>
-              <Button variant="outline-primary" onClick={this.onSubmitSignIn}>Ingresar</Button>{' '}
+              <Button variant="outline-primary" type="submit">Ingresar</Button>
             </div>
 
             <div className='ingresoRutas'>
@@ -79,6 +71,4 @@ class Ingreso extends Component {
       </div>
     );
   }
-}
 
-export default Ingreso;
