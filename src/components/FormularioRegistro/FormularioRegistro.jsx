@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import ComponenteInput from "../input/ComponenteInput";
 import "./formularioRegistro.css"
 import Button from 'react-bootstrap/Button';
-const FormularioRegistro = () => {
+import axios from 'axios';
 
+const FormularioRegistro = () => {
     //Estados para controlar el valor de los input
 
     //Datos del complejo
@@ -74,6 +75,7 @@ const FormularioRegistro = () => {
     };
 
     //Funcion para tomar los datos ingresados como objeto
+    axios.defaults.withCredentials = true;
     const consultarFormulario = (e) => {
         e.preventDefault();
 
@@ -88,15 +90,38 @@ const FormularioRegistro = () => {
 
         console.log(usuarioObjeto);
 
+        //Se modifcan los campos para que matcheen con la ddbb. Mejorar!
+        usuarioObjeto.mail = usuarioObjeto.email1
+        usuarioObjeto.pass = usuarioObjeto.contrasenia1
+        usuarioObjeto.fnac = usuarioObjeto.nacimiento
+        usuarioObjeto.telefono = usuarioObjeto.celular
+        delete usuarioObjeto.contrasenia1
+        delete usuarioObjeto.contrasenia2
+        delete usuarioObjeto.email1
+        delete usuarioObjeto.email2
+        delete usuarioObjeto.nacimiento
+        delete usuarioObjeto.celular
+
+        console.log(usuarioObjeto);
+
         e.target.reset();
         
         if (isAdmin) {
             alert("Administrador registrado"); //Poner mesajes con sweet alert
         } else {
-            alert("Usuario registrado");
+            axios.post('http://localhost:3001/registro', usuarioObjeto)
+            .then(res => {
+                console.log(res)
+                if(res.data.message === "Created"){
+                    alert("Usuario registrado");
+                    navigate('/home')
+                } else {
+                    alert(res.data.Message)
+                }
+            })
+            .catch(err => console.log(err))
         }
         
-        navigate("/");
     };
 
     return (
