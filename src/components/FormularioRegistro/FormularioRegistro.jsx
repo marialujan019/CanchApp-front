@@ -94,6 +94,7 @@ const FormularioRegistro = () => {
         usuarioObjeto.mail = usuarioObjeto.email1
         usuarioObjeto.pass = usuarioObjeto.contrasenia1
         usuarioObjeto.fnac = usuarioObjeto.nacimiento
+        usuarioObjeto.telefonoComplejo = usuarioObjeto.telefono
         usuarioObjeto.telefono = usuarioObjeto.celular
         delete usuarioObjeto.contrasenia1
         delete usuarioObjeto.contrasenia2
@@ -102,12 +103,50 @@ const FormularioRegistro = () => {
         delete usuarioObjeto.nacimiento
         delete usuarioObjeto.celular
 
-        console.log(usuarioObjeto);
+        if(isAdmin){
+            var complejo = {
+                nombreComplejo: usuarioObjeto.nombreComplejo,
+                cuit: usuarioObjeto.cuit,
+                ciudad: usuarioObjeto.ciudad,
+                direccion: usuarioObjeto.calle + " " + usuarioObjeto.altura,
+                telefonoComplejo: usuarioObjeto.telefonoComplejo,
+                adminId: usuarioObjeto.mail
+              };
+              
+              console.log(complejo)
+              // Crear el objeto administrador
+              var administrador = {
+                nombre: usuarioObjeto.nombre,
+                apellido: usuarioObjeto.apellido,
+                mail: usuarioObjeto.mail,
+                pass: usuarioObjeto.pass,
+                telefono: usuarioObjeto.telefono
+              };
+              console.log(administrador)
+              // Crear el objeto data que contiene los objetos complejo y administrador
+              var dataAdmin = {
+                complejo: complejo,
+                administrador: administrador
+              };
+
+        }
 
         e.target.reset();
-        
+        console.log(dataAdmin);
+
         if (isAdmin) {
-            alert("Administrador registrado"); //Poner mesajes con sweet alert
+            axios.post('http://localhost:3001/complejo', dataAdmin)
+            .then(res => {
+                console.log(res)
+                if(res.data.message === "Created"){
+                    alert("Administrador registrado"); //Poner mesajes con sweet alert
+                    navigate('/home')
+                } else {
+                    alert(res.data.Message)
+                }
+            })
+            .catch(err => console.log(err))
+           
         } else {
             axios.post('http://localhost:3001/registro', usuarioObjeto)
             .then(res => {
