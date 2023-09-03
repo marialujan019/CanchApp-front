@@ -24,7 +24,8 @@ export default function Login() {
       .then(res => {
           console.log(res)
           if(res.data.Status === "Respuesta ok" ){
-              navigate('/home')
+            console.log(res.data)
+              navigate('/home', { state: { responseData: res.data } })
           } else {
               alert(res.data.Message)
           }

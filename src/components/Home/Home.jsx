@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Inicio from '../Inicio/Inicio';
 import axios from 'axios';
 
 function Home() {
     const [auth, setAuth] = useState(false)
-    const [name, setName] = useState('')
+    const [nombre, setNombre] = useState('')
     const [message, setMessage] = useState('')
-
+    const [tipo, setTipo] = useState('')
+    // Obtén los datos de la prop responseData en lugar de hacer una nueva solicitud GET
+    const location = useLocation();
+    const responseData = location.state && location.state.responseData;
+   
     useEffect(()=> {
         axios.get('http://localhost:3001')
         .then(res => {
+            console.log(res)
             if(res.data.Status === "Respuesta ok") {
+                
                 setAuth(true);
-                setName(res.data.nombre)
+                setNombre(res.data.nombre)
             } else {
                 setAuth(false);
                 setMessage(res.data.message)
             }
         })
-    }, [])
+    }, [responseData])
 
     const handleLogout = () => {
         axios.get('http://localhost:3001/logout')
@@ -35,12 +42,19 @@ function Home() {
     return(
         <div>{
                 auth ?
+                responseData.tipo === "administrador" ?
                 <div>
-                    Aca se muestra el home del user o administrador {name}
+                    Bienvenido a canchapp {responseData.nombre}. Acá podrás administrar tus canchas
                     <button className="btn btn-danger" onClick={handleLogout}>
                         Salir
                     </button>
-                </div>
+                </div> :
+                <div>
+                Bienvenido a canchapp {responseData.nombre}. Acá podrás encontrar y reservar tu cancha
+                <button className="btn btn-danger" onClick={handleLogout}>
+                    Salir
+                </button>
+            </div>
                 :
                 <div>
                     <Inicio/>
