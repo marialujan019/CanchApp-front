@@ -11,6 +11,10 @@
     font-size: 24px;
   }
   
+  .logoinicio {
+    width:150px;
+  }
+
   .menu-button {
     display: none;
     font-size: 24px;

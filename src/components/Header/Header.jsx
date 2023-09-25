@@ -11,13 +11,13 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="logo">Logo</div>
+      <div className="logo"> logo </div>
       <button className="menu-button" onClick={toggleMenu}>
         <i class="bi bi-list"></i>
       </button>
       <nav className={`nav ${menuOpen ? 'open' : ''}`}>
         <Link to="/" className="nav-link">Inicio</Link>
-        <Link to="/ingreso" className="nav-link">Registrarse</Link>
+        <Link to="/ingreso" className="nav-link">Ingresar</Link>
       </nav>
     </header>
   );

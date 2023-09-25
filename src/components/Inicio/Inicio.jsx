@@ -15,7 +15,7 @@ const Inicio = () => {
             </section>
             
             <section className='inicioSeccion2'>
-                <h2 className='inicioSeccion2Titulo'>Que ofrecemos</h2>
+                <h2 className='inicioSeccion2Titulo'>¿Qué ofrecemos?</h2>
 
                 <div className='inicioCardsContainer'>
 

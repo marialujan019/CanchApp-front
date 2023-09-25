@@ -2,17 +2,33 @@
 .formularioIngresoContainer {
     display: flex;
     justify-content: center;
+    color: white;
     align-items: center;
-    background-color: #e5e5e5;
+    background-image: url(/public/images/inicio/image.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     min-height: 84.2vh;
 }
+
+.formularioIngresoContainer2{
+    padding: 30px;
+    background-color: rgba(129, 129, 129, 0.699);
+}
+
 .formularioIngreso {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
 }
 
-.formularioInput {
+.formularioIngresoLabel{
+    padding: 10px;
+    min-height: 40px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.formularioIngresoInput {
     width: 100%;
     background-color: white;
     border-radius: 3px;
@@ -23,13 +39,33 @@
     border: solid transparent;
 }
 
-.formularioLabel {
-    display: block;
-    padding: 10px;
-    min-height: 40px;
-    cursor: pointer;
+.formularioIngresoInput:focus {
+    border: 3px solid rgb(255, 196, 33);
+    outline: none;
+    box-shadow: 3px 0px 30px rgba(163,163,163, 0.4);
 }
 
+.formularioIngresoBoton{
+    background-color: #FFA500; /* Naranja */
+    color: #FFFFFF; /* Blanco */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Efecto hover */
+.formularioIngresoBoton:hover {
+    background-color: #FFD700; /* Naranja claro */
+    transform: scale(1.05); /* Escala el botón al 105% de su tamaño original */
+}
+
+/* Efecto de clic */
+.formularioIngresoBoton:active {
+    background-color: #FF8C00; /* Naranja oscuro */
+    transform: scale(0.95); /* Escala el botón al 95% de su tamaño original cuando se hace clic */
+}
 
 /* RUTAS */
 .ingresoRutas {
@@ -37,10 +73,11 @@
     flex-direction: column;
     margin-top: 20px;
     align-items: flex-end;
+    color: white;
 }
 .ingresoRuta {
-    color: black;
     text-decoration: none;
+    color: white;
 }
 .ingresoRuta:hover {
     color: orange

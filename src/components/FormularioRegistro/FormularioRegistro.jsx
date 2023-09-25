@@ -164,7 +164,7 @@ const FormularioRegistro = () => {
     };
 
     return (
-        <div>
+        <div className="formularioContainer">
                 <div className="switch-container">
                     <label className="formularioLabelCheckAdmin">
                         Registrarse como Administrador
@@ -175,8 +175,8 @@ const FormularioRegistro = () => {
 
 
                 {isAdmin ? 
-                    <div className='formularioContainer'>
-                        <form onSubmit={consultarFormulario} ref={datosFormulario}>
+                    <div className='formularioContainer2'>
+                        <form onSubmit={consultarFormulario} ref={datosFormulario} className="formularioRegistro">
                         <h2 className="formularioTituloRegistro">Datos del complejo</h2>
                         <div className="formularioRegistroInputs">
                             <ComponenteInput
@@ -246,7 +246,7 @@ const FormularioRegistro = () => {
                             <ComponenteInput
                                 tipo="text"
                                 label="Nombre"
-                                placeholder="Ej: Emmanuel"
+                                placeholder="Ej: Mirtha"
                                 idHTMLName="nombre"
                                 expresionRegular={expresiones.nombre}
                                 estado={nombre}
@@ -255,7 +255,7 @@ const FormularioRegistro = () => {
                             <ComponenteInput
                                 tipo="text"
                                 label="Apellido"
-                                placeholder="Ej: Martinez"
+                                placeholder="Ej: Legrand"
                                 idHTMLName="apellido"
                                 expresionRegular={expresiones.nombre}
                                 estado={apellido}
@@ -321,12 +321,12 @@ const FormularioRegistro = () => {
 
                         {/* Boton de enviar formulario*/}
                         <div className='formularioBotonSubmitcontainer'>
-                            <Button variant="outline-primary" type="submit">Finalizar registro</Button>
+                            <button className='formularioIngresoBotonRegistro'type="submit" > Finalizar registro </button>
                         </div>
                         </form>
                     </div>
                 : 
-                <div className="formularioContainer">
+                <div className="formularioContainer2">
                     
                     <form onSubmit={consultarFormulario} ref={datosFormulario} className="formularioRegistro">
                     <h2 className="formularioTituloRegistro">Datos del jugador</h2>
@@ -424,7 +424,7 @@ const FormularioRegistro = () => {
 
                         {/* Boton de enviar formulario*/}
                         <div className='formularioBotonSubmitcontainer'>
-                            <Button variant="outline-primary" type="submit" className="">Finalizar registro</Button>{' '}
+                            <button className='formularioIngresoBotonRegistro'type="submit" > Finalizar registro </button>
                         </div>
 
                     </form>

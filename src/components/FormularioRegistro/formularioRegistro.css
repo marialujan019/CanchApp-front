@@ -1,11 +1,25 @@
 /* Contenedor de formulario - sirve para centrarlo en la pagina*/
 .formularioContainer {
-    display: flex;
-    justify-content: center;
-    background-color: #e5e5e5;
-    min-height: 84.2vh;
+    background-image: url(/public/images/inicio/image.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     padding-bottom: 30px;
 }
+
+.formularioContainer2{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    color: white;
+}
+
+.formularioRegistro{
+    padding: 10px;
+    background-color: rgba(129, 129, 129, 0.699);
+    color: white;
+}
+
 /* Estructura grid del formulario */
 .formularioRegistroInputs {
     display: grid;
@@ -27,6 +41,7 @@
     padding: 10px;
     min-height: 40px;
     cursor: pointer;
+    text-align: center;
 }
 
 .formularioGrupoInput {
@@ -97,21 +112,41 @@ input[value]:not([value=""]) + .formularioIconoInput {
     color: green;
 }
 .bi-x-circle {
-    color: red;
+    color: #FF8C00;
 }
 
 
 
 /* Mensaje por si el input está mal escrito */
 .leyendaError {
-    color: red;
+    color: #FF8C00;
 }
 /* Boton enviar del formulario */
 .formularioBotonSubmitcontainer {
     margin-top: 30px;
 }
 
+.formularioIngresoBotonRegistro {
+        background-color: #FFA500; /* Naranja */
+        color: #FFFFFF; /* Blanco */
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+}
 
+/* Efecto hover */
+.formularioIngresoBotonRegistro:hover {
+    background-color: #FFD700; /* Naranja claro */
+    transform: scale(1.05); /* Escala el botón al 105% de su tamaño original */
+}
+
+/* Efecto de clic */
+.formularioIngresoBoton:active {
+    background-color: #FF8C00; /* Naranja oscuro */
+    transform: scale(0.95); /* Escala el botón al 95% de su tamaño original cuando se hace clic */
+}
 
 /* Swich administrador */
 .switch-container {
@@ -126,8 +161,8 @@ input[value]:not([value=""]) + .formularioIconoInput {
     align-items: center;
     cursor: pointer;
     font-size: 16px;
-    color: #333;
     margin-bottom: 10px;
+    color:white;
   }
   
   .formularioInputCheckAdmin {
@@ -145,7 +180,7 @@ input[value]:not([value=""]) + .formularioIconoInput {
   }
   
   .formularioInputCheckAdmin:checked + .switch {
-    background-color: #66bb6a; /* Color del fondo cuando está marcado */
+    background-color: #ffc423; /* Color del fondo cuando está marcado */
   }
   
   .switch::before {
