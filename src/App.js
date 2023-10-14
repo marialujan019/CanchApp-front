@@ -18,7 +18,7 @@ import FormularioRegistro from './components/FormularioRegistro/FormularioRegist
 import Ingreso from './components/ingresar/Ingreso';
 import Registro from './components/registrarse/Registro';
 import RecuperarContrasenia from './components/RecuperarContrasenia/RecuperarContrasenia';
-
+import FormCancha from './components/Cancha/FormCancha'
 //Home page - en construccion
 import Home from './components/Home/Home'
 
@@ -75,6 +75,7 @@ class App extends Component {
             <Route path='/ingreso/registro' element={<FormularioRegistro/>}/>
             <Route path='/ingreso/recuperar' element={<RecuperarContrasenia/>}/>
             <Route path= '/home' element={<Home />}/>
+            <Route path= '/home/crearcancha' element={<FormCancha />}/>
           </Routes>
           <Footer/>
         </BrowserRouter>

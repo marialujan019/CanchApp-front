@@ -16,7 +16,7 @@ const Header = () => {
         <i class="bi bi-list"></i>
       </button>
       <nav className={`nav ${menuOpen ? 'open' : ''}`}>
-        <Link to="/" className="nav-link">Inicio</Link>
+        <Link to="/home" className="nav-link">Inicio</Link>
         <Link to="/ingreso" className="nav-link">Registrarse</Link>
       </nav>
     </header>

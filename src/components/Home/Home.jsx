@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { useLocation } from 'react-router-dom';
 import Inicio from '../Inicio/Inicio';
 import axios from 'axios';
@@ -38,17 +40,39 @@ function Home() {
             }
         }).catch(err => console.log(err))
     }
+
+    const handleCrearCancha = () => {
+        axios.get('http://localhost:3001/crearcancha')
+        .then(res=> {
+            if(res.data.Status === "Respuesta ok"){
+                window.location.reload(true);
+            } else {
+                alert('error');
+            }
+        }).catch(err => console.log(err))
+    }
+
     console.log(auth)
     return(
         <div>{
                 auth ?
                 responseData.tipo === "administrador" ?
                 <div>
-                    Bienvenido a canchapp {responseData.nombre}. Acá podrás administrar tus canchas
+                    Bienvenido a canchapp {responseData.nombre}. 
                     <button className="btn btn-danger" onClick={handleLogout}>
                         Salir
                     </button>
-                </div> :
+                    <br></br>
+                    Acá podrás administrar tus canchas:
+                    <div className='ingresoRutas'>
+                        <Link to={'crearcancha'} className='ingresoRuta'>Crear Cancha</Link>
+                    </div>
+                    <div>
+                        Aca va la lista de canchas
+                    </div>
+                </div>
+                
+                :
                 <div>
                 Bienvenido a canchapp {responseData.nombre}. Acá podrás encontrar y reservar tu cancha
                 <button className="btn btn-danger" onClick={handleLogout}>
