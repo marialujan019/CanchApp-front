@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 //React-router-doom
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
+
 
 //React-boostrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,6 +22,11 @@ import RecuperarContrasenia from './components/RecuperarContrasenia/RecuperarCon
 
 //Home page - en construccion
 import Home from './components/Home/Home'
+
+//Buscadores
+import BusquedaJugador from './components/BusquedaJugador/BusquedaJugador';
+import BusquedaEquipo from './components/BusquedaEquipo/BusquedaEquipo';
+
 
 const initialState = {
   input: '',
@@ -75,8 +81,16 @@ class App extends Component {
             <Route path='/ingreso/registro' element={<FormularioRegistro/>}/>
             <Route path='/ingreso/recuperar' element={<RecuperarContrasenia/>}/>
             <Route path= '/home' element={<Home />}/>
+
+
+            {/* Busqueda */}
+            <Route path='/buscarjugador' element={<BusquedaJugador/>}/>
+            <Route path='/buscarequipo/' element={<BusquedaEquipo/>}/>
+          
+
           </Routes>
           <Footer/>
+          
         </BrowserRouter>
       </div>
     );
