@@ -63,7 +63,7 @@ const Header = () => {
     </header>
     :
     <header className="header">
-      <div className="logo">Logo</div>
+      <div className="logo"> logo </div>
       <button className="menu-button" onClick={toggleMenu}>
         <i class="bi bi-list"></i>
       </button>

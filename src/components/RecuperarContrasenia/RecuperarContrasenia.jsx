@@ -8,17 +8,17 @@ const RecuperarContrasenia = () => {
               <h3>Recuperar contraseña</h3>
               
               <div className="formularioIngreso">
-                <label htmlFor="email" className='formularioLabel'>Ingrese su correo electronico</label>
+                <label htmlFor="email" className='formularioLabel'>Ingrese su correo electrónico</label>
                 <input
                   type="email"
-                  placeholder='Ingrese el mail'
-                  className='formularioInput'
+                  placeholder='example@gmail.com'
+                  className='formularioIngresoInput'
                   required
                 />
               </div>
   
                 <div className='formularioBotonSubmitcontainer'>
-                    <Button variant="outline-primary" type="submit">Aceptar</Button>{' '}
+                    <button className='formularioIngresoBoton'type="submit" > Aceptar </button>
                 </div>
             </form>            
         </div>

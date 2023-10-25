@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 //React-router-doom
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
+
 
 //React-boostrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,6 +27,11 @@ import Home from './components/Home/Home'
 import Perfil from './components/Perfil/Perfil';
 
 import { UserProvider } from './components/UserContext';
+
+
+//Buscadores
+import BusquedaJugador from './components/BusquedaJugador/BusquedaJugador';
+import BusquedaEquipo from './components/BusquedaEquipo/BusquedaEquipo';
 
 
 const initialState = {
@@ -87,8 +93,16 @@ class App extends Component {
             <Route path= '/miscanchas/:idAdmin' element={<MisCanchas />}/>
             <Route path= '/perfil/:tipo/:id' element={<Perfil />}/>
             <Route path= '/cancha/:id' element={<Cancha />}/>
+
+
+            {/* Busqueda */}
+            <Route path='/buscarjugador' element={<BusquedaJugador/>}/>
+            <Route path='/buscarequipo/' element={<BusquedaEquipo/>}/>
+          
+
           </Routes>
           <Footer/>
+          
         </BrowserRouter>
       </div>
       </UserProvider>

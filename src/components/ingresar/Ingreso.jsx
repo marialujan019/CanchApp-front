@@ -43,37 +43,38 @@ export default function Login() {
 
     return (
       <div className='formularioIngresoContainer'>   
-          <form onSubmit={handleSumit}>
-            <h3> Bienvenido a Canchapp</h3>
+          <form className='formularioIngresoContainer2' onSubmit={handleSumit}>
+            <h3> ¡Bienvenido a Canchapp! </h3>
             
             <div className="formularioIngreso">
-              <label htmlFor="email" className='formularioLabel'>Mail</label>
+              <label htmlFor="email" className='formularioIngresoLabel'>Correo electrónico</label>
               <input
                 type="email"
-                placeholder='Ingrese el mail'
-                className='formularioInput'
+                placeholder='example@gmail.com'
+                className='formularioIngresoInput'
                 onChange={e=> setValues({...values, mail: e.target.value})}
                 required
               />
             </div>
           
             <div className='formularioIngreso'>
-              <label htmlFor="password" className='formularioLabel'>Contraseña</label>
+              <label htmlFor="password" className='formularioIngresoLabel'>Contraseña</label>
               <input
                 type="password"
-                placeholder='Ingrese contrasena'
-                className='formularioInput'
+                placeholder='example123'
+                className='formularioIngresoInput'
                 onChange={e=> setValues({...values, pass: e.target.value})}
                 required
               />
             </div>
 
             <div className='formularioBotonSubmitcontainer'>
-              <Button variant="outline-primary" type="submit">Ingresar</Button>
+              <button className='formularioIngresoBoton'type="submit" > Ingresar </button>
+
             </div>
 
             <div className='ingresoRutas'>
-              <Link to={'recuperar'} className='ingresoRuta'>Olvidé la contraseña</Link>
+              <Link to={'recuperar'} className='ingresoRuta'>Olvidé mi contraseña</Link>
               <Link to={"registro"} className='ingresoRuta'>Registrarse</Link>
             </div>
           </form>
