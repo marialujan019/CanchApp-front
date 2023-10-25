@@ -3,8 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import './ingreso.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { useUser } from '../UserContext';
 
 export default function Login() {
+  const { user, setUser } = useUser();
+
   const [values, setValues] = useState({
     mail: '',
     pass: ''
@@ -24,7 +27,12 @@ export default function Login() {
       .then(res => {
           console.log(res)
           if(res.data.Status === "Respuesta ok" ){
-            console.log(res.data)
+            setUser({
+              id: res.data.id,
+              tipo: res.data.tipo,
+              auth: true,
+              nombre: res.data.nombre
+            })
               navigate('/home', { state: { responseData: res.data } })
           } else {
               alert(res.data.Message)
