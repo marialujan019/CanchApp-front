@@ -1,0 +1,47 @@
+/* FORMULARIO */
+.formularioIngresoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e5e5e5;
+    min-height: 84.2vh;
+}
+.formularioIngreso {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.formularioInput {
+    width: 100%;
+    background-color: white;
+    border-radius: 3px;
+    height: 45px;
+    line-height: 45px;
+    padding: 0 40px 0 10px;
+    transition: .3s ease all;
+    border: solid transparent;
+}
+
+.formularioLabel {
+    display: block;
+    padding: 10px;
+    min-height: 40px;
+    cursor: pointer;
+}
+
+
+/* RUTAS */
+.ingresoRutas {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    align-items: flex-end;
+}
+.ingresoRuta {
+    color: black;
+    text-decoration: none;
+}
+.ingresoRuta:hover {
+    color: orange
+}

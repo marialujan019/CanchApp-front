@@ -1,0 +1,56 @@
+/* Agrega estilos para la tarjeta */
+.cards-container {
+    display: flex;
+    justify-content: space-between; /* Distribuye las tarjetas equitativamente */
+    align-items: center; /* Centra verticalmente las tarjetas */
+    margin: 10px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 300px; /* Ajusta el ancho de la tarjeta según tus preferencias */
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 200px;
+  }
+  
+  /* Estilos para la imagen de la tarjeta */
+  .card-image {
+    width: 100%;
+    height: auto;
+    margin-top: 10px; /* Agrega margen superior para separar la imagen del título */
+  }
+  
+  /* Estilos para el contenido de la tarjeta */
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  }
+  
+  /* Estilos para el título de la tarjeta */
+  .card-content h2 {
+    font-size: 18px;
+    margin: 10px 0; /* Agrega margen superior e inferior para separar el título de la imagen */
+  }
+
+  /* Opcional: Agrega una línea divisoria */
+.card-content::before {
+    content: '';
+    border-top: 1px solid #ccc;
+    width: 50%;
+    margin: 10px auto;
+  }
+
+/* Estilos para el enlace de la tarjeta */
+.card-link {
+  text-decoration: none; /* Elimina el subrayado por defecto */
+  color: #0077FF; /* Color del texto del enlace */
+}
+
+/* Estilos para el enlace de la tarjeta cuando se pasa el mouse sobre él */
+.card-link:hover {
+  text-decoration: underline; /* Agrega un subrayado al pasar el mouse */
+}
+  
