@@ -1,0 +1,22 @@
+/* Estilos para las flechas de navegación */
+.navigation-arrows {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Estilos para los botones de las flechas de navegación */
+  .navigation-arrows button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    margin: 0 10px;
+    color: #0077FF;
+  }
+  
+  /* Estilos para las flechas de navegación cuando no se pueden usar (deshabilitadas) */
+  .navigation-arrows button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+  

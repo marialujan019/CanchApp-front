@@ -19,9 +19,15 @@ import FormularioRegistro from './components/FormularioRegistro/FormularioRegist
 import Ingreso from './components/ingresar/Ingreso';
 import Registro from './components/registrarse/Registro';
 import RecuperarContrasenia from './components/RecuperarContrasenia/RecuperarContrasenia';
-
+import FormCancha from './components/Cancha/FormCancha'
+import MisCanchas from './components/Cancha/MisCanchas'
+import Cancha from './components/Cancha/Cancha'
 //Home page - en construccion
 import Home from './components/Home/Home'
+import Perfil from './components/Perfil/Perfil';
+
+import { UserProvider } from './components/UserContext';
+
 
 //Buscadores
 import BusquedaJugador from './components/BusquedaJugador/BusquedaJugador';
@@ -68,8 +74,10 @@ class App extends Component {
 
   render() {
     const { route } = this.state;
+    const { idAdmin } = this.state;
+
     return (
-      
+      <UserProvider>
       <div className="App">
         <BrowserRouter>
           <Mapa/>
@@ -84,6 +92,10 @@ class App extends Component {
             <Route path='/ingreso/registro' element={<FormularioRegistro/>}/>
             <Route path='/ingreso/recuperar' element={<RecuperarContrasenia/>}/>
             <Route path= '/home' element={<Home />}/>
+            <Route path= '/crearcancha/:id_complejo' element={<FormCancha />}/>
+            <Route path= '/miscanchas/:idAdmin' element={<MisCanchas />}/>
+            <Route path= '/perfil/:tipo/:id' element={<Perfil />}/>
+            <Route path= '/cancha/:id' element={<Cancha />}/>
 
 
             {/* Busqueda */}
@@ -95,6 +107,7 @@ class App extends Component {
           <Footer/>
         </BrowserRouter>
       </div>
+      </UserProvider>
     );
   }
 }

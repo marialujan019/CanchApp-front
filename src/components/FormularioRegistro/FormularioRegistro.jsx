@@ -92,16 +92,18 @@ const FormularioRegistro = () => {
 
         //Se modifcan los campos para que matcheen con la ddbb. Mejorar!
         usuarioObjeto.mail = usuarioObjeto.email1
-        usuarioObjeto.pass = usuarioObjeto.contrasenia1
-        usuarioObjeto.fnac = usuarioObjeto.nacimiento
+        usuarioObjeto.contrasena = usuarioObjeto.contrasenia1
+        usuarioObjeto.fecha_nac = usuarioObjeto.nacimiento
         usuarioObjeto.telefonoComplejo = usuarioObjeto.telefono
         usuarioObjeto.telefono = usuarioObjeto.celular
+        usuarioObjeto.tipo = usuarioObjeto.usuario
         delete usuarioObjeto.contrasenia1
         delete usuarioObjeto.contrasenia2
         delete usuarioObjeto.email1
         delete usuarioObjeto.email2
         delete usuarioObjeto.nacimiento
         delete usuarioObjeto.celular
+        delete usuarioObjeto.usuario
 
         if(isAdmin){
             var complejo = {
@@ -110,7 +112,6 @@ const FormularioRegistro = () => {
                 ciudad: usuarioObjeto.ciudad,
                 direccion: usuarioObjeto.calle + " " + usuarioObjeto.altura,
                 telefonoComplejo: usuarioObjeto.telefonoComplejo,
-                adminId: usuarioObjeto.mail
               };
               
               console.log(complejo)
@@ -119,7 +120,7 @@ const FormularioRegistro = () => {
                 nombre: usuarioObjeto.nombre,
                 apellido: usuarioObjeto.apellido,
                 mail: usuarioObjeto.mail,
-                pass: usuarioObjeto.pass,
+                contrasena: usuarioObjeto.contrasena,
                 telefono: usuarioObjeto.telefono
               };
               console.log(administrador)

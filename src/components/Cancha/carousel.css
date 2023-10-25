@@ -1,0 +1,62 @@
+/* Estilos para el contenedor del carrusel */
+.carousel-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Estilos para el carrusel (contenedor de tarjetas) */
+  .carousel {
+    display: flex;
+    overflow: hidden;
+  }
+  
+  /* Estilos para las tarjetas */
+  .card {
+    flex: 0 0 auto;
+    width: 300px; /* Ancho de cada tarjeta */
+    margin-right: 20px; /* Espacio entre tarjetas */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+  
+  /* Estilos para la imagen dentro de las tarjetas */
+  .card img {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Estilos para el botón debajo de las tarjetas */
+  .card button {
+    display: block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #0077FF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Estilos para las flechas de navegación */
+  .navigation-arrows {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navigation-arrows button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    margin: 0 10px;
+    color: #0077FF;
+  }
+  
+  /* Estilos para las flechas de navegación cuando no se pueden usar (deshabilitadas) */
+  .navigation-arrows button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+  

@@ -1,0 +1,35 @@
+/* Estilos para las tarjetas */
+.card {
+    flex: 0 0 auto;
+    width: 300px; /* Ancho de cada tarjeta */
+    margin-right: 20px; /* Espacio entre tarjetas */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+  
+  /* Estilos para la imagen dentro de las tarjetas */
+  .card img {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Estilos para el título de las tarjetas */
+  .card h2 {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  /* Estilos para el botón debajo de las tarjetas */
+  .card button {
+    display: block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #0077FF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
