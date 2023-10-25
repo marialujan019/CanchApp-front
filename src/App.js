@@ -27,6 +27,8 @@ import Home from './components/Home/Home'
 import BusquedaJugador from './components/BusquedaJugador/BusquedaJugador';
 import BusquedaEquipo from './components/BusquedaEquipo/BusquedaEquipo';
 
+//Mapa
+import Mapa from './components/Mapa/Mapa';
 
 const initialState = {
   input: '',
@@ -70,6 +72,7 @@ class App extends Component {
       
       <div className="App">
         <BrowserRouter>
+          <Mapa/>
           <Header/>
           <Routes>
             <Route path='/' element={<Inicio/>}/>
@@ -90,7 +93,6 @@ class App extends Component {
 
           </Routes>
           <Footer/>
-          
         </BrowserRouter>
       </div>
     );
