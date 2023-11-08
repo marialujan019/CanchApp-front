@@ -8,6 +8,7 @@ const Cancha = () => {
   const [cantidadJugadores, setCantidadJugadores] = useState();
   const [techo, setTecho] = useState();
   const [editandoFoto, setEditandoFoto] = useState();
+  const [precioTurno, setPrecioTurno] = useState();
 
   useEffect(() => {
     axios.post('http://localhost:3001/cancha', {
@@ -19,6 +20,7 @@ const Cancha = () => {
         setNombre(res.data.nombre);
         setCantidadJugadores(res.data.jugadores);
         setTecho(res.data.techo);
+        setPrecioTurno(res.data.precio_turno)
       } else {
         alert(res.data.Message);
       }
@@ -49,6 +51,7 @@ const Cancha = () => {
   return (
     <div className="cancha">
       <h3>{nombre}</h3>
+      <h5> Precio turno: {precioTurno}</h5>
       <img alt="Imagen de la cancha" />
       {editandoFoto ? (
         <button onClick={handleEditarFoto}>Guardar Foto</button>

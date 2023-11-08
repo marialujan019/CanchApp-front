@@ -80,7 +80,7 @@ class App extends Component {
       <UserProvider>
       <div className="App">
         <BrowserRouter>
-          <Mapa/>
+        
           <Header/>
           <Routes>
             <Route path='/' element={<Inicio/>}/>
