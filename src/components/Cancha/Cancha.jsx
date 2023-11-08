@@ -1,5 +1,5 @@
 import React, {  useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Cancha = () => {
@@ -9,6 +9,8 @@ const Cancha = () => {
   const [techo, setTecho] = useState();
   const [editandoFoto, setEditandoFoto] = useState();
   const [precioTurno, setPrecioTurno] = useState();
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     axios.post('http://localhost:3001/cancha', {
@@ -36,8 +38,23 @@ const Cancha = () => {
   };
 
   const handleGuardarCambios = () => {
-    // Agregar lógica para guardar los cambios en la base de datos
-    // Usar las variables nombre, cantidadJugadores y techo
+    axios.put(`http://localhost:3001/update_cancha/${id}`, {
+      cant_jugador: cantidadJugadores,
+      techo: techo,
+      nombre_cancha: nombre,
+      imagen: editandoFoto,
+      precio_turno: precioTurno
+    })
+    .then(res => {
+      if (res.data.Status === "Respuesta ok") {
+        navigate('/home', { state: { responseData: res.data } })
+      } else {
+        alert(res.data.Message);
+      }
+    })
+    .catch(error => {
+      console.error('Error al realizar la solicitud:', error);
+    });
   };
 
   const handleAgenda = () => {
@@ -45,13 +62,23 @@ const Cancha = () => {
   };
 
   const handleEliminarCancha = () => {
-    // Agregar lógica para eliminar la cancha
+    //Falta popUp que diga si quiere confirmar, if yes == delete else== misCanchas
+    axios.delete(`http://localhost:3001/borrar_cancha/${id}`)
+    .then(res => {
+      if (res.data.Status === "Respuesta ok") {
+        navigate('/home', { state: { responseData: res.data } })
+      } else {
+        alert(res.data.Message);
+      }
+    })
+    .catch(error => {
+      console.error('Error al realizar la solicitud:', error);
+    });
   };
 
   return (
     <div className="cancha">
       <h3>{nombre}</h3>
-      <h5> Precio turno: {precioTurno}</h5>
       <img alt="Imagen de la cancha" />
       {editandoFoto ? (
         <button onClick={handleEditarFoto}>Guardar Foto</button>
@@ -61,6 +88,10 @@ const Cancha = () => {
       <div>
         <label>Nombre de la cancha:</label>
         <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+      </div>
+      <div>
+        <label>Precio turno:</label>
+        <input type="text" value={precioTurno} onChange={(e) => setPrecioTurno(e.target.value)} />
       </div>
       <div>
         <label>Cantidad de Jugadores:</label>
