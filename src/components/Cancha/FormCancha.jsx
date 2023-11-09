@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './FormCancha.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { useUser } from '../UserContext';
 
 export default function CrearCancha() {
   const { id_complejo } = useParams();
@@ -19,6 +20,8 @@ export default function CrearCancha() {
     setValues({ ...values, [name]: value });
   };
 
+  const { user } = useUser();
+
 
   console.log(values)
   axios.defaults.withCredentials = true;
@@ -31,14 +34,40 @@ export default function CrearCancha() {
         id_complejo: id_complejo,
         precio_turno: values.precio_turno
       })
-
       .then(res => {
           console.log(res)
           if(res.data.Status === "Respuesta ok" ){
             console.log(res.data)
-              navigate('/crearCancha', { state: { responseData: res.data } })
-          } else {
-              alert(res.data.Message)
+           
+            const fechaHoy = new Date();
+            const diasAgregados = 15;
+            for (let i = 0; i < diasAgregados; i++) {
+              const fecha = new Date(fechaHoy);
+              fecha.setDate(fechaHoy.getDate() + i);
+              fecha.setHours(10, 0, 0, 0); // Configura la hora de inicio a las 10 am
+          
+              for (let hora = 10; hora <= 23; hora++) {
+                const horaInicio = new Date(fecha);
+                horaInicio.setHours(hora, 0, 0, 0);
+
+            axios.post('http://localhost:3001/crear_agenda', {
+              id_cancha: res.data.idCancha,
+              fecha: horaInicio.toISOString(),
+              hora: horaInicio.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              disponibilidad: 'Disponible',
+              id_jug: null
+            })
+            .then(res => {
+                console.log(res)
+                if(res.data.Status === "Respuesta ok" ){
+                  console.log(res.data)
+                    navigate(`/miscanchas/${user.id}`, { state: { responseData: res.data } })
+                } else {
+                    alert(res.data.Message)
+                }
+            })
+            .catch(err => console.log(err))
+          }}
           }
       })
       .catch(err => console.log(err))
@@ -148,7 +177,7 @@ export default function CrearCancha() {
         </div>
 
         <div className="formularioBotonSubmitcontainer">
-          <Button variant="outline-primary" type="submit">
+          <Button variant="outline-primary" type="submit" onClick={handleCrearCancha}>
             Crear cancha
           </Button>
         </div>
