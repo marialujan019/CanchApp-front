@@ -10,7 +10,7 @@ const Card = ({ card }) => {
     <div className="card">
       <img src={card.urlPicture} alt="Imagen de la tarjeta" className="card-image" />
       <h2>{card.nombre_cancha}</h2>
-      <Link to={`/cancha/${card.id_cancha}`} className="nav-link"> Ver cancha </Link>
+      <Link to={`/cancha/${card.id_cancha}`} className="nav-link-canchas"> Ver cancha </Link>
     </div>
   );
 };

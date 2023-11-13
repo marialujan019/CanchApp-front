@@ -53,4 +53,8 @@
 .card-link:hover {
   text-decoration: underline; /* Agrega un subrayado al pasar el mouse */
 }
+
+.nav-link-canchas {
+  color: #0077FF;
+}
   
