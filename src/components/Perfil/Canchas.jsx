@@ -7,7 +7,7 @@ const Canchas = ({idAdmin}) => {
       <div className="card">
         <img src="ruta-a-tu-imagen.jpg" alt="Imagen de Canchas" className="card-image" />
           <div className="card-content">
-            <Link to={`/miscanchas/${idAdmin}`} className="nav-link"> Mis canchas</Link>
+            <Link to={`/miscanchas/${idAdmin}`} className="nav-link-canchas"> Mis canchas</Link>
               {/* Agrega el contenido de esta sección aquí */}
           </div>
       </div>

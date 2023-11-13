@@ -28,7 +28,8 @@ export default function CrearCancha() {
         nombre_cancha: values.nombre_cancha,
         cant_jugador: values.cant_jugador,
         techo: values.techo,
-        id_complejo: id_complejo
+        id_complejo: id_complejo,
+        precio_turno: values.precio_turno
       })
 
       .then(res => {
@@ -59,6 +60,21 @@ export default function CrearCancha() {
             className="formularioInput"
             onChange={handleInputChange}
             value={values.nombre_cancha}
+            required
+          />
+        </div>
+
+        <div className="formularioIngreso">
+          <label htmlFor="text" className="formularioLabel">
+            Precio turno
+          </label>
+          <input
+            type="text"
+            name="precio_turno"
+            placeholder="precio"
+            className="formularioInput"
+            onChange={handleInputChange}
+            value={values.precio_turno}
             required
           />
         </div>

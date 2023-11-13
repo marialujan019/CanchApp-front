@@ -80,9 +80,9 @@ class App extends Component {
       <UserProvider>
       <div className="App">
         <BrowserRouter>
+        
           <Header/>
           <Routes>
-
             <Route path='/' element={<Inicio/>}/>
             <Route path='/ingreso' element={
               route === 'signin'
@@ -96,14 +96,12 @@ class App extends Component {
             <Route path= '/miscanchas/:idAdmin' element={<MisCanchas />}/>
             <Route path= '/perfil/:tipo/:id' element={<Perfil />}/>
             <Route path= '/cancha/:id' element={<Cancha />}/>
-            
+
 
             {/* Busqueda */}
             <Route path='/buscarjugador' element={<BusquedaJugador/>}/>
             <Route path='/buscarequipo/' element={<BusquedaEquipo/>}/>
           
-            {/* Mapa */}
-            <Route path='/mapa' element={<Mapa/>}/>
 
           </Routes>
           <Footer/>

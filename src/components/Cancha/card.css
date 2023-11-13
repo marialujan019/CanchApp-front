@@ -32,4 +32,7 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  
+
+  .nav-link-canchas {
+    color: #0077FF;
+  }
