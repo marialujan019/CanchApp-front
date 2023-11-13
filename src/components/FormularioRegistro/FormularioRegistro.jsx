@@ -34,6 +34,8 @@ const FormularioRegistro = () => {
         telefono: /^\d{7,14}$/ // 7 a 14 numeros.
     }
 
+
+    
     //Funcion para validar que la segunda contraseña sea igual a la primera
     const validarContrasenia2 = () => {
         if (contrasenia1.campo.length > 0) {
