@@ -35,7 +35,8 @@ const FormularioRegistro = () => {
         },
     });
 
-    //funcion para obtener latitud y longitud
+
+    //funcion para obtener latitud y Longitud
     const obtenerDireccion = async (calle, altura, provincia, ciudad) => {
         try {
             // Create the desired address format
