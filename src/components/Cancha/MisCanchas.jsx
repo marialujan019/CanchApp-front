@@ -33,7 +33,7 @@ const MisCanchas = () => {
             <div className="card-content">
                 <h2>Mis canchas</h2>
                 {/* Agrega el contenido de esta sección aquí */}
-                <Link to={`/crearcancha/${idComplejo}`} className="nav-link"> Crear cancha </Link>
+                <Link to={`/crearcancha/${idComplejo}`} className="nav-link-canchas"> Crear cancha </Link>
                
             </div>
             <div>
