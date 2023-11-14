@@ -4,6 +4,7 @@ import ComponenteInput from "../input/ComponenteInput";
 import "./formularioRegistro.css"
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { LocationIQProvider } from 'leaflet-geosearch';
 
 const FormularioRegistro = () => {
     //Estados para controlar el valor de los input
@@ -11,9 +12,10 @@ const FormularioRegistro = () => {
     //Datos del complejo
     const [nombreComplejo, cambiarNombreComplejo] = useState({campo:"", valido: null})
     const [cuit, cambiarCuit] = useState({campo:"", valido: null})
-    const [ciudad, cambiarCiudad] = useState({campo:"", valido: null})
-    const [calle, cambiarCalle] = useState({campo:"", valido: null})
-    const [altura, cambiarAltura] = useState({campo:"", valido: null})
+    const [calle, cambiarCalle] = useState({ campo: "", valido: null });
+    const [altura, cambiarAltura] = useState({ campo: "", valido: null });
+    const [provincia, cambiarProvincia] = useState({ campo: "", valido: null });
+    const [ciudad, cambiarCiudad] = useState({ campo: "", valido: null });
     const [telefono, cambiarTelefono] = useState({campo:"", valido: null})
 
     //Datos del jugador-administrador
@@ -24,14 +26,44 @@ const FormularioRegistro = () => {
     const [celular, cambiarCelular] = useState({campo:"", valido: null})
     const [contrasenia1, cambiarContrasenia1] = useState({campo:"", valido: null})
     const [contrasenia2, cambiarContrasenia2] = useState({campo:"", valido: null})
-    
+
+    //API mapa
+    const [location, setLocation] = useState('');
+    const [coordinates, setCoordinates] = useState(null);
+    const locationiqProvider = new LocationIQProvider({
+        params: {
+        key: 'pk.79ec038c6078903d6573f59fbc11b4f9'
+        },
+    });
+
+    //funcion para obtener latitud y longitud
+    const obtenerDireccion = async (calle, altura, provincia, ciudad) => {
+        try {
+            // Create the desired address format
+            const direccionCompleta = `${calle} ${altura}, Argentina, ${provincia}, ${ciudad}`;
+            
+            const results = await locationiqProvider.search({ query: direccionCompleta });
+            if (results && results.length > 0) {
+                const { y: latitude, x: longitude } = results[0];
+                return { latitude, longitude };
+            } else {
+                // Handle an error or return a default value
+                return null;
+            }
+        } catch (error) {
+            console.error('Error al buscar la ubicación:', error);
+            return null;
+        }
+    };
+        
     //Expresiones regulares
     const expresiones = {
         usuario: /^[a-zA-Z0-9_-]{4,16}$/, // Letras, numeros, guion y guion_bajo
         nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
         password: /^.{4,25}$/, // 4 a 12 digitos.
         correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-        telefono: /^\d{7,14}$/ // 7 a 14 numeros.
+        telefono: /^\d{7,14}$/, // 7 a 14 numeros.
+        numero: /^[0-9]+$/
     }
 
 
@@ -78,18 +110,24 @@ const FormularioRegistro = () => {
 
     //Funcion para tomar los datos ingresados como objeto
     axios.defaults.withCredentials = true;
-    const consultarFormulario = (e) => {
+    const consultarFormulario = async (e) => {
         e.preventDefault();
 
         const data = new FormData(datosFormulario.current);
         const cliente = Object.fromEntries(data);
         const tipoUsuario = isAdmin ? "administrador" : "jugador";
-
+        
+        //Llamado a la funcion para obtener latitud y longitud
+        const coordinates = await obtenerDireccion(calle.campo, altura.campo, provincia.campo, ciudad.campo);
+    
         const usuarioObjeto = {
             usuario: tipoUsuario,
             ...cliente,
+            latitud: coordinates ? coordinates.latitude : null,
+            longitud: coordinates ? coordinates.longitude : null,
         };
-
+    
+        console.log(usuarioObjeto);
         console.log(usuarioObjeto);
 
         //Se modifcan los campos para que matcheen con la ddbb. Mejorar!
@@ -204,6 +242,16 @@ const FormularioRegistro = () => {
                             />
                             <ComponenteInput
                                 tipo="text"
+                                label="Provincia"
+                                placeholder="Ej: Chaco"
+                                idHTMLName="provincia"
+                                leyendaError="provincia"
+                                expresionRegular={expresiones.nombre}
+                                estado={provincia}
+                                cambiarEstado={cambiarProvincia}
+                            />
+                            <ComponenteInput
+                                tipo="text"
                                 label="Ciudad"
                                 placeholder="Ej: Resistencia"
                                 idHTMLName="ciudad"
@@ -228,7 +276,7 @@ const FormularioRegistro = () => {
                                 placeholder="Ej: 3123"
                                 idHTMLName="altura"
                                 leyendaError="Altura"
-                                expresionRegular={expresiones.telefono}
+                                expresionRegular={expresiones.numero}
                                 estado={altura}
                                 cambiarEstado={cambiarAltura}
                             />
@@ -439,5 +487,3 @@ const FormularioRegistro = () => {
 };
 
 export default FormularioRegistro;
-
-
