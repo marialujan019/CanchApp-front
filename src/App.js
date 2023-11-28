@@ -36,6 +36,13 @@ import BusquedaEquipo from './components/BusquedaEquipo/BusquedaEquipo';
 //Mapa
 import Mapa from './components/Mapa/Mapa';
 
+//Reserva
+import Complejo from './components/Complejo/Complejo';
+import FormularioReserva from './components/FormularioReserva/FormularioReserva';
+
+//Mis equipos
+import MisEquipos from './components/MisEquipos/MisEquipos';
+
 const initialState = {
   input: '',
   imageUrl: '',
@@ -82,6 +89,7 @@ class App extends Component {
         <BrowserRouter>
         
           <Header/>
+          
           <Routes>
             <Route path='/' element={<Inicio/>}/>
             <Route path='/ingreso' element={
@@ -102,6 +110,14 @@ class App extends Component {
             <Route path='/buscarjugador' element={<BusquedaJugador/>}/>
             <Route path='/buscarequipo/' element={<BusquedaEquipo/>}/>
           
+
+           {/* Reserva */}
+           <Route path="/mapa" element={<Mapa/>} />
+           <Route path="/complejo/:id_complejo" element={<Complejo />} />
+           <Route path="/reserva" element={<FormularioReserva />} />
+           
+           {/* Mis equipos */}
+           <Route path="/misEquipos" element={<MisEquipos />} />
 
           </Routes>
           <Footer/>

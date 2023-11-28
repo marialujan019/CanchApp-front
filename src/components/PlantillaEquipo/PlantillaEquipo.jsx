@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap'; // Importa el botón de React-Bootstrap
+import React, { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 import JugadoresModal from './JugadoresModal/JugadoresModal';
+import { consultarBaseDeDatos } from '../utils/Funciones';
 import './plantillaEquipo.css';
 
 const PlantillaEquipo = ({ equipo }) => {
+  const [traerJugadores, setTraerJugadores] = useState([]);
   const [mostrarJugadores, setMostrarJugadores] = useState(false);
+
+  useEffect(() => {
+    const fetchJugadores = async () => {
+      const datos = await consultarBaseDeDatos('../json/jugadoresParaBusqueda.json');
+      setTraerJugadores(datos);
+    };
+
+    fetchJugadores();
+  }, []); // Arreglo de dependencias vacío para cargar solo una vez
 
   const toggleMostrarJugadores = () => {
     setMostrarJugadores(!mostrarJugadores);
@@ -13,18 +23,14 @@ const PlantillaEquipo = ({ equipo }) => {
 
   return (
     <div className="plantillaEquipoContainer">
-      <p>
-        <Link to={`/reserva/${equipo.nombre}`}>{equipo.nombre}</Link>
-      </p>
-      <p>Ubicación: {equipo.ubicacion}</p>
-      <p>Fecha: {equipo.fecha}</p>
-      <p>Cantidad de jugadores: {equipo.jugadores.length}/10</p>
+      <p>{equipo.nombreEquipo}</p>
+      <p>{equipo.cant_jug}</p>
       <div className="plantillaEquipoJugadoresContainer">
         <Button variant="primary" onClick={toggleMostrarJugadores}>
           Ver jugadores
         </Button>
         <JugadoresModal
-          equipo={equipo}
+          jugadores={traerJugadores}
           show={mostrarJugadores}
           onHide={toggleMostrarJugadores}
         />
@@ -34,3 +40,4 @@ const PlantillaEquipo = ({ equipo }) => {
 };
 
 export default PlantillaEquipo;
+

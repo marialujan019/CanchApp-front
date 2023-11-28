@@ -1,57 +1,35 @@
 [
     {
-        "id":"1",
-        "status": "respuesta ok",
+        "id_complejo":"1",
         "nombre": "pepito",
         "direccion": "Pasaje Uspallata 552, Argentina, Chaco, Resitencia",
         "telefono": "32321",
-        "contraseña": "aiwd23",
-        "idCancha": "1",
         "latitud": "-27.4613063",
         "longitud": "-58.984803"
     },
     {
-        "id":"2",
-        "status": "respuesta ok",
+        "id_complejo":"2",
         "nombre": "nombre_2",
         "direccion": "dirección_2",
         "telefono": "teléfono_2",
-        "contraseña": "contraseña_2",
-        "idCancha": "2",
         "latitud": "-27.448505",
         "longitud": "-59.0819164"
     },
     {
-        "id":"3",
-        "status": "respuesta ok",
+        "id_complejo":"3",
         "nombre": "nombre_3",
         "direccion": "dirección_3",
         "telefono": "teléfono_3",
-        "contraseña": "contraseña_3",
-        "idCancha": "3",
         "latitud": "-27.458735",
         "longitud": "-59.0302855"
     },
     {
-        "id":"4",
-        "status": "respuesta ok",
+        "id_complejo":"4",
         "nombre": "nombre_4",
         "direccion": "dirección_4",
         "telefono": "teléfono_4",
-        "contraseña": "contraseña_4",
-        "idCancha": "4",
         "latitud": "-27.464733",
         "longitud": "-59.0167662"
-    },
-    {
-        "id":"5",
-        "status": "respuesta ok",
-        "nombre": "nombre_5",
-        "direccion": "dirección_5",
-        "telefono": "teléfono_5",
-        "contraseña": "contraseña_5",
-        "idCancha": "5",
-        "latitud": "-27.4637164",
-        "longitud": "-59.0262755"
     }
 ]
+  

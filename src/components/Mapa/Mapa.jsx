@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './mapa.css';
-import { Link } from 'react-router-dom';
 import { consultarBaseDeDatos } from '../utils/Funciones';
-import Marcadores from '../Marcadores/Marcadores';
+import Marcadores from './Marcadores/Marcadores';
 import { Icon } from 'leaflet';
 
 
@@ -41,7 +40,7 @@ const Mapa = () => {
           key={item.id}
           position={[parseFloat(item.latitud), parseFloat(item.longitud)]}
           customIcon={customIcon}
-          idCancha={item.idCancha}
+          id_complejo={item.id_complejo}
           nombre={item.nombre}
           direccion={item.direccion}
           telefono={item.telefono}
