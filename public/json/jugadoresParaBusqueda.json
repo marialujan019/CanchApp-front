@@ -5,9 +5,10 @@
   "apellido": "si",
   "edad": 23,
   "pie_habil": "Derecho",
-  "sexo": "M",
+  "sexo": "Masculino",
   "telefono": 21,
-  "posicion": "Arquero"
+  "posicion": "Arquero",
+  "estado": "pendiente"
   },
 
   {
@@ -16,8 +17,9 @@
     "apellido": "No",
     "edad": 44,
     "pie_habil": "Izquierdo",
-    "sexo": "F",
+    "sexo": "Femenino",
     "telefono": 21,
-    "posicion": "Mediocampista"
+    "posicion": "Mediocampista",
+    "estado": "aceptado"
     }
 ]

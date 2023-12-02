@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { consultarBaseDeDatos } from '../utils/Funciones';
+import { Button } from '@nextui-org/react';
 
 const Complejo = () => {
   const { id_complejo } = useParams();
@@ -130,7 +131,7 @@ const Complejo = () => {
                   {disponibilidadPorCancha.map((cancha, i) => ( // Agregar el índice i como segundo parámetro
                     <td key={cancha.cancha}>
                       {cancha.disponibilidad.find(item => item.hora === hora)?.disponible ? (
-                        <button onClick={() => handleReservaClick(hora, canchas[i])}>Reservar</button>
+                        <Button onClick={() => handleReservaClick(hora, canchas[i])} color="primary">Reservar</Button>
                       ) : 
                       ('No disponible')
                       }

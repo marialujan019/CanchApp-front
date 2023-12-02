@@ -3,6 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import "./jugadoresModal.css"
 
 const JugadoresModal = ({ jugadores, show, onHide }) => {
+
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>

@@ -1,12 +1,21 @@
 [
   {
-  "id_equipo":1,
-  "nombreEquipo": "Los cracks",
-  "cant_jug": 2
+    "id_equipo":1,
+    "nombreEquipo": "Los cracks",
+    "cant_jug": 5,
+    "fecha": "1/2/3 08:00hs",
+    "nombreComplejo": "Complejos pedro" ,
+    "direccion" : "Marco antonio 132",
+    "estado": "pendiente"	
   },
   {
     "id_equipo":3,
     "nombreEquipo": "Los capos",
-    "cant_jug": 5
+    "cant_jug": 3,
+    "fecha": "1/2/3 08:00hs",
+    "hora": "08:00",
+    "nombreComplejo": "Complejos pedro" ,
+    "direccion": "Marco antonio 132",
+    "estado": "pendiente"	
   }
 ]

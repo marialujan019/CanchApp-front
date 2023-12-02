@@ -1,0 +1,18 @@
+[
+    {
+        "id_reserva":4,
+        "nombre_equipo": "Los cracks",
+        "fecha": "12/12/12 08:00",
+        "complejo": "si",
+        "cancha": "cancha2",
+        "direccion": "mi cancha"
+    },
+    {
+        "id_reserva":2,
+        "nombre_equipo": "Los cracks",
+        "fecha": "1/12/12 22:00",
+        "complejo": "si",
+        "cancha": "cancha2",
+        "direccion": "mi cancha"
+    }
+]
