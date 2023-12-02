@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { consultarBaseDeDatos } from '../utils/Funciones';
+import axios from 'axios';
 
 const Complejo = () => {
   const { id_complejo } = useParams();
@@ -11,17 +12,40 @@ const Complejo = () => {
 
   useEffect(() => {
     async function fetchComplejo() { //Función para obtener el JSON del complejo desde el back
-      const jsonDataComplejo = await consultarBaseDeDatos('../json/complejo.json');
+      /*const jsonDataComplejo = await consultarBaseDeDatos('../json/complejo.json');
       const complejoSeleccionado = jsonDataComplejo.id_complejo === id_complejo;
-      setComplejo(complejoSeleccionado ? jsonDataComplejo : null);
+      setComplejo(complejoSeleccionado ? jsonDataComplejo : null);*/
+      axios.get('http://localhost:3001/complejo/:id_complejo').then(
+        res => {
+          var complejo = res.data.complejo
+          if(complejo) {
+            setComplejo(complejo)
+          } else {
+              alert("Error al obtener los datos del complejo")
+          }
+        }
+      )
     }
 
     async function fetchCanchas() { //Función para obtener el JSON de las canchas desde el back
-      const jsonDataCanchas = await consultarBaseDeDatos('../json/canchasDeUnComplejo.json');
-      setCanchas(jsonDataCanchas.filter(cancha => cancha.id_complejo === id_complejo));
+      //const jsonDataCanchas = await consultarBaseDeDatos('../json/canchasDeUnComplejo.json');
+      axios.get('http://localhost:3001/complejo/canchas/:id_complejo').then(
+        res => {
+          var canchas = res.data.canchas
+          if(canchas) {
+              setCanchas(canchas)
+          } else {
+              alert("Error al obtener canchas del complejo")
+          }
+        }
+      )
+      //Revisar este set, ya que el BE va a la base de datos, a la tabla canchas, 
+      //y ya trae todas las canchas del complejo seleccionado.
+      //setCanchas(jsonDataCanchas.filter(cancha => cancha.id_complejo === id_complejo));
     }
 
     async function fetchFechas() { //Función para obtener el JSON de las fechas disponibles desde el back
+      //Esto sería del complejo, no?
       const jsonDataFechas = await consultarBaseDeDatos('../json/fechas.json');
       setFechas(jsonDataFechas);
     }
