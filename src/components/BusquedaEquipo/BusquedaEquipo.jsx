@@ -3,6 +3,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button
 import { consultarBaseDeDatos } from '../utils/Funciones';
 import JugadoresModal from './JugadoresModal/JugadoresModal';
 
+const id_jugador = 1; //Esto hay que cambiar por el userConstext
 const BusquedaEquipo = () => {
   const [equiposDeLaAPI, setEquiposDeLaAPI] = useState([]);
   const [filtros, setFiltros] = useState({ nombreBusqueda: '' });
@@ -38,23 +39,27 @@ const BusquedaEquipo = () => {
     { key: "estado", label: "Estado" },
   ];
 
-  const toggleSolicitud = (idEquipo) => {
+  //Acá se hace el manejo de solicitudes, envio el idEquipo al back y debo recibir una "solicitud recibida" para manejar los botones
+  //Si se envió la solicitud correctamente, el botón de "Enviar solicitud" debe pasar a "Cancelar solicitud" y viceversa
+  const toggleSolicitud = (idEquipo, id_jugador) => {
     if (solicitudEnviadaPorEquipo[idEquipo]) {
-      cancelarSolicitud(idEquipo);
+      cancelarSolicitud(idEquipo, id_jugador);
       setSolicitudEnviadaPorEquipo((prev) => ({ ...prev, [idEquipo]: false }));
     } else {
-      enviarSolicitud(idEquipo);
+      enviarSolicitud(idEquipo, id_jugador);
       setSolicitudEnviadaPorEquipo((prev) => ({ ...prev, [idEquipo]: true }));
     }
   };
 
   //Esta función debe enviar una solicitud al back con el id_equipo cambiar el estado de una solicitud de un jugador
-  const enviarSolicitud = (idEquipo) => {
-    console.log(`Solicitud enviada para el Equipo con ID: ${idEquipo}`);
+  const enviarSolicitud = (idEquipo, id_jugador) => {
+    const solicitudEnviada = true; //Se envia esto al back junto con el id_jugador, para que se pueda eliminar de la tabla, la solicitud
+    console.log(`Solicitud enviada por el jugador ${id_jugador} para el Equipo con ID: ${idEquipo}`);
   };
 
-  const cancelarSolicitud = (idEquipo) => {
-    console.log(`Solicitud cancelada para el Equipo con ID: ${idEquipo}`);
+  const cancelarSolicitud = (idEquipo, id_jugador) => {
+    const solicitudEnviada = false; //Se envia esto al back junto con el id_jugador, para que se pueda eliminar de la tabla, la solicitud
+    console.log(`Solicitud cancelada por el jugador ${id_jugador} para el Equipo con ID: ${idEquipo}`);
   };
 
   
@@ -66,6 +71,7 @@ const BusquedaEquipo = () => {
     setShowJugadoresModal(true);
   };
 
+  
 
   return (
     <div>
@@ -96,7 +102,7 @@ const BusquedaEquipo = () => {
                     </>
                   ) : column.key === 'solicitud' ? (
                     <Button
-                      onClick={() => toggleSolicitud(equipo.id_equipo)}
+                      onClick={() => toggleSolicitud(equipo.id_equipo, id_jugador)}
                       color={solicitudEnviadaPorEquipo[equipo.id_equipo] ? "danger" : "primary"}
                     >
                       {solicitudEnviadaPorEquipo[equipo.id_equipo] ? "Cancelar solicitud" : "Enviar solicitud"}

@@ -285,7 +285,7 @@ const BusquedaJugador = () => {
                       jugador[column.key]
                     ) : (
                       <Button
-                        onClick={() => toggleSolicitud(jugador.id_jugador)}
+                        onClick={() => toggleSolicitud(jugador.id_jugador)} //Se envia solo el id_jugaor al back
                         color={solicitudEnviadaPorEquipo[jugador.id_jugador] ? "danger" : "primary"}
                       >
                         {solicitudEnviadaPorEquipo[jugador.id_jugador] ? "Cancelar solicitud" : "Enviar solicitud"}

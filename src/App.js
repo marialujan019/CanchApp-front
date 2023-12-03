@@ -45,6 +45,25 @@ import FormularioReserva from './components/FormularioReserva/FormularioReserva'
 //Mis equipos
 import MisEquipos from './components/MisEquipos/MisEquipos';
 
+//Historial
+import Historial from './components/Historial/Historial';
+
+import ModalSeleccionEquipo from './components/BusquedaJugador/ModalSeleccionEquipo/ModalSeleccionEquipo';
+
+const equipos = [
+  {
+      id_equipo: 1,
+      nombre_equipo: "Los cracks",
+      cant_jug: 4
+  },
+  {
+      id_equipo: 2,
+      nombre_equipo: "Los capos",
+      cant_jug: 2
+  }
+]
+
+
 const initialState = {
   input: '',
   imageUrl: '',
@@ -81,6 +100,7 @@ class App extends Component {
     this.setState({route: route});
   }
 
+  
   render() {
     const { route } = this.state;
     const { idAdmin } = this.state;
@@ -90,7 +110,9 @@ class App extends Component {
         <UserProvider>
           <div className="App">
             <BrowserRouter>
-        
+
+            <ModalSeleccionEquipo equipos={equipos}/>
+            
               <Header/>
           
               <Routes>
@@ -120,6 +142,9 @@ class App extends Component {
           
               {/* Mis equipos */}
                <Route path="/misEquipos" element={<MisEquipos />} />
+
+              {/* Historial */}
+              <Route path="/historial" element={<Historial />} />
 
               </Routes>
               <Footer/>

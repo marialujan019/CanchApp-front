@@ -1,18 +1,24 @@
 [
     {
-        "id_reserva":4,
-        "nombre_equipo": "Los cracks",
-        "fecha": "12/12/12 08:00",
-        "complejo": "si",
-        "cancha": "cancha2",
-        "direccion": "mi cancha"
+      "id_reserva": 1,
+      "nombre_complejo": "Complejo Deportivo A",
+      "nombre_cancha": "Cancha 1",
+      "fechaYHora": "2023-12-01 14:30:00",
+      "nombre_equipo": "Equipo A"
     },
     {
-        "id_reserva":2,
-        "nombre_equipo": "Los cracks",
-        "fecha": "1/12/12 22:00",
-        "complejo": "si",
-        "cancha": "cancha2",
-        "direccion": "mi cancha"
+      "id_reserva": 2,
+      "nombre_complejo": "Complejo Deportivo B",
+      "nombre_cancha": "Cancha 3",
+      "fechaYHora": "2023-12-02 16:45:00",
+      "nombre_equipo": "Equipo B"
+    },
+    {
+      "id_reserva": 3,
+      "nombre_complejo": "Complejo Deportivo C",
+      "nombre_cancha": "Cancha 2",
+      "fechaYHora": "2023-12-03 10:15:00",
+      "nombre_equipo": "Equipo C"
     }
-]
+  ]
+  
