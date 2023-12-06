@@ -111,11 +111,12 @@ class App extends Component {
           <div className="App">
             <BrowserRouter>
 
-            <ModalSeleccionEquipo equipos={equipos}/>
+            
             
               <Header/>
           
               <Routes>
+                
                 <Route path='/' element={<Inicio/>}/>
                 <Route path='/ingreso' element={
                   route === 'signin'
@@ -145,6 +146,11 @@ class App extends Component {
 
               {/* Historial */}
               <Route path="/historial" element={<Historial />} />
+
+              
+              {/* Modal para ver equipos */}
+              <Route path="/historial" element={<ModalSeleccionEquipo equipos={equipos}/>} />
+
 
               </Routes>
               <Footer/>

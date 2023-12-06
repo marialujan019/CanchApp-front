@@ -13,6 +13,7 @@ const JugadoresModal = ({ jugadores, show, onHide }) => {
         <div>
         {jugadores.map((jugador, index) => (
           <div key={index} className='jugadoresModalContainer'>
+            <img src={jugador.imagen} alt="" />
             <p>Nombre: {jugador.nombre}</p>
             <p>Apellido: {jugador.apellido}</p>
             <p>Edad: {jugador.edad}</p>

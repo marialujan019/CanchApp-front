@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
 import { consultarBaseDeDatos } from '../utils/Funciones';
-import JugadoresModal from './JugadoresModal/JugadoresModal';
+import JugadoresModal from '../JugadoresModal/JugadoresModal';
 
 const id_jugador = 1; //Esto hay que cambiar por el userConstext
 const BusquedaEquipo = () => {

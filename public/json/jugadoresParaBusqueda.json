@@ -1,17 +1,5 @@
 [
   {
-  "id_jugador":4,
-  "nombre": "juanpe",
-  "apellido": "si",
-  "edad": 23,
-  "pie_habil": "Derecho",
-  "sexo": "Masculino",
-  "telefono": 21,
-  "posicion": "Arquero",
-  "estado": "pendiente"
-  },
-
-  {
     "id_jugador":7,
     "nombre": "Pan",
     "apellido": "No",
@@ -19,7 +7,29 @@
     "pie_habil": "Izquierdo",
     "sexo": "Femenino",
     "telefono": 21,
-    "posicion": "Mediocampista",
-    "estado": "aceptado"
-    }
+    "posicion": "Mediocampista"
+  },
+
+  {
+    "id_jugador":17,
+    "nombre": "Josefe",
+    "apellido": "No",
+    "imagen": "url",
+    "edad": 21,
+    "pie_habil": "Izquierdo",
+    "sexo": "Femenino",
+    "telefono": 21,
+    "posicion": "Mediocampista"
+  },
+  {
+    "id_jugador":5,
+    "nombre": "No se",
+    "apellido": "Capaz",
+    "imagen": "url",
+    "edad": 14,
+    "pie_habil": "Izquierdo",
+    "sexo": "Femenino",
+    "telefono": 21,
+    "posicion": "Mediocampista"
+  }
 ]

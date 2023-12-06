@@ -4,13 +4,15 @@
         "nombre_equipo": "Los cracks",
         "cant_jug": 4,
         "max_jug": 10,
-        "publico": true
+        "publico": true,
+        "estado": "Pendiente"
     },
     {
         "id_equipo": 2,
         "nombre_equipo": "Los capos",
         "cant_jug": 2,
         "max_jug": 22,
-        "publico": false
+        "publico": false,
+        "estado": "Aceptado"
     }
 ]
