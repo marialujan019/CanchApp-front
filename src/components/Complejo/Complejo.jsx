@@ -2,13 +2,59 @@ import React, { useEffect, useState } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
 import { useParams } from 'react-router-dom';
 import { consultarBaseDeDatos } from '../utils/Funciones';
+import ModalReservas from '../ModalReservas/ModalReservas';
 
+const id_jugador = 4
 const Complejo = () => {
+  //Variable para obtener el id del complejo mediante la ruta
   const { id_complejo } = useParams();
+
+  //Variable para poner los datos del complejo y sus canchas
   const [complejo, setComplejo] = useState(null);
   const [canchas, setCanchas] = useState([]);
+
+  //Variable para obtener el equipo
+  const [equipos, setEquipos] = useState([]);
+
+
+  //Variables para manejar las fechas
   const [fechas, setFechas] = useState(null);
   const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
+
+  //Variable para manejar el formulario de reserva
+  const [nuevaReserva, setNuevaReserva] = useState({});
+  const [showModal, setShowModal] = useState(false);
+   
+  useEffect(() => {
+    if (Object.keys(nuevaReserva).length > 0) {
+      setShowModal(true);
+    }
+  }, [nuevaReserva]);
+  useEffect(() => {//Esta función trae los datos de un complejo, segun el id_complejo del use params
+    //O sea, toma el paramtro 1 de la url, que es el id_complejo y la envia al back
+    async function fetchComplejo(id_complejo) {
+      console.log(id_complejo)
+      const jsonDataComplejo = await consultarBaseDeDatos('../json/complejo.json');
+      setComplejo(jsonDataComplejo);
+    }
+
+    async function fetchCanchas(id_complejo) { //Funcion para traer un json con las canchas segun el id_complejo
+      console.log(id_complejo)
+      const jsonDataCanchas = await consultarBaseDeDatos('../json/canchasDeUnComplejo.json');
+      setCanchas(jsonDataCanchas);
+    }
+
+    async function fetchEquiposDelJugador(id_jugador) { //Funcion para traer un json con los equipos creados por un jugador
+      console.log(id_jugador)
+      const jsonDataEqipos = await consultarBaseDeDatos('../json/equiposDeUnJugador.json');
+      setEquipos(jsonDataEqipos);
+    }
+
+    // Llamar a fetchFechas inicialmente para cargar fechas según la fecha seleccionada
+    fetchComplejo(id_complejo);
+    fetchCanchas(id_complejo);
+    fetchEquiposDelJugador(id_jugador)
+  }, [id_complejo]);
 
    // Función para obtener las fechas disponibles según la fecha seleccionada
    //Se tiene que enviar la variable fecha al back
@@ -25,26 +71,6 @@ const Complejo = () => {
       setFechas(null);
     }
   };
-
-  useEffect(() => {
-    async function fetchComplejo() {
-      const jsonDataComplejo = await consultarBaseDeDatos('../json/complejo.json');
-      setComplejo(jsonDataComplejo);
-    }
-
-    async function fetchCanchas() {
-      const jsonDataCanchas = await consultarBaseDeDatos('../json/canchasDeUnComplejo.json');
-      setCanchas(jsonDataCanchas);
-    }
-
-    // Llamar a fetchFechas inicialmente para cargar fechas según la fecha seleccionada
-    fetchFechas();
-
-    fetchComplejo();
-    fetchCanchas();
-  }, [id_complejo]);
-
-
 
   // Función para manejar el cambio de fecha
   const handleFechaSeleccionada = async (fecha) => {
@@ -67,61 +93,10 @@ const Complejo = () => {
     })),
   }));
 
-  //Función para crear el formulario de reserva
-  const handleReservaClick = (hora, canchas) => {
-    const nuevaReserva = {
-      id_complejo: complejo.id_complejo,
-      nombre_complejo: complejo.nombre,
-      direccion_complejo: complejo.direccion,
-      telefono_complejo: complejo.telefono,
-      id_cancha: canchas.id_cancha,
-      nombre_cancha: canchas.nombre_cancha,
-      fecha: fechaSeleccionada,
-      hora: hora,
-    };
-    
-    console.log(nuevaReserva)
-    // Obtener las reservas existentes o inicializar un nuevo array
-    const reservas = JSON.parse(localStorage.getItem('reservas')) || [];
-  
-    // Verificar duplicados
-    const esDuplicado = reservas.some(
-      (reserva) =>
-        reserva.id_complejo === nuevaReserva.id_complejo &&
-        reserva.id_cancha === nuevaReserva.id_cancha &&
-        reserva.fecha === nuevaReserva.fecha &&
-        reserva.hora === nuevaReserva.hora
-    );
-  
-    if (esDuplicado) {
-      console.log('¡Reserva duplicada!');
-      return;
-    }
-  
-    // Verificar límite de reservas (10 reservas máximas)
-    if (reservas.length >= 10) {
-      console.log('¡Has alcanzado el límite de 10 reservas!');
-      return;
-    }
-  
-    // Agregar la nueva reserva al array
-    reservas.push(nuevaReserva);
-  
-    // Guardar el array actualizado en localStorage
-    localStorage.setItem('reservas', JSON.stringify(reservas));
-
-  };
-
-
+  //Renderizado de fechas
   const columns = [
-    {
-      key: "hora",
-      label: "Horarios",
-    },
-    ...canchas.map(cancha => ({
-      key: `cancha_${cancha.nombre_cancha}`,
-      label: `Cancha ${cancha.nombre_cancha}`,
-    })),
+    { key: "hora", label: "Horarios" },
+    ...canchas.map(cancha => ({ key: `cancha_${cancha.nombre_cancha}`, label: `Cancha ${cancha.nombre_cancha}` })),
   ];
 
   const rows = horarios.map(hora => {
@@ -134,8 +109,35 @@ const Complejo = () => {
     return row;
   });
 
+  //Función para crear el formulario de reserva
+
+  const handleReservaClick = (hora, cancha) => {
+    const reserva = {
+      id_jugador: id_jugador,
+      id_complejo: complejo.id_complejo,
+      nombre_complejo: complejo.nombre,
+      direccion_complejo: complejo.direccion,
+      telefono_complejo: complejo.telefono,
+      id_cancha: cancha.id_cancha,
+      nombre_cancha: cancha.nombre_cancha,
+      fecha: fechaSeleccionada,
+      hora: hora,
+    };
+
+    setNuevaReserva(reserva);
+    console.log(nuevaReserva)
+    setShowModal(true);
+  };
+
+
   return (
     <div>
+      <ModalReservas
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          nuevaReserva={nuevaReserva}
+          equipos={equipos}
+        />
       <div className='Complejo'>
         <h2>{complejo.nombre}</h2>
         <p>Dirección: {complejo.direccion}</p>
@@ -179,6 +181,8 @@ const Complejo = () => {
           <div>Fecha no disponible</div>
         )}
       </div>
+
+        
     </div>
   );
 };

@@ -1,8 +1,45 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import "./jugadoresModal.css"
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User } from '@nextui-org/react';
+import "./jugadoresModal.css";
+
+const columns = [
+  { key: "nombre", label: "Jugador" },
+  { key: "pie_habil", label: "Pie Hábil" },
+  { key: "sexo", label: "Sexo" },
+  { key: "posicion", label: "Posición" },
+  { key: "telefono", label: "Teléfono" },
+];
 
 const JugadoresModal = ({ jugadores, show, onHide }) => {
+
+  const renderCell = useCallback((jugador, columnKey) => {
+    const cellValue = jugador[columnKey];
+
+    switch (columnKey) {
+      case "nombre":
+        return (
+    <User
+      avatarProps={{ radius: "lg", src: jugador.imagen }}
+      description={`Edad: ${jugador.edad}`}
+      name={`${jugador.nombre} ${jugador.apellido}`}
+      
+    >
+      {jugador.email}
+    </User>
+  );
+      case "edad":
+      case "pie_habil":
+      case "sexo":
+      case "posicion":
+      case "telefono":
+        return cellValue;
+      default:
+        return cellValue;
+    }
+  }, []);
+
+  
 
   return (
     <Modal show={show} onHide={onHide} centered>
@@ -10,22 +47,22 @@ const JugadoresModal = ({ jugadores, show, onHide }) => {
         <Modal.Title>Jugadores</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div>
-        {jugadores.map((jugador, index) => (
-          <div key={index} className='jugadoresModalContainer'>
-            <img src={jugador.imagen} alt="" />
-            <p>Nombre: {jugador.nombre}</p>
-            <p>Apellido: {jugador.apellido}</p>
-            <p>Edad: {jugador.edad}</p>
-            <p>Pie habil: {jugador.pie_habil}</p>
-            <p>Sexo: {jugador.sexo}</p>
-            <p>Posicion: {jugador.posicion}</p>
-            <p>Telefono: {jugador.telefono}</p>
-          </div>
-        ))}
-
-
-        </div>
+        <Table aria-label="Tabla de Jugadores">
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key} align="start">
+                {column.label}
+              </TableColumn>
+            )}
+          </TableHeader>
+          <TableBody items={jugadores}>
+            {(item) => (
+              <TableRow key={item.id_jugador}>
+                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>

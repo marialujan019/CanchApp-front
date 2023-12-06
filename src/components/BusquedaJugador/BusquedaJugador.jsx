@@ -7,8 +7,7 @@ import ModalSeleccionEquipo from './ModalSeleccionEquipo/ModalSeleccionEquipo';
 const id_capitan = 42;
 
 const columns = [
-  { key: "nombre", label: "Nombre" },
-  { key: "apellido", label: "Apellido" },
+  { key: "nombre_apellido", label: "Nombre y Apellido" },
   { key: "edad", label: "Edad" },
   { key: "pie_habil", label: "Pie Hábil" },
   { key: "sexo", label: "Sexo" },
@@ -17,7 +16,9 @@ const columns = [
   { key: "solicitud", label: "Solicitud" },
 ];
 
+
 const BusquedaJugador = () => {
+  //Estados para renderizar los jugadores
   const [jugadoresParaLaBusqueda, setJugadoresParaLaBusqueda] = useState([]);
   const [refreshPage, setRefreshPage] = useState(false);
 
@@ -26,8 +27,9 @@ const BusquedaJugador = () => {
   const [filtroSexo, setFiltroSexo] = useState("");
   const [filtroPieHabil, setFiltroPieHabil] = useState("");
   const [filtroPosicion, setFiltroPosicion] = useState("");
+  const [filtroNombre, setFiltroNombre] = useState('');
 
-  //Estados para la selección de equipos
+  //Estados para renderizar la selección de equipos
   const [equiposDelBack, setEquiposDelBack] = useState([])
   const [showSolicitudModal, setShowSolicitudModal] = useState(false);  
   const [idJugadorAInvitar, setIdJugadorAInvitar] = useState();
@@ -83,6 +85,18 @@ const BusquedaJugador = () => {
     setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
   };
 
+  const handleNombreChange = (e) => {
+    const input = e.target.value.toLowerCase();
+    setFiltroNombre(input);
+  };
+  
+  const jugadoresFiltrados = jugadoresParaLaBusqueda.filter(
+    (jugador) =>
+      jugador.nombre.toLowerCase().startsWith(filtroNombre.toLowerCase()) ||
+      jugador.apellido.toLowerCase().startsWith(filtroNombre.toLowerCase()) ||
+      `${jugador.nombre} ${jugador.apellido}`.toLowerCase().startsWith(filtroNombre.toLowerCase())
+  );
+  
 
 
   //Manejo de solicitudes
@@ -97,7 +111,12 @@ const BusquedaJugador = () => {
   return (
     <div className='busquedaJugadorContainer'>
       <div className='busquedaJugadorFiltroNombre'>
-        <h4>Búsqueda por nombre</h4>
+        <h4>Búsqueda por nombre o apellido</h4>
+        <input
+          type='text'
+          value={filtroNombre}
+          onChange={handleNombreChange}
+        />
       </div>
       <div className='busquedaJugadorFiltros'>
         <h3>Filtros</h3>
@@ -153,23 +172,25 @@ const BusquedaJugador = () => {
 
       <div>
         <Table aria-label="Tabla con contenido dinámico">
-          <TableHeader columns={columns}>
-            {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
-          </TableHeader>
-          <TableBody>
-            {jugadoresParaLaBusqueda.map((jugador) => (
-              <TableRow key={jugador.id_jugador}>
-                {columns.map((column) => (
-                  <TableCell key={column.key}>
-                    {column.key !== "solicitud" ? (
-                      jugador[column.key]
-                    ) : (
+         <TableHeader columns={columns}>
+           {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
+         </TableHeader>
+         <TableBody>
+            {jugadoresFiltrados.map((jugador) => (
+            <TableRow key={jugador.id_jugador}>
+              {columns.map((column) => (
+              <TableCell key={column.key}>
+                {column.key === "nombre_apellido" ? (
+                  `${jugador["nombre"]} ${jugador["apellido"]}`
+                  ) : column.key !== "solicitud" ? (
+                    jugador[column.key]
+                  ) : (
                     <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jugador)}> Ver solicitud </Button>
-                    )}
+                  )}
+                </TableCell>
+              ))}
 
-                  </TableCell>
-                ))}
-              </TableRow>
+               </TableRow>
             ))}
           </TableBody>
         </Table>

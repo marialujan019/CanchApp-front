@@ -1,77 +1,91 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
 import { consultarBaseDeDatos } from '../utils/Funciones';
 import JugadoresModal from '../JugadoresModal/JugadoresModal';
 
 const id_jugador = 1; //Esto hay que cambiar por el userConstext
+const columns = [
+  { key: "nombreEquipo", label: "Nombre del Equipo" },
+  { key: "fecha", label: "Fecha del proximo partido" },
+  { key: "cant_jug", label: "Jugadores" },
+  { key: "solicitud", label: "Solicitud" },
+  { key: "estado", label: "Estado" },
+];
+
 const BusquedaEquipo = () => {
-  const [equiposDeLaAPI, setEquiposDeLaAPI] = useState([]);
-  const [filtros, setFiltros] = useState({ nombreBusqueda: '' });
-  const [solicitudEnviadaPorEquipo, setSolicitudEnviadaPorEquipo] = useState({});
-  const [jugadoresDeLaAPI, setJugadoresDeLaAPI] = useState([]);
+
+  //Estados para renderizar los equipos
+  const [equiposParaLaBusqueda, setEquiposParaLaBusqueda] = useState([]);
+  const [refreshPage, setRefreshPage] = useState(false);
+
+  //Estados para renderizar la selección de equipos
+  const [jugadoresDeVerJugadores, setJugadoresDeVerJugadores] = useState([]);
   const [showJugadoresModal, setShowJugadoresModal] = useState(false);
 
-  const filtrarPorNombre = useCallback((equipo) => {
-    if (filtros.nombreBusqueda) {
-      const nombreMinusculas = equipo.nombreEquipo.toLowerCase();
-      const busquedaMinusculas = filtros.nombreBusqueda.toLowerCase();
+  //Estados para el filtro
+  const [filtroNombre, setFiltroNombre] = useState('');
 
-      return nombreMinusculas.startsWith(busquedaMinusculas);
-    }
-    return true;
-  }, [filtros.nombreBusqueda]);
-
+  //Primer renderizado de la pagina, se renderiza cada vez que cambio el valor de refreshPage
   useEffect(() => {
-    consultarBaseDeDatos('../json/equiposParaBusqueda.json')
-      .then((listaEquiposObtenidos) => {
-        const equiposFiltrados = listaEquiposObtenidos
-          .filter(filtrarPorNombre);
-
-        setEquiposDeLaAPI(equiposFiltrados);
-      });
-  }, [filtros, filtrarPorNombre]);
-
-  const columns = [
-    { key: "nombreEquipo", label: "Nombre del Equipo" },
-    { key: "fecha", label: "Fecha" },
-    { key: "cant_jug", label: "Jugadores" },
-    { key: "solicitud", label: "Solicitud" },
-    { key: "estado", label: "Estado" },
-  ];
-
-  //Acá se hace el manejo de solicitudes, envio el idEquipo al back y debo recibir una "solicitud recibida" para manejar los botones
-  //Si se envió la solicitud correctamente, el botón de "Enviar solicitud" debe pasar a "Cancelar solicitud" y viceversa
-  const toggleSolicitud = (idEquipo, id_jugador) => {
-    if (solicitudEnviadaPorEquipo[idEquipo]) {
-      cancelarSolicitud(idEquipo, id_jugador);
-      setSolicitudEnviadaPorEquipo((prev) => ({ ...prev, [idEquipo]: false }));
-    } else {
-      enviarSolicitud(idEquipo, id_jugador);
-      setSolicitudEnviadaPorEquipo((prev) => ({ ...prev, [idEquipo]: true }));
-    }
-  };
-
-  //Esta función debe enviar una solicitud al back con el id_equipo cambiar el estado de una solicitud de un jugador
-  const enviarSolicitud = (idEquipo, id_jugador) => {
-    const solicitudEnviada = true; //Se envia esto al back junto con el id_jugador, para que se pueda eliminar de la tabla, la solicitud
-    console.log(`Solicitud enviada por el jugador ${id_jugador} para el Equipo con ID: ${idEquipo}`);
-  };
-
-  const cancelarSolicitud = (idEquipo, id_jugador) => {
-    const solicitudEnviada = false; //Se envia esto al back junto con el id_jugador, para que se pueda eliminar de la tabla, la solicitud
-    console.log(`Solicitud cancelada por el jugador ${id_jugador} para el Equipo con ID: ${idEquipo}`);
-  };
-
+    const fetchEquipos = async () => {
+      const datos = await consultarBaseDeDatos('../json/equiposParaBusqueda.json');
+      setEquiposParaLaBusqueda(datos);
+    };
   
+    fetchEquipos();
+  }, [refreshPage]);
+
+
   //Esta función recibe el id_equipo el cual hay que mandarlo al back para recibir los datos
   //Los datos van a ser un arreglo de jugadores con el mismo id_equipo. Es decir, el arreglo de jugadores del equipo
   const fetchJugadores = async (idEquipo) => {
-    const datos = await consultarBaseDeDatos(`../json/jugadoresDeUnEquipoDeLaBusqueda.json`);
-    setJugadoresDeLaAPI(datos);
+    const datos = await consultarBaseDeDatos(`../json/jugadoresParaBusqueda.json`);
+    setJugadoresDeVerJugadores(datos);
     setShowJugadoresModal(true);
   };
 
-  
+
+  //Manejo de solicitudes
+  //Lo que hago es enviarte el id del equipo al que le quiero enviar solicitud y mi id
+  //Con esto, vos los agregar a la base de datos y deberias cambiar el estado del equipo
+  const toggleSolicitudes = async (equipo) => {
+    const palabraClave = "cancelar"
+    if (equipo.estado === 'Pendiente') {
+      console.log(`Se canceló la solicitud del jugador ${id_jugador} del equipo ${equipo.id_equipo}`);
+    } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
+      const palabraClave = "enviar"
+      console.log(`Se envió la solicitud del jugador ${id_jugador} al equipo ${equipo.id_equipo}`);
+    }
+    setRefreshPage((prev) => !prev)
+  };
+
+  const renderButton = (equipo) => {
+    if (equipo.estado === 'Aceptado') {
+      return <Button disabled color='success'>Aceptado</Button>;
+    } else if (equipo.estado === 'Pendiente') {
+      return (
+        <Button onClick={() => toggleSolicitudes(equipo)} color='danger'>
+          Cancelar solicitud
+        </Button>
+      );
+    } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
+      return (
+        <Button onClick={() => toggleSolicitudes(equipo)} color='primary'>
+          Enviar solicitud
+        </Button>
+      );
+    }
+  };
+
+
+  //Filtro de nombre
+  const handleNombreChange = (e) => {
+    setFiltroNombre(e.target.value);
+  };
+
+  // Filtrar equipos por nombre
+  const equiposFiltrados = equiposParaLaBusqueda.filter(equipo => equipo.nombreEquipo.toLowerCase().startsWith(filtroNombre.toLowerCase()));
+ 
 
   return (
     <div>
@@ -79,34 +93,31 @@ const BusquedaEquipo = () => {
         <h4>Búsqueda por nombre</h4>
         <input
           type='text'
-          value={filtros.nombreBusqueda}
-          onChange={(e) => setFiltros({ ...filtros, nombreBusqueda: e.target.value })}
+          value={filtroNombre}
+          onChange={handleNombreChange}
         />
       </div>
 
       <Table aria-label="Equipos">
         <TableHeader columns={columns}>
-          {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+          {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
         </TableHeader>
         <TableBody>
-          {equiposDeLaAPI.map((equipo) => (
+          {equiposFiltrados.map((equipo) => (
             <TableRow key={equipo.id_equipo}>
               {columns.map((column) => (
                 <TableCell key={column.key}>
                   {column.key === 'cant_jug' ? (
                     <>
-                      {equipo[column.key]}
-                      <button onClick={() => fetchJugadores(equipo.id_equipo)}>
+                      <div>
+                        {equipo[column.key]}/{equipo.max_jug}
+                      </div>
+                      <Button onClick={() => fetchJugadores(equipo.id_equipo)}>
                         Ver jugadores
-                      </button>
+                      </Button>
                     </>
                   ) : column.key === 'solicitud' ? (
-                    <Button
-                      onClick={() => toggleSolicitud(equipo.id_equipo, id_jugador)}
-                      color={solicitudEnviadaPorEquipo[equipo.id_equipo] ? "danger" : "primary"}
-                    >
-                      {solicitudEnviadaPorEquipo[equipo.id_equipo] ? "Cancelar solicitud" : "Enviar solicitud"}
-                    </Button>
+                    renderButton(equipo)
                   ) : (
                     equipo[column.key]
                   )}
@@ -118,7 +129,7 @@ const BusquedaEquipo = () => {
       </Table>
 
       <JugadoresModal
-        jugadores={jugadoresDeLaAPI}
+        jugadores={jugadoresDeVerJugadores}
         show={showJugadoresModal}
         onHide={() => setShowJugadoresModal(false)}
       />
@@ -127,4 +138,3 @@ const BusquedaEquipo = () => {
 };
 
 export default BusquedaEquipo;
-

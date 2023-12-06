@@ -3,11 +3,12 @@
     "id_jugador":7,
     "nombre": "Pan",
     "apellido": "No",
+    "imagen":"https://picsum.photos/200/300",
     "edad": 44,
     "pie_habil": "Izquierdo",
     "sexo": "Femenino",
     "telefono": 21,
-    "posicion": "Mediocampista"
+    "posicion": "Arquero"
   },
 
   {
