@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
 import { consultarBaseDeDatos } from '../utils/Funciones';
 import JugadoresModal from '../JugadoresModal/JugadoresModal';
+import axios from 'axios';
 
 const id_jugador = 1; //Esto hay que cambiar por el userConstext
 const columns = [
@@ -39,7 +40,7 @@ const BusquedaEquipo = () => {
   //Esta función recibe el id_equipo el cual hay que mandarlo al back para recibir los datos
   //Los datos van a ser un arreglo de jugadores con el mismo id_equipo. Es decir, el arreglo de jugadores del equipo
   const fetchJugadores = async (idEquipo) => {
-    const datos = await consultarBaseDeDatos(`../json/jugadoresParaBusqueda.json`);
+    const datos = await axios.get('http://localhost:3001/equipo/jugadores/:id_equipo');
     setJugadoresDeVerJugadores(datos);
     setShowJugadoresModal(true);
   };

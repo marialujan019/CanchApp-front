@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useUser } from '../UserContext';
 
 import Administrador from "../Perfil/Administrador";
+import Mapa from "../Mapa/Mapa";
 
 function Home() {
     const { user } = useUser();
@@ -35,9 +36,7 @@ function Home() {
                 <div>
                     Bienvenido a canchapp {user.nombre}. Acá podrás encontrar y reservar tu cancha
                     <div>
-                        <button className="btn btn-danger" onClick={handleLogout}>
-                        Salir
-                        </button>
+                        <Mapa/>
                     </div>
                 </div>)
                 :

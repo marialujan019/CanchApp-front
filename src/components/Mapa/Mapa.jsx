@@ -5,8 +5,7 @@ import './mapa.css';
 import { consultarBaseDeDatos } from '../utils/Funciones';
 import Marcadores from './Marcadores/Marcadores';
 import { Icon } from 'leaflet';
-
-
+import axios from 'axios';
 
 const customIcon = new Icon({
   iconUrl: "/images/mapa/marcador.png",
@@ -20,8 +19,10 @@ const Mapa = () => {
 
     useEffect(() => {
         async function fetchData() {
-            const jsonData = await consultarBaseDeDatos('../json/popups.json'); 
-            setData(jsonData);
+          //popups: rompe porque no se guardo bien la latitud y la longitud
+            const jsonData = await axios.get('http://localhost:3001/popups'); 
+            console.log(jsonData)
+            setData(jsonData.data);
         }
 
         fetchData();
@@ -43,7 +44,7 @@ const Mapa = () => {
             position={[parseFloat(item.latitud), parseFloat(item.longitud)]}
             customIcon={customIcon}
             id_complejo={item.id_complejo}
-            nombre={item.nombre}
+            nombre={item.nombre_complejo}
             direccion={item.direccion}
             telefono={item.telefono}
           />

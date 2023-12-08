@@ -44,7 +44,7 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
           arregloJugadores,
           nuevoCapitan,
         });
-        updateMisEquipos(); // Llama a la función para actualizar MisEquipos
+        updateMisEquipos(); // Llama a la función para actualizar MisEquipos, actualizar bbdd
         onHide();
     };
 

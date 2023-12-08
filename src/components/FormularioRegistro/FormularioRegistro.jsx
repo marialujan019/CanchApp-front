@@ -151,6 +151,8 @@ const FormularioRegistro = () => {
                 ciudad: usuarioObjeto.ciudad,
                 direccion: usuarioObjeto.calle + " " + usuarioObjeto.altura,
                 telefonoComplejo: usuarioObjeto.telefonoComplejo,
+                latitud: usuarioObjeto.latitud,
+                longitud: usuarioObjeto.longitud
               };
               
               console.log(complejo)

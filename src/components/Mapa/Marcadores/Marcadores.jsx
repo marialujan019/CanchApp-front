@@ -15,8 +15,10 @@ const Marcadores = ({ position, customIcon, id_complejo, nombre, direccion, tele
     <div>
       <Marker position={position} icon={customIcon}>
         <Popup>
-          {id_complejo}, {nombre}, {direccion}, {telefono}
-          <button onClick={pedirComplejo}>Hola</button>
+          {nombre}, {direccion}, {telefono}
+          <div>
+            <button onClick={pedirComplejo}>Hola</button>
+          </div>
         </Popup>
       </Marker>
     </div>

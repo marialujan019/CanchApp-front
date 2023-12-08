@@ -4,6 +4,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Toolti
 import JugadoresModal from '../JugadoresModal/JugadoresModal';
 import EditarEquipo from './EditarEquipo/EditarEquipo';
 import CrearEquipo from './CrearEquipo/CrearEquipo';
+import axios from 'axios';
 
 const id_capitan = 23;
 const MisEquipos = () => {
@@ -25,7 +26,7 @@ const MisEquipos = () => {
   //Función para obtener los equipos de un jugador
   useEffect(() => {
     const fetchEquipos = async () => {
-      const datos = await consultarBaseDeDatos('../json/equiposDeUnJugador.json');
+      const datos = await axios.get('http://localhost:3001/equipo/mis_equipos/:id_jugador');
       setMisEquipos(datos);
     };
 
@@ -38,7 +39,7 @@ const MisEquipos = () => {
    //Los valores de visibilidad y nombre equipo se obtienen mediante las funciones del renderCell
    const fetchJugadores = async (idEquipo, visibilidad, nombre_equipo, accion) => {
     if(accion === "ver") {
-      const datos = await consultarBaseDeDatos(`../json/jugadoresDeUnEquipo.json`);
+      const datos = await axios.get('http://localhost:3001/equipo/jugadores/:id_equipo');
       setJugadoresDelBack(datos);
       setShowVerJugadoresModal(true);
     } else if (accion === "editar") {
@@ -60,6 +61,7 @@ const MisEquipos = () => {
   //Funcion para renderizar nuevamente Mis Equipos
   //Basicamente envio esta funcion al editarEquipos para que, cuando se confirmen los cambios, se refresque la pagina
   const updateMisEquipos = async () => {
+    //update a la bade de datos
     const datos = await consultarBaseDeDatos('../json/equiposDeUnJugador.json');
     setMisEquipos(datos);
   };

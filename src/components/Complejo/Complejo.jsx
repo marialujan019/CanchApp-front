@@ -3,6 +3,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button
 import { useParams } from 'react-router-dom';
 import { consultarBaseDeDatos } from '../utils/Funciones';
 import ModalReservas from '../ModalReservas/ModalReservas';
+import axios from 'axios';
 
 const id_jugador = 4
 const Complejo = () => {
@@ -32,22 +33,51 @@ const Complejo = () => {
   }, [nuevaReserva]);
   useEffect(() => {//Esta función trae los datos de un complejo, segun el id_complejo del use params
     //O sea, toma el paramtro 1 de la url, que es el id_complejo y la envia al back
-    async function fetchComplejo(id_complejo) {
-      console.log(id_complejo)
-      const jsonDataComplejo = await consultarBaseDeDatos('../json/complejo.json');
-      setComplejo(jsonDataComplejo);
-    }
-
-    async function fetchCanchas(id_complejo) { //Funcion para traer un json con las canchas segun el id_complejo
-      console.log(id_complejo)
-      const jsonDataCanchas = await consultarBaseDeDatos('../json/canchasDeUnComplejo.json');
-      setCanchas(jsonDataCanchas);
-    }
 
     async function fetchEquiposDelJugador(id_jugador) { //Funcion para traer un json con los equipos creados por un jugador
       console.log(id_jugador)
-      const jsonDataEqipos = await consultarBaseDeDatos('../json/equiposDeUnJugador.json');
-      setEquipos(jsonDataEqipos);
+      //endpoint mis_equipos
+      const jsonDataEqipos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_jugador}`);
+      setEquipos(jsonDataEqipos.data);
+    }
+    async function fetchComplejo() { //Función para obtener el JSON del complejo desde el back
+      /*const jsonDataComplejo = await consultarBaseDeDatos('../json/complejo.json');
+      const complejoSeleccionado = jsonDataComplejo.id_complejo === id_complejo;
+      setComplejo(complejoSeleccionado ? jsonDataComplejo : null);*/
+      axios.get(`http://localhost:3001/complejo/${id_complejo}`).then(
+        res => {
+          var complejo = res.data.complejo
+          if(complejo) {
+            setComplejo(complejo)
+          } else {
+              alert("Error al obtener los datos del complejo")
+          }
+        }
+      )
+    }
+
+    async function fetchCanchas() { //Función para obtener el JSON de las canchas desde el back
+      //const jsonDataCanchas = await consultarBaseDeDatos('../json/canchasDeUnComplejo.json');
+      axios.get(`http://localhost:3001/complejo/canchas/${id_complejo}`).then(
+        res => {
+          var canchas = res.data.canchas
+          if(canchas) {
+            console.log(canchas)
+              setCanchas(canchas)
+          } else {
+              alert("Error al obtener canchas del complejo")
+          }
+        }
+      )
+      //Revisar este set, ya que el BE va a la base de datos, a la tabla canchas, 
+      //y ya trae todas las canchas del complejo seleccionado.
+      //setCanchas(jsonDataCanchas.filter(cancha => cancha.id_complejo === id_complejo));
+    }
+
+    async function fetchFechas() { //Función para obtener el JSON de las fechas disponibles desde el back
+      //Esto sería del complejo, no?
+      const jsonDataFechas = await axios.get(`http://localhost:3001/complejo/agenda/turnos/${id_complejo}`);
+      setFechas(jsonDataFechas);
     }
 
     // Llamar a fetchFechas inicialmente para cargar fechas según la fecha seleccionada
@@ -59,13 +89,16 @@ const Complejo = () => {
    // Función para obtener las fechas disponibles según la fecha seleccionada
    //Se tiene que enviar la variable fecha al back
    const fetchFechas = async (fecha) => {
-    const jsonDataFechas = await consultarBaseDeDatos('../json/fechas.json');
-    setFechas(jsonDataFechas);
+    console.log(fecha)
+    console.log(id_complejo)
+    const jsonDataFechas = await axios.get(`http://localhost:3001/complejo/agenda/turnos/${id_complejo}/${fecha}`);
+    console.log(jsonDataFechas.data)
+    setFechas(jsonDataFechas.data);
 
     // Verificar si la fecha seleccionada es válida
     //Esto sirve para cuando el administrador no define una fecha, 
     //si el administrador no define una cierta fecha y el jugador quiere ver esa fecha no definida, me vas a enviar "fecha_seleccionada": null, entonces pongo que no está disponible
-    const fechaSeleccionadaValida = fecha === jsonDataFechas.fecha_seleccionada;
+    const fechaSeleccionadaValida = fecha === jsonDataFechas.data.fecha_seleccionada;
     if (!fechaSeleccionadaValida) {
       // Mostrar mensaje de fecha no disponible y limpiar las fechas
       setFechas(null);

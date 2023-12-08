@@ -9,17 +9,21 @@ import {
   getKeyValue,
 } from "@nextui-org/react";
 
+import axios from 'axios';
+
 import { consultarBaseDeDatos } from '../utils/Funciones';
 
 const Historial = () => {
+  //sacarlo del context
   const id_jugador = 1;
   const [historialData, setHistorialData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await consultarBaseDeDatos("../json/historial.json");
-        setHistorialData(data);
+        //id === id_jugador
+        const data = await axios.get('http://localhost:3001/reservas/historial/:id'); 
+        setHistorialData(data.data);
       } catch (error) {
         console.error('Error al obtener datos del historial', error);
       }
