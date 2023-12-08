@@ -1,0 +1,25 @@
+[
+  {
+  "id_jugador":4,
+  "nombre": "juanpe",
+  "apellido": "si",
+  "imagen": "url",
+  "edad": 23,
+  "pie_habil": "Derecho",
+  "sexo": "Masculino",
+  "telefono": 21,
+  "posicion": "Arquero"
+  },
+
+  {
+    "id_jugador":7,
+    "nombre": "Pan",
+    "apellido": "No",
+    "imagen": "url",
+    "edad": 44,
+    "pie_habil": "Izquierdo",
+    "sexo": "Femenino",
+    "telefono": 21,
+    "posicion": "Mediocampista"
+  }
+]

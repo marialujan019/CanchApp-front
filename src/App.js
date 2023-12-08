@@ -3,6 +3,8 @@ import './App.css';
 //React-router-doom
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 
+//Next-ui
+import {NextUIProvider} from "@nextui-org/react";
 
 //React-boostrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -35,6 +37,32 @@ import BusquedaEquipo from './components/BusquedaEquipo/BusquedaEquipo';
 
 //Mapa
 import Mapa from './components/Mapa/Mapa';
+
+//Reserva
+import Complejo from './components/Complejo/Complejo';
+import FormularioReserva from './components/FormularioReserva/FormularioReserva';
+
+//Mis equipos
+import MisEquipos from './components/MisEquipos/MisEquipos';
+
+//Historial
+import Historial from './components/Historial/Historial';
+
+import ModalSeleccionEquipo from './components/BusquedaJugador/ModalSeleccionEquipo/ModalSeleccionEquipo';
+
+const equipos = [
+  {
+      id_equipo: 1,
+      nombre_equipo: "Los cracks",
+      cant_jug: 4
+  },
+  {
+      id_equipo: 2,
+      nombre_equipo: "Los capos",
+      cant_jug: 2
+  }
+]
+
 
 const initialState = {
   input: '',
@@ -72,42 +100,64 @@ class App extends Component {
     this.setState({route: route});
   }
 
+  
   render() {
     const { route } = this.state;
     const { idAdmin } = this.state;
 
     return (
-      <UserProvider>
-      <div className="App">
-        <BrowserRouter>
-        
-          <Header/>
-          <Routes>
-            <Route path='/' element={<Inicio/>}/>
-            <Route path='/ingreso' element={
-              route === 'signin'
-              ? <Ingreso loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-              : <Registro loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-          }/>
-            <Route path='/ingreso/registro' element={<FormularioRegistro/>}/>
-            <Route path='/ingreso/recuperar' element={<RecuperarContrasenia/>}/>
-            <Route path= '/home' element={<Home />}/>
-            <Route path= '/crearcancha/:id_complejo' element={<FormCancha />}/>
-            <Route path= '/miscanchas/:idAdmin' element={<MisCanchas />}/>
-            <Route path= '/perfil/:tipo/:id' element={<Perfil />}/>
-            <Route path= '/cancha/:id' element={<Cancha />}/>
+      <NextUIProvider>
+        <UserProvider>
+          <div className="App">
+            <BrowserRouter>
 
+            
+            
+              <Header/>
+          
+              <Routes>
+                
+                <Route path='/' element={<Inicio/>}/>
+                <Route path='/ingreso' element={
+                  route === 'signin'
+                  ? <Ingreso loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+                  : <Registro loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+              }/>
+                <Route path='/ingreso/registro' element={<FormularioRegistro/>}/>
+                <Route path='/ingreso/recuperar' element={<RecuperarContrasenia/>}/>
+                <Route path= '/home' element={<Home />}/>
+                <Route path= '/crearcancha/:id_complejo' element={<FormCancha />}/>
+                <Route path= '/miscanchas/:idAdmin' element={<MisCanchas />}/>
+                <Route path= '/perfil/:tipo/:id' element={<Perfil />}/>
+                <Route path= '/cancha/:id' element={<Cancha />}/>
 
-            {/* Busqueda */}
-            <Route path='/buscarjugador' element={<BusquedaJugador/>}/>
-            <Route path='/buscarequipo/' element={<BusquedaEquipo/>}/>
+                {/* Busqueda */}
+                <Route path='/buscarjugador' element={<BusquedaJugador/>} />
+                <Route path='/buscarequipo/' element={<BusquedaEquipo/>} />
           
 
-          </Routes>
-          <Footer/>
-        </BrowserRouter>
-      </div>
-      </UserProvider>
+               {/* Reserva */}
+               <Route path="/mapa" element={<Mapa/>} />
+               <Route path="/complejo/:id_complejo" element={<Complejo />} />
+               <Route path="/reserva" element={<FormularioReserva />} />
+          
+              {/* Mis equipos */}
+               <Route path="/misEquipos" element={<MisEquipos />} />
+
+              {/* Historial */}
+              <Route path="/historial" element={<Historial />} />
+
+              
+              {/* Modal para ver equipos */}
+              <Route path="/historial" element={<ModalSeleccionEquipo equipos={equipos}/>} />
+
+
+              </Routes>
+              <Footer/>
+            </BrowserRouter>
+          </div>
+        </UserProvider>
+      </NextUIProvider>
     );
   }
 }
