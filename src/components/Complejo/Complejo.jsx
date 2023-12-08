@@ -25,12 +25,15 @@ const Complejo = () => {
   //Variable para manejar el formulario de reserva
   const [nuevaReserva, setNuevaReserva] = useState({});
   const [showModal, setShowModal] = useState(false);
-   
+  
+  const [refreshPage, setRefreshPage] = useState(false);
+
   useEffect(() => {
     if (Object.keys(nuevaReserva).length > 0) {
       setShowModal(true);
     }
   }, [nuevaReserva]);
+
   useEffect(() => {//Esta función trae los datos de un complejo, segun el id_complejo del use params
     //O sea, toma el paramtro 1 de la url, que es el id_complejo y la envia al back
 
@@ -40,6 +43,7 @@ const Complejo = () => {
       const jsonDataEqipos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_jugador}`);
       setEquipos(jsonDataEqipos.data);
     }
+
     async function fetchComplejo() { //Función para obtener el JSON del complejo desde el back
       /*const jsonDataComplejo = await consultarBaseDeDatos('../json/complejo.json');
       const complejoSeleccionado = jsonDataComplejo.id_complejo === id_complejo;

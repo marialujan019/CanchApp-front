@@ -40,7 +40,7 @@ const BusquedaEquipo = () => {
   //Esta función recibe el id_equipo el cual hay que mandarlo al back para recibir los datos
   //Los datos van a ser un arreglo de jugadores con el mismo id_equipo. Es decir, el arreglo de jugadores del equipo
   const fetchJugadores = async (idEquipo) => {
-    const datos = await axios.get('http://localhost:3001/equipo/jugadores/:id_equipo');
+    const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
     setJugadoresDeVerJugadores(datos);
     setShowJugadoresModal(true);
   };

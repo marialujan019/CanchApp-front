@@ -26,7 +26,7 @@ const MisEquipos = () => {
   //Función para obtener los equipos de un jugador
   useEffect(() => {
     const fetchEquipos = async () => {
-      const datos = await axios.get('http://localhost:3001/equipo/mis_equipos/:id_jugador');
+      const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_jugador}`);
       setMisEquipos(datos);
     };
 
@@ -39,7 +39,7 @@ const MisEquipos = () => {
    //Los valores de visibilidad y nombre equipo se obtienen mediante las funciones del renderCell
    const fetchJugadores = async (idEquipo, visibilidad, nombre_equipo, accion) => {
     if(accion === "ver") {
-      const datos = await axios.get('http://localhost:3001/equipo/jugadores/:id_equipo');
+      const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
       setJugadoresDelBack(datos);
       setShowVerJugadoresModal(true);
     } else if (accion === "editar") {

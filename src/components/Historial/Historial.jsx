@@ -22,7 +22,7 @@ const Historial = () => {
     const fetchData = async () => {
       try {
         //id === id_jugador
-        const data = await axios.get('http://localhost:3001/reservas/historial/:id'); 
+        const data = await axios.get(`http://localhost:3001/reservas/historial/${id}`); 
         setHistorialData(data.data);
       } catch (error) {
         console.error('Error al obtener datos del historial', error);
