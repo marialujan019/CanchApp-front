@@ -5,10 +5,11 @@ import JugadoresModal from '../JugadoresModal/JugadoresModal';
 import EditarEquipo from './EditarEquipo/EditarEquipo';
 import CrearEquipo from './CrearEquipo/CrearEquipo';
 import axios from 'axios';
+import { useUser } from '../UserContext';
 
-const id_capitan = 23;
 const MisEquipos = () => {
-
+  const { user } = useUser();
+  const id_capitan = user.id;
   const [misEquipos, setMisEquipos] = useState([]);
   const [jugadoresDelBack, setJugadoresDelBack] = useState([]);
   //Variable del ver jugadores
@@ -26,8 +27,8 @@ const MisEquipos = () => {
   //Función para obtener los equipos de un jugador
   useEffect(() => {
     const fetchEquipos = async () => {
-      const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_jugador}`);
-      setMisEquipos(datos);
+      const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${user.id}`);
+      setMisEquipos(datos.data);
     };
 
     fetchEquipos();
@@ -62,8 +63,8 @@ const MisEquipos = () => {
   //Basicamente envio esta funcion al editarEquipos para que, cuando se confirmen los cambios, se refresque la pagina
   const updateMisEquipos = async () => {
     //update a la bade de datos
-    const datos = await consultarBaseDeDatos('../json/equiposDeUnJugador.json');
-    setMisEquipos(datos);
+    const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${user.id}`);
+    setMisEquipos(datos.data);
   };
 
   const handleCrearEquipo = (id_capitan) => {
@@ -78,7 +79,7 @@ const MisEquipos = () => {
       case "nombre_equipo":
         return cellValue
       case "cant_jug":
-        return `${cellValue}/${equipo.max_jug}`;
+        return `${cellValue}/${equipo.cant_jugador}`;
       case "publico":
         if(cellValue==true) return "Público"
         else return "Privado";
@@ -177,7 +178,7 @@ const MisEquipos = () => {
         id_equipo={idEquipoAEnviar}
         visibilidad={visibilidadEquipoAEnviar}
         nombre_equipo={nombreEquipoAEnviar}
-        id_capitan={id_capitan}
+        id_capitan={user.id}
         updateMisEquipos={updateMisEquipos} // Pasa la función para renderizar Mis Equipos como prop
       />
 

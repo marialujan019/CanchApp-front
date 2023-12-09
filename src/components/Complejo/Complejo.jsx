@@ -4,12 +4,13 @@ import { useParams } from 'react-router-dom';
 import { consultarBaseDeDatos } from '../utils/Funciones';
 import ModalReservas from '../ModalReservas/ModalReservas';
 import axios from 'axios';
+import { useUser } from '../UserContext';
 
-const id_jugador = 4
 const Complejo = () => {
   //Variable para obtener el id del complejo mediante la ruta
   const { id_complejo } = useParams();
-
+  const { user } = useUser();
+  const id_jugador = user.id
   //Variable para poner los datos del complejo y sus canchas
   const [complejo, setComplejo] = useState(null);
   const [canchas, setCanchas] = useState([]);
@@ -41,6 +42,7 @@ const Complejo = () => {
       console.log(id_jugador)
       //endpoint mis_equipos
       const jsonDataEqipos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_jugador}`);
+      console.log("ACAAAAA: " + id_jugador)
       setEquipos(jsonDataEqipos.data);
     }
 
@@ -93,10 +95,8 @@ const Complejo = () => {
    // Función para obtener las fechas disponibles según la fecha seleccionada
    //Se tiene que enviar la variable fecha al back
    const fetchFechas = async (fecha) => {
-    console.log(fecha)
-    console.log(id_complejo)
+
     const jsonDataFechas = await axios.get(`http://localhost:3001/complejo/agenda/turnos/${id_complejo}/${fecha}`);
-    console.log(jsonDataFechas.data)
     setFechas(jsonDataFechas.data);
 
     // Verificar si la fecha seleccionada es válida
@@ -152,7 +152,7 @@ const Complejo = () => {
     const reserva = {
       id_jugador: id_jugador,
       id_complejo: complejo.id_complejo,
-      nombre_complejo: complejo.nombre,
+      nombre_complejo: complejo.nombre_complejo,
       direccion_complejo: complejo.direccion,
       telefono_complejo: complejo.telefono,
       id_cancha: cancha.id_cancha,

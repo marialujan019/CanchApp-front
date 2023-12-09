@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const ModalReservas = ({ show, onHide, nuevaReserva, equipos }) => {
   const [selectedEquipo, setSelectedEquipo] = useState('');
+  const navigate = useNavigate()
 
   const handleReservarClick = () => {
     // Verificar si se ha seleccionado un equipo
@@ -38,8 +40,8 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos }) => {
       return (
         <div>
           <p>No tienes equipos creados.</p>
-          <Button variant="primary" disabled>
-            Reservar
+          <Button variant="primary"  onClick={() => navigate('/misEquipos')}>
+            Crea un equipo
           </Button>
         </div>
       );
@@ -53,7 +55,6 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <p>Información de la reserva:</p>
         <p>Nombre del Complejo: {nuevaReserva.nombre_complejo}</p>
         <p>Dirección del Complejo: {nuevaReserva.direccion_complejo}</p>
         <p>Teléfono del Complejo: {nuevaReserva.telefono_complejo}</p>

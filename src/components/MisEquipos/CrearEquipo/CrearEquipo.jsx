@@ -1,14 +1,19 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { useUser } from '../../UserContext';
+
 
 const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
+  const { user } = useUser();
+
   const [equipo, setEquipo] = useState({
     nombre_equipo: '',
     publico: false,
     max_jug: 0,
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Verificar si ya existe un equipo con el mismo nombre
@@ -23,6 +28,14 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
 
     // Continuar con la creación del equipo si no hay un equipo existente
     console.log(equipo);
+    await axios.post('http://localhost:3001/crear_equipo', {
+      nombre_equipo: equipo.nombre_equipo,
+      cant_jugador: equipo.max_jug,
+      capitan: user.id,
+      id_jugadores: [user.id],
+      ubicacion: equipo.ubicacion
+    })
+    
     setEquipo({
       nombre_equipo: '',
       publico: false,
@@ -36,6 +49,13 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
     setEquipo({
       ...equipo,
       nombre_equipo: e.target.value,
+    });
+  };
+
+  const handleUbicacionEquipoChange = (e) => {
+    setEquipo({
+      ...equipo,
+      ubicacion: e.target.value,
     });
   };
 
@@ -93,6 +113,16 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
               />
             </label>
             <label>
+              Ubicación:
+              <input
+                type="text"
+                name="ubicacion"
+                value={equipo.ubicacion}
+                onChange={handleUbicacionEquipoChange}
+                required
+              />
+            </label>
+            <label>
               Seleccione el tipo de equipo:
               <select
                 name="max_jug"
@@ -126,7 +156,7 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
               <p>Su equipo no será visible en la búsqueda de jugadores.</p>
             )}
             <br />
-            <button type="submit">Crear Equipo</button>
+            <button type="submit" >Crear Equipo</button>
           </form>
         </div>
       </Modal.Body>

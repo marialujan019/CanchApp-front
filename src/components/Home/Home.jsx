@@ -12,6 +12,7 @@ import Mapa from "../Mapa/Mapa";
 
 function Home() {
     const { user } = useUser();
+    console.log(user)
     const handleLogout = () => {
         
         axios.get('http://localhost:3001/logout')
