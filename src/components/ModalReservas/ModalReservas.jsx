@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ModalReservas = ({ show, onHide, nuevaReserva, equipos }) => {
   const [selectedEquipo, setSelectedEquipo] = useState('');
@@ -13,11 +14,20 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos }) => {
       alert(
         `ID Jugador: ${nuevaReserva.id_jugador}\nID Complejo: ${nuevaReserva.id_complejo}\nID Cancha: ${nuevaReserva.id_cancha}\nFecha: ${nuevaReserva.fecha}\nHora: ${nuevaReserva.hora}\nID Equipo seleccionado: ${selectedEquipo}`
       );
+      setReservas();
+      navigate();
     } else {
       // Si no se ha seleccionado un equipo, mostrar un mensaje
       alert('Selecciona un equipo antes de reservar.');
     }
   };
+
+  const setReservas = () => {
+    axios.post('http://localhost:3001/reservar', {
+        id_agenda: nuevaReserva.id_agenda,
+        id_equipo: selectedEquipo,
+      })
+  }
 
   const renderEquiposSection = () => {
     if (equipos.length > 0) {
