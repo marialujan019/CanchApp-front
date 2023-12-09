@@ -51,7 +51,7 @@ import Historial from './components/Historial/Historial';
 //Mis solicitudes
 import MisSolicitudes from './components/MisSolicitudes/MisSolicitudes';
 
-
+import Complejo2 from './components/Complejo/complejo2';
 const initialState = {
   input: '',
   imageUrl: '',
@@ -104,7 +104,8 @@ class App extends Component {
               <Header/>
           
               <Routes>
-                
+              <Route path="/complejo2/:id_complejo" element={<Complejo2 />} />
+
                 <Route path='/' element={<Inicio/>}/>
                 <Route path='/ingreso' element={
                   route === 'signin'
