@@ -1,0 +1,12 @@
+[
+    {
+        "id_solicitud": 5,
+        "id_equipo": 1,
+        "nombre_equipo": "los pan"
+    },
+    {
+        "id_solicitud": 8,
+        "id_equipo": 2,
+        "nombre_equipo": "los quesitos"
+    }
+]

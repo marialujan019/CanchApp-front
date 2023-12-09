@@ -58,15 +58,18 @@ const FormularioRegistro = () => {
     
     
     
-    //Expresiones regulares
+    // Expresiones regulares
     const expresiones = {
-        usuario: /^[a-zA-Z0-9_-]{4,16}$/, // Letras, numeros, guion y guion_bajo
         nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-        password: /^.{4,25}$/, // 4 a 12 digitos.
+        password: /^.{4,25}$/, // 4 a 25 caracteres.
         correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
         telefono: /^\d{7,14}$/, // 7 a 14 numeros.
-        numero: /^[0-9]+$/
-    }
+        numero: /^[0-9]+$/,
+        ubicacion: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, hasta 40 caracteres.
+        altura: /^\d{1,4}$/, // 1 a 4 digitos.
+        cuit: /^\d{11}$/ // 11 digitos.
+    };
+
 
     //Funcion para validar que la segunda contraseña sea igual a la primera
     const validarContrasenia2 = () => {
@@ -235,7 +238,7 @@ const FormularioRegistro = () => {
                                 placeholder="Ej: 3123"
                                 idHTMLName="cuit"
                                 leyendaError="Cuit"
-                                expresionRegular={expresiones.telefono}
+                                expresionRegular={expresiones.cuit}
                                 estado={cuit}
                                 cambiarEstado={cambiarCuit}
                             />
@@ -245,7 +248,7 @@ const FormularioRegistro = () => {
                                 placeholder="Ej: Chaco"
                                 idHTMLName="provincia"
                                 leyendaError="provincia"
-                                expresionRegular={expresiones.nombre}
+                                expresionRegular={expresiones.ubicacion}
                                 estado={provincia}
                                 cambiarEstado={cambiarProvincia}
                             />
@@ -265,7 +268,7 @@ const FormularioRegistro = () => {
                                 placeholder="Ej: Edison"
                                 idHTMLName="calle"
                                 leyendaError="calle"
-                                expresionRegular={expresiones.nombre}
+                                expresionRegular={expresiones.ubicacion}
                                 estado={calle}
                                 cambiarEstado={cambiarCalle}
                             />
@@ -275,7 +278,7 @@ const FormularioRegistro = () => {
                                 placeholder="Ej: 3123"
                                 idHTMLName="altura"
                                 leyendaError="Altura"
-                                expresionRegular={expresiones.numero}
+                                expresionRegular={expresiones.altura}
                                 estado={altura}
                                 cambiarEstado={cambiarAltura}
                             />

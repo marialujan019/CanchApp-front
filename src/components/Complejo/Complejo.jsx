@@ -72,6 +72,7 @@ const Complejo = () => {
     }
   };
 
+
   // Función para manejar el cambio de fecha
   const handleFechaSeleccionada = async (fecha) => {
     setFechaSeleccionada(fecha);
@@ -83,31 +84,18 @@ const Complejo = () => {
     return <div>No existe el complejo seleccionado</div>;
   }
 
-  // Renderizar solo si hay fechas disponibles
-  const horarios = fechas?.horario_disponibilidad ? Object.keys(fechas.horario_disponibilidad) : [];
-  const disponibilidadPorCancha = canchas.map(cancha => ({
-    cancha: cancha.nombre_cancha,
-    disponibilidad: horarios.map(hora => ({
-      hora,
-      disponible: fechas?.horario_disponibilidad[hora]?.disponibles.includes(Number(cancha.id_cancha)),
-    })),
-  }));
+  const renderCell = (hora, cancha) => {
+    const disponibles = fechas.horario_disponibilidad[hora]?.disponibles || [];
+    const ocupadas = fechas.horario_disponibilidad[hora]?.ocupadas || [];
 
-  //Renderizado de fechas
-  const columns = [
-    { key: "hora", label: "Horarios" },
-    ...canchas.map(cancha => ({ key: `cancha_${cancha.nombre_cancha}`, label: `Cancha ${cancha.nombre_cancha}` })),
-  ];
-
-  const rows = horarios.map(hora => {
-    const row = { hora };
-    canchas.forEach(cancha => {
-      row[`cancha_${cancha.nombre_cancha}`] = fechas?.horario_disponibilidad[hora]?.disponibles.includes(Number(cancha.id_cancha))
-        ? "Disponible"
-        : "Ocupada";
-    });
-    return row;
-  });
+    if (disponibles.includes(cancha.id_cancha)) {
+      return <Button onClick={() => handleReservaClick(hora, cancha)}>Reservar</Button>;
+    } else if (ocupadas.includes(cancha.id_cancha)) {
+      return "No disponible";
+    } else {
+      return ""; // Puedes ajustar esto según tus necesidades
+    }
+  };
 
   //Función para crear el formulario de reserva
 
@@ -151,38 +139,29 @@ const Complejo = () => {
       </div>
   
       <div className='Grilla'>
-        {fechas ? (
-          <Table aria-label="Tabla de Disponibilidad">
-            <TableHeader columns={columns}>
-              {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
-            </TableHeader>
-            <TableBody items={rows}>
-              {(item) => (
-                <TableRow key={item.hora}>
-                  {(columnKey) => (
-                    <TableCell>
-                      {item[columnKey] === "Disponible" ? (
-                        <Button
-                          onClick={() => handleReservaClick(item.hora, canchas.find(c => c.nombre_cancha === columnKey.slice(7)))}
-                          color="primary"
-                        >
-                          Reservar
-                        </Button>
-                      ) : (
-                        'No disponible'
-                      )}
-                    </TableCell>
-                  )}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        ) : (
-          <div>Fecha no disponible</div>
-        )}
+      {fechas && (
+        <Table>
+          <TableHeader>
+            <TableColumn>Horarios</TableColumn>
+            {canchas.map((cancha) => (
+              <TableColumn key={cancha.id_cancha}>{cancha.nombre_cancha}</TableColumn>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {Object.keys(fechas.horario_disponibilidad).map((hora) => (
+              <TableRow key={hora}>
+                <TableCell>{hora}</TableCell>
+                {canchas.map((cancha) => (
+                  <TableCell key={`${hora}-${cancha.id_cancha}`}>
+                    {renderCell(hora, cancha)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
       </div>
-
-        
     </div>
   );
 };

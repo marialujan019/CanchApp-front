@@ -7,11 +7,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
+  options: {
+    whitelist: ['noTailwindcss'],
+  },
   theme: {
     extend: {
-      opacity: {
-        '1': '1',
-      }
     },
   },
   darkMode: "class",

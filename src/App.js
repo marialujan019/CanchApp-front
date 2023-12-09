@@ -48,20 +48,8 @@ import MisEquipos from './components/MisEquipos/MisEquipos';
 //Historial
 import Historial from './components/Historial/Historial';
 
-import ModalSeleccionEquipo from './components/BusquedaJugador/ModalSeleccionEquipo/ModalSeleccionEquipo';
-
-const equipos = [
-  {
-      id_equipo: 1,
-      nombre_equipo: "Los cracks",
-      cant_jug: 4
-  },
-  {
-      id_equipo: 2,
-      nombre_equipo: "Los capos",
-      cant_jug: 2
-  }
-]
+//Mis solicitudes
+import MisSolicitudes from './components/MisSolicitudes/MisSolicitudes';
 
 
 const initialState = {
@@ -147,10 +135,8 @@ class App extends Component {
               {/* Historial */}
               <Route path="/historial" element={<Historial />} />
 
-              
-              {/* Modal para ver equipos */}
-              <Route path="/historial" element={<ModalSeleccionEquipo equipos={equipos}/>} />
-
+              {/* Mis Solicitudes */}
+              <Route path="/misSolicitudes" element={<MisSolicitudes />} />
 
               </Routes>
               <Footer/>

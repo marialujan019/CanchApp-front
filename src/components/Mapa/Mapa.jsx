@@ -5,7 +5,7 @@ import './mapa.css';
 import { consultarBaseDeDatos } from '../utils/Funciones';
 import Marcadores from './Marcadores/Marcadores';
 import { Icon } from 'leaflet';
-
+import CardComplejos from './CardComplejos/CardComplejos';
 
 
 const customIcon = new Icon({
@@ -23,14 +23,15 @@ const Mapa = () => {
             const jsonData = await consultarBaseDeDatos('../json/popups.json'); 
             setData(jsonData);
         }
-
         fetchData();
     }, []);
 
   return (
 
-    <div>
-      <h1>Hola</h1>
+    <div className='mapaContainer main'>
+      <section>
+        <CardComplejos complejos={data}/>
+      </section>
       <MapContainer center={position} zoom={13} scrollWheelZoom={false} className='mapa'>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

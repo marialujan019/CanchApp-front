@@ -1,4 +1,7 @@
+.mapaContainer {
+    display: flex
+}
 .mapa{
-    width: 600px;
-    height: 600px;
+    width: 40vw;
+    height: 80vh;
 }

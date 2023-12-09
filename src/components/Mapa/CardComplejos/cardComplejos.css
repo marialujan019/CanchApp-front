@@ -1,0 +1,16 @@
+.complejoCardsContainer {
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.cardComplejo {
+    display: flex;
+}
+
+.imagenCardComplejo{
+    width: 40%
+}
+.imagenCardComplejo {
+    width: inherit;
+    height: inherit;
+}
