@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { consultarBaseDeDatos } from '../utils/Funciones';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Tooltip, Button } from "@nextui-org/react";
 import JugadoresModal from '../JugadoresModal/JugadoresModal';
 import EditarEquipo from './EditarEquipo/EditarEquipo';
@@ -27,7 +26,7 @@ const MisEquipos = () => {
   //Función para obtener los equipos de un jugador
   useEffect(() => {
     const fetchEquipos = async () => {
-      const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${user.id}`);
+      const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_capitan}`);
       setMisEquipos(datos.data);
     };
 
@@ -39,16 +38,19 @@ const MisEquipos = () => {
    //Acá cada vez que apreto el botón para ver o editar los jugadores, se hace una llamada al back, con el id_equipo
    //Los valores de visibilidad y nombre equipo se obtienen mediante las funciones del renderCell
    const fetchJugadores = async (idEquipo, visibilidad, nombre_equipo, accion) => {
+    console.log("id_equipo: " + idEquipo)
     if(accion === "ver") {
+      console.log("VER")
       const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
-      setJugadoresDelBack(datos);
+      console.log(datos.data)
+      setJugadoresDelBack(datos.data);
       setShowVerJugadoresModal(true);
     } else if (accion === "editar") {
-      const datos = await consultarBaseDeDatos(`../json/jugadoresDeUnEquipo.json`);
+      const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
       setIdEquipoAEnviar(idEquipo)
       setVisibilidadEquipoAEnviar(visibilidad)
       setNombreEquipoAEnviar(nombre_equipo)
-      setJugadoresDelBack(datos);
+      setJugadoresDelBack(datos.data);
       setShowEditarJugadoresModal(true);
     }
   };
@@ -63,7 +65,7 @@ const MisEquipos = () => {
   //Basicamente envio esta funcion al editarEquipos para que, cuando se confirmen los cambios, se refresque la pagina
   const updateMisEquipos = async () => {
     //update a la bade de datos
-    const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${user.id}`);
+    const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_capitan}`);
     setMisEquipos(datos.data);
   };
 
@@ -78,8 +80,8 @@ const MisEquipos = () => {
     switch (columnKey) {
       case "nombre_equipo":
         return cellValue
-      case "cant_jug":
-        return `${cellValue}/${equipo.cant_jugador}`;
+      case "cant_jugadores":
+        return `${cellValue}/${equipo.cant_max}`;
       case "publico":
         if(cellValue==true) return "Público"
         else return "Privado";
@@ -112,7 +114,7 @@ const MisEquipos = () => {
       label: "Nombre del Equipo",
     },
     {
-      key: "cant_jug",
+      key: "cant_jugadores",
       label: "Cantidad de Jugadores",
     },
     {
@@ -178,7 +180,7 @@ const MisEquipos = () => {
         id_equipo={idEquipoAEnviar}
         visibilidad={visibilidadEquipoAEnviar}
         nombre_equipo={nombreEquipoAEnviar}
-        id_capitan={user.id}
+        id_capitan={id_capitan}
         updateMisEquipos={updateMisEquipos} // Pasa la función para renderizar Mis Equipos como prop
       />
 

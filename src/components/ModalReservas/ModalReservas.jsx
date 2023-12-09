@@ -15,7 +15,7 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos }) => {
         `ID Jugador: ${nuevaReserva.id_jugador}\nID Complejo: ${nuevaReserva.id_complejo}\nID Cancha: ${nuevaReserva.id_cancha}\nFecha: ${nuevaReserva.fecha}\nHora: ${nuevaReserva.hora}\nID Equipo seleccionado: ${selectedEquipo}`
       );
       setReservas();
-      navigate();
+      navigate("/misEquipos");
     } else {
       // Si no se ha seleccionado un equipo, mostrar un mensaje
       alert('Selecciona un equipo antes de reservar.');

@@ -36,10 +36,7 @@ const JugadoresModal = ({ jugadores, show, onHide }) => {
         return cellValue;
       default:
         return cellValue;
-    }
-  }, []);
-
-  
+    }  }, []);
 
   return (
     <Modal show={show} onHide={onHide} centered>
@@ -57,7 +54,7 @@ const JugadoresModal = ({ jugadores, show, onHide }) => {
           </TableHeader>
           <TableBody items={jugadores}>
             {(item) => (
-              <TableRow key={item.id_jugador}>
+              <TableRow key={item.id_jug}>
                 {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
               </TableRow>
             )}
