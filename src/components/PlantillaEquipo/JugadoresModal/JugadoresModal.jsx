@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import "./jugadoresModal.css"
 
-const JugadoresModal = ({ equipo, show, onHide }) => {
+const JugadoresModal = ({ jugadores, show, onHide }) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
@@ -10,14 +10,19 @@ const JugadoresModal = ({ equipo, show, onHide }) => {
       </Modal.Header>
       <Modal.Body>
         <div>
-          {equipo.jugadores.map((jugador) => (
-            <div key={jugador.id}  className='jugadoresModalContainer'>
-              <img src={jugador.foto} alt="" />
-              <p>Nombre: {jugador.nombre}</p>
-              <p>Edad: {jugador.edad}</p>
-              <p>Partidos Jugados: {jugador.partidosJugados}</p>
-            </div>
-          ))}
+        {jugadores.map((jugador, index) => (
+          <div key={index} className='jugadoresModalContainer'>
+            <p>Nombre: {jugador.nombre}</p>
+            <p>Apellido: {jugador.apellido}</p>
+            <p>Edad: {jugador.edad}</p>
+            <p>Pie habil: {jugador.pie_habil}</p>
+            <p>Sexo: {jugador.sexo}</p>
+            <p>Posicion: {jugador.posicion}</p>
+            <p>Telefono: {jugador.telefono}</p>
+          </div>
+        ))}
+
+
         </div>
       </Modal.Body>
       <Modal.Footer>

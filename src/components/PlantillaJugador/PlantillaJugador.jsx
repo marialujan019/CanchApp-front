@@ -19,9 +19,10 @@ const PlantillaJugador = ({ jugador }) => {
       <div className="plantillaJugadorInfo">
         <img src={jugador.foto} alt="" />
         <p>Nombre: {jugador.nombre}</p>
-        <p>Ubicación: {jugador.ubicacion}</p>
         <p>Sexo: {jugador.sexo}</p>
         <p>Edad: {jugador.edad}</p>
+        <p>Pie habil: {jugador.pie_habil}</p>
+        <p>Posicion: {jugador.posicion}</p>
 
         <div>
             <button onClick={handleEnviarSolicitud}>

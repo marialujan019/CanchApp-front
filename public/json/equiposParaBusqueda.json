@@ -1,0 +1,12 @@
+[
+  {
+  "id_equipo":1,
+  "nombreEquipo": "Los cracks",
+  "cant_jug": 2
+  },
+  {
+    "id_equipo":3,
+    "nombreEquipo": "Los capos",
+    "cant_jug": 5
+  }
+]
