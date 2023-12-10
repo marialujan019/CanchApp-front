@@ -3,6 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Tooltip } from "@nextui-org/react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { async } from 'q';
 
 
 const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_equipo, id_capitan, updateMisEquipos }) => {
@@ -61,6 +62,11 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
         onHide();
     };
 
+    const updateJugadoresEquipo = async (id) => {
+        const updatedJugadores = await axios.post(`http://localhost:3001/jugadores/${id}/${id_equipo}`)
+        setNuevoCapitan(null);
+        setArregloJugadores(updatedJugadores.data);
+    }
     const renderCell = useCallback((jugador, columnKey) => {
         const cellValue = jugador[columnKey];
       
@@ -83,13 +89,7 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
                 <Tooltip content="Eliminar jugador">
                   <button
                     className="text-lg text-danger cursor-pointer active:opacity-50"
-                    onClick={() => {
-                      const updatedJugadores = jugadores.filter(
-                        (j) => j.id_jug !== jugador.id_jug
-                      );
-                      setNuevoCapitan(null);
-                      setArregloJugadores(updatedJugadores);
-                    }}
+                    onClick={() => updateJugadoresEquipo(jugador.id_jug)}
                   >
                     Eliminar jugador
                   </button>
