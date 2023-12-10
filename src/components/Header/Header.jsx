@@ -61,7 +61,7 @@ const Header = () => {
           <Link to={`/perfil/${user.tipo}/${user.id}`} className="nav-link">Mi perfil</Link>
           <Link to="/misReservas" className="nav-link">Mis reservas</Link>
           <Link to="/misEquipos" className="nav-link">Mis Equipos</Link>
-          <Link to="/buscarequipo" className="nav-link">Buscar equipo</Link>
+          <Link to={`/buscarequipo/${user.id}`} className="nav-link">Buscar equipo</Link>
           <Link to="/buscarjugador" className="nav-link">Buscar jugadores</Link>
           <Link to="/historial" className="nav-link">Mi historial </Link>
 

@@ -39,7 +39,7 @@ const BusquedaJugador = () => {
   // Primer renderizado de la pagina
   useEffect(() => {
     const fetchJugadores = async () => {
-      const datos = await axios.get('http://localhost:3001/jugadores/all');
+      const datos = await axios.get(`http://localhost:3001/jugadores/${id_capitan}`);
       setJugadoresParaLaBusqueda(datos.data);
     };
   

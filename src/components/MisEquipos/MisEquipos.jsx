@@ -19,7 +19,7 @@ const columns = [
 
 const columnsEquiposDeFuera = [
   { key: "nombre_equipo", label: "Nombre del Equipo" },
-  { key: "max_jug", label: "Cantidad de Jugadores" },
+  { key: "cant_max", label: "Cantidad de Jugadores" },
   { key: "actions", label: "Acciones" }
 ];
 
@@ -49,13 +49,13 @@ const MisEquipos = () => {
   //Función para obtener los equipos de un jugador
   useEffect(() => {
     const fetchEquipos = async () => {
-      const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_capitan}`);
+      const datos = await axios.get(`http://localhost:3001/equipo/soy_capitan/${id_capitan}`);
       setMisEquipos(datos.data);
     };
 
     const fetchEquiposDeFuera = async () => {
-      const datos = await consultarBaseDeDatos(`../json/equiposDeMisEquipos.json`);
-      setEquiposDeFuera(datos);
+      const datos = await axios.get(`http://localhost:3001/equipo/no_soy_capitan/${id_capitan}`)
+      setEquiposDeFuera(datos.data);
     };
 
     fetchEquiposDeFuera()
@@ -141,10 +141,10 @@ const MisEquipos = () => {
   //Función para traer los equipos en los que está el usuario, según el id_capitan
   //Al ser el id_capitan lo mismo que el id_jugador del jugador te envio eso para que me traigas los equipos del back
   //Onda, yo envio el id_jugador del usuario al back y me tiene que traer los equipos en los que está anotado
-  const fetchJugadoresDeFuera = async (id_capitan) => {
+  const fetchJugadoresDeFuera = async (id_capitan, idEquipo) => {
     console.log(id_capitan)
-    const datos = await consultarBaseDeDatos(`../json/jugadoresDeUnEquipo.json`);
-    setJugadoresEquiposDeFuera(datos)
+    const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
+    setJugadoresEquiposDeFuera(datos.data)
     console.log(jugadoresEquiposDeFuera)
     setShowVerJugadoresModal2(true);
   };
@@ -156,14 +156,14 @@ const MisEquipos = () => {
     switch (columnKey) {
       case "nombre_equipo":
         return cellValue;
-      case "max_jug":
-        return `${equipo.cant_jug}/${cellValue}`;
+      case "cant_max":
+        return `${equipo.cant_jugadores}/${cellValue}`;
       case "actions":
         case "actions":
         return (
           <div className="flex items-center space-x-3 justify-center">
             <Tooltip content="Ver detalles">
-              <button className="text-lg text-default-400 cursor-pointer active:opacity-50" onClick={() => fetchJugadoresDeFuera(id_capitan)}><i class="bi bi-eye"></i></button>
+              <button className="text-lg text-default-400 cursor-pointer active:opacity-50" onClick={() => fetchJugadoresDeFuera(id_capitan, equipo.id_equipo)}><i class="bi bi-eye"></i></button>
             </Tooltip>
             <Tooltip content="Editar equipo">
             </Tooltip>
@@ -182,7 +182,7 @@ const MisEquipos = () => {
   return (
     <div>
         <Button onClick={handleCrearEquipo}>Crear equipo</Button>
-        <Button onClick={()=>{navigate("/buscarequipo")}}>Buscar equipo</Button>
+        <Button onClick={()=>{navigate(`/buscarequipo/${id_capitan}`)}}>Buscar equipo</Button>
 
 
       <div>
