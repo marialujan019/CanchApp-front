@@ -64,7 +64,7 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
         return equipo[column.key];
     }
   };
-
+//ACA IRIAN LAS INVITACIONES
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
-import { consultarBaseDeDatos } from '../utils/Funciones';
 import JugadoresModal from '../JugadoresModal/JugadoresModal';
 import axios from 'axios';
+import {  useParams } from 'react-router-dom';
 
-const id_jugador = 1; //Esto hay que cambiar por el userConstext
 const columns = [
-  { key: "nombreEquipo", label: "Nombre del Equipo" },
+  { key: "nombre_equipo", label: "Nombre del Equipo" },
   { key: "fecha", label: "Fecha del proximo partido" },
-  { key: "cant_jug", label: "Jugadores" },
+  { key: "cant_jugadores", label: "Jugadores" },
   { key: "solicitud", label: "Solicitud" },
   { key: "estado", label: "Estado" },
 ];
@@ -18,6 +17,7 @@ const BusquedaEquipo = () => {
   //Estados para renderizar los equipos
   const [equiposParaLaBusqueda, setEquiposParaLaBusqueda] = useState([]);
   const [refreshPage, setRefreshPage] = useState(false);
+  const { id_jugador } = useParams();
 
   //Estados para renderizar la selección de equipos
   const [jugadoresDeVerJugadores, setJugadoresDeVerJugadores] = useState([]);
@@ -29,8 +29,9 @@ const BusquedaEquipo = () => {
   //Primer renderizado de la pagina, se renderiza cada vez que cambio el valor de refreshPage
   useEffect(() => {
     const fetchEquipos = async () => {
-      const datos = await consultarBaseDeDatos('../json/equiposParaBusqueda.json');
-      setEquiposParaLaBusqueda(datos);
+      const datos = await axios.get(`http://localhost:3001/equipo/buscar/${id_jugador}`)
+      console.log("BUSCAR: " + datos.data)
+      setEquiposParaLaBusqueda(datos.data);
     };
   
     fetchEquipos();
@@ -41,7 +42,7 @@ const BusquedaEquipo = () => {
   //Los datos van a ser un arreglo de jugadores con el mismo id_equipo. Es decir, el arreglo de jugadores del equipo
   const fetchJugadores = async (idEquipo) => {
     const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
-    setJugadoresDeVerJugadores(datos);
+    setJugadoresDeVerJugadores(datos.data);
     setShowJugadoresModal(true);
   };
 
@@ -50,11 +51,15 @@ const BusquedaEquipo = () => {
   //Lo que hago es enviarte el id del equipo al que le quiero enviar solicitud y mi id
   //Con esto, vos los agregar a la base de datos y deberias cambiar el estado del equipo
   const toggleSolicitudes = async (equipo) => {
-    const palabraClave = "cancelar"
     if (equipo.estado === 'Pendiente') {
+      await axios.delete(`http://localhost:3001/solicitudes/borrar/${id_jugador}/${equipo.id_equipo}`)
       console.log(`Se canceló la solicitud del jugador ${id_jugador} del equipo ${equipo.id_equipo}`);
     } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
-      const palabraClave = "enviar"
+      console.log("AGREGAR SOLICITUDDD")
+      axios.post('http://localhost:3001/solicitudes', {
+        id_jugador: id_jugador,
+        id_equipo: equipo.id_equipo
+      })
       console.log(`Se envió la solicitud del jugador ${id_jugador} al equipo ${equipo.id_equipo}`);
     }
     setRefreshPage((prev) => !prev)
@@ -69,12 +74,15 @@ const BusquedaEquipo = () => {
           Cancelar solicitud
         </Button>
       );
-    } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
+    } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado' || equipo.estado === null) {
       return (
         <Button onClick={() => toggleSolicitudes(equipo)} color='primary'>
           Enviar solicitud
         </Button>
       );
+    } else if(equipo.estado) {
+      return <Button disabled color='success'> {equipo.estado} </Button>;
+
     }
   };
 
@@ -85,8 +93,10 @@ const BusquedaEquipo = () => {
   };
 
   // Filtrar equipos por nombre
-  const equiposFiltrados = equiposParaLaBusqueda.filter(equipo => equipo.nombreEquipo.toLowerCase().startsWith(filtroNombre.toLowerCase()));
- 
+  const equiposFiltrados = equiposParaLaBusqueda.filter(equipo => equipo.nombre_equipo.toLowerCase().startsWith(filtroNombre.toLowerCase()));
+  const jsonString = JSON.stringify(equiposFiltrados);
+
+  console.log("Equipos filtrados: " + jsonString)
 
   return (
     <div>
@@ -108,7 +118,7 @@ const BusquedaEquipo = () => {
             <TableRow key={equipo.id_equipo}>
               {columns.map((column) => (
                 <TableCell key={column.key}>
-                  {column.key === 'cant_jug' ? (
+                  {column.key === 'cant_jugadores' ? (
                     <>
                       <Button onClick={() => fetchJugadores(equipo.id_equipo)}>
                       <i class="bi bi-eye"></i>  {equipo[column.key]}/{equipo.max_jug}
