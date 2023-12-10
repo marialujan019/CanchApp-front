@@ -44,6 +44,7 @@ const MisReservas = () => {
 
   // Se tiene que llamar a los equipos del jugador para que pueda elegir
   const fetchEquipos = async (id_jugador) => {
+    console.log(id_jugador)
     const datos = await consultarBaseDeDatos(`../json/equiposDeUnJugador.json`);
     setEquipos(datos);
   };

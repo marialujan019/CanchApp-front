@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router';
 import { consultarBaseDeDatos } from '../utils/Funciones';
 
 
+
 const columns = [
   { key: "nombre_equipo", label: "Nombre del Equipo" },
   { key: "cant_jugadores", label: "Cantidad de Jugadores" },

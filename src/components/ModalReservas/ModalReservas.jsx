@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useReservasContext } from '../reservasContext';
 import axios from 'axios';
+import { useUser } from '../UserContext';
 
 
 const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
