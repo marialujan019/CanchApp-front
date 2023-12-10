@@ -9,8 +9,15 @@ export const ReservasProvider = ({ children }) => {
     setMisReservas([...misReservas, reserva]);
   };
 
+  const eliminarReserva = (idJugador, fecha, hora) => {
+    const nuevasReservas = misReservas.filter(
+      (reserva) => !(reserva.id_jugador === idJugador && reserva.fecha === fecha && reserva.hora === hora)
+    );
+    setMisReservas(nuevasReservas);
+  };
+
   return (
-    <ReservasContext.Provider value={{ misReservas, agregarReserva }}>
+    <ReservasContext.Provider value={{ misReservas, agregarReserva, eliminarReserva  }}>
       {children}
     </ReservasContext.Provider>
   );

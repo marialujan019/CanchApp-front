@@ -1,6 +1,6 @@
 [
   {
-  "id_jugador":4,
+  "id_jug":4,
   "nombre": "juanpe",
   "apellido": "si",
   "imagen": "url",
@@ -12,7 +12,7 @@
   },
 
   {
-    "id_jugador":7,
+    "id_jug":7,
     "nombre": "Pan",
     "apellido": "No",
     "imagen": "url",

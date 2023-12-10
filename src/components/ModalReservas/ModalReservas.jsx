@@ -5,10 +5,17 @@ import Swal from 'sweetalert2';
 import { useReservasContext } from '../reservasContext';
 import axios from 'axios';
 
+
 const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
-  const { agregarReserva } = useReservasContext(); // Mover esto aquí
+  //Contexto de reserva
+  const { agregarReserva } = useReservasContext();
+  //Variables para manejar el botón de "Crear equipo"
   const [selectedEquipo, setSelectedEquipo] = useState('');
   const navigate = useNavigate(); 
+  //Id del jugador
+  const { user } = useUser();
+  const id_jugador = user.id;
+  
 
   const handleReservarClick = () => {
     if (selectedEquipo) {
@@ -29,6 +36,8 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
       })
   }
 
+  //Esta función se usa cuando el jugador no tiene equipos, lo que hace es que le aparece el botón de "Crear equipo"
+  //Al presionar ese botón aparece un mensaje en el cual permite guardar la reserva en mis reservas
   const handleMisEquiposClick = () => {
     if (origen === "complejo") {
       Swal.fire({
@@ -59,17 +68,20 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
             text: "Tu equipo se guardó en 'Mis reservas'",
             icon: "success",
           });
-          navigate("/misReservas");
+          navigate("/misEquipos");
         } else {
           onHide();
         }
       });
     } else if (origen === "reservas") {
+      navigate("/misEquipos");
     }
   };
 
 
-  const renderEquiposSection = () => {
+  //Función para traer las reservas ya hechas por el usuario
+  const renderEquiposSection = (id_jugador) => {
+    console.log(id_jugador)
     if (equipos.length > 0) {
       return (
         <div>
@@ -112,7 +124,7 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
         <p>Fecha de la Reserva: {nuevaReserva.fecha}</p>
         <p>Hora de la Reserva: {nuevaReserva.hora}</p>
 
-        {renderEquiposSection()}
+        {renderEquiposSection(id_jugador)}
       </Modal.Body>
 
       <Modal.Footer>

@@ -110,11 +110,8 @@ const BusquedaEquipo = () => {
                 <TableCell key={column.key}>
                   {column.key === 'cant_jug' ? (
                     <>
-                      <div>
-                        {equipo[column.key]}/{equipo.max_jug}
-                      </div>
                       <Button onClick={() => fetchJugadores(equipo.id_equipo)}>
-                        Ver jugadores
+                      <i class="bi bi-eye"></i>  {equipo[column.key]}/{equipo.max_jug}
                       </Button>
                     </>
                   ) : column.key === 'solicitud' ? (

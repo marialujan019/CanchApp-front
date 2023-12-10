@@ -9,6 +9,8 @@ const Complejo = () => {
   //Variable para obtener el id del complejo mediante la ruta
   const { id_complejo } = useParams();
   const { user } = useUser();
+  const id_jugador = user.id
+
   //Variable para poner los datos del complejo y sus canchas
   const [complejo, setComplejo] = useState(null);
   const [canchas, setCanchas] = useState([]);
@@ -24,8 +26,6 @@ const Complejo = () => {
   //Variable para manejar el formulario de reserva
   const [nuevaReserva, setNuevaReserva] = useState({});
   const [showModal, setShowModal] = useState(false);
-  
-  const [refreshPage, setRefreshPage] = useState(false);
 
   useEffect(() => {
     if (Object.keys(nuevaReserva).length > 0) {
@@ -34,23 +34,10 @@ const Complejo = () => {
   }, [nuevaReserva]);
   useEffect(() => {//Esta función trae los datos de un complejo, segun el id_complejo del use params
     //O sea, toma el paramtro 1 de la url, que es el id_complejo y la envia al back
-
-    async function fetchEquiposDelJugador(id_jugador) { //Funcion para traer un json con los equipos creados por un jugador
-      console.log(id_jugador)
-      //endpoint mis_equipos
-      const jsonDataEqipos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_jugador}`);
-      console.log("ACAAAAA: " + id_jugador)
-      setEquipos(jsonDataEqipos.data);
-    }
-
-    async function fetchComplejo() { //Función para obtener el JSON del complejo desde el back
-      /*const jsonDataComplejo = await consultarBaseDeDatos('../json/complejo.json');
-      const complejoSeleccionado = jsonDataComplejo.id_complejo === id_complejo;
-      setComplejo(complejoSeleccionado ? jsonDataComplejo : null);*/
+    async function fetchComplejo(id_complejo) {
       axios.get(`http://localhost:3001/complejo/${id_complejo}`).then(
         res => {
           var complejo = res.data.complejo
-          console.log(complejo)
           if(complejo) {
             setComplejo(complejo)
           } else {
@@ -71,15 +58,13 @@ const Complejo = () => {
           }
         }
       )
-      //Revisar este set, ya que el BE va a la base de datos, a la tabla canchas, 
-      //y ya trae todas las canchas del complejo seleccionado.
-      //setCanchas(jsonDataCanchas.filter(cancha => cancha.id_complejo === id_complejo));
+      
     }
 
-    async function fetchFechas() { //Función para obtener el JSON de las fechas disponibles desde el back
-      //Esto sería del complejo, no?
-      const jsonDataFechas = await axios.get(`http://localhost:3001/complejo/agenda/turnos/${id_complejo}`);
-      setFechas(jsonDataFechas);
+    async function fetchEquiposDelJugador(id_jugador) { //Funcion para traer un json con los equipos creados por un jugador
+      console.log(id_jugador)
+      const jsonDataEqipos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_jugador}`);
+      setEquipos(jsonDataEqipos.data); //setEquipos(jsonDataEqipos.data);
     }
 
     // Llamar a fetchFechas inicialmente para cargar fechas según la fecha seleccionada
@@ -88,9 +73,9 @@ const Complejo = () => {
     fetchEquiposDelJugador(id_jugador)
   }, [id_complejo]);
 
-   // Función para obtener las fechas disponibles según la fecha seleccionada
-   //Se tiene que enviar la variable fecha al back
-   const fetchFechas = async (fecha) => {
+  // Función para obtener las fechas disponibles según la fecha seleccionada
+  //Se tiene que enviar la variable fecha al back
+  const fetchFechas = async (fecha) => {
     const jsonDataFechas = await axios.get(`http://localhost:3001/complejo/agenda/turnos/${id_complejo}/${fecha}`);
     setFechas(jsonDataFechas.data);
     console.log(jsonDataFechas.data)
@@ -116,31 +101,19 @@ const Complejo = () => {
     return <div>No existe el complejo seleccionado</div>;
   }
 
-  // Renderizar solo si hay fechas disponibles
-  const horarios = fechas?.horario_disponibilidad ? Object.keys(fechas.horario_disponibilidad) : [];
-  const disponibilidadPorCancha = canchas.map(cancha => ({
-    cancha: cancha.nombre_cancha,
-    disponibilidad: horarios.map(hora => ({
-      hora,
-      disponible: fechas?.horario_disponibilidad[hora]?.disponibles.includes(Number(cancha.id_cancha)),
-    })),
-  }));
+  const renderCell = (hora, cancha) => {
+    const disponibles = fechas.horario_disponibilidad[hora]?.disponibles || [];
+    const ocupadas = fechas.horario_disponibilidad[hora]?.ocupadas || [];
 
-  //Renderizado de fechas
-  const columns = [
-    { key: "hora", label: "Horarios" },
-    ...canchas.map(cancha => ({ key: `cancha_${cancha.nombre_cancha}`, label: `Cancha ${cancha.nombre_cancha}` })),
-  ];
+    if (disponibles.includes(cancha.id_cancha)) {
+      return <Button onClick={() => handleReservaClick(hora, cancha)}>Reservar</Button>;
+    } else if (ocupadas.includes(cancha.id_cancha)) {
+      return "No disponible";
+    } else {
+      return ""; 
+    }
+  };
 
-  const rows = horarios.map(hora => {
-    const row = { hora };
-    canchas.forEach(cancha => {
-      row[`cancha_${cancha.nombre_cancha}`] = fechas?.horario_disponibilidad[hora]?.disponibles.includes(Number(cancha.id_cancha))
-        ? "Disponible"
-        : "Ocupada";
-    });
-    return row;
-  });
 
   //Función para crear el formulario de reserva
 
@@ -148,7 +121,7 @@ const Complejo = () => {
     const reserva = {
       id_jugador: id_jugador,
       id_complejo: complejo.id_complejo,
-      nombre_complejo: complejo.nombre,
+      nombre_complejo: complejo.nombre_complejo,
       direccion_complejo: complejo.direccion,
       telefono_complejo: complejo.telefono,
       id_cancha: cancha.id_cancha,
@@ -162,7 +135,6 @@ const Complejo = () => {
     setShowModal(true);
   };
 
-
   return (
     <div>
       <ModalReservas
@@ -173,7 +145,7 @@ const Complejo = () => {
           origen={"complejo"}
         />
       <div className='Complejo'>
-        <h2>{complejo.nombre}</h2>
+        <h2>{complejo.nombre_complejo}</h2>
         <p>Dirección: {complejo.direccion}</p>
         <p>Teléfono: {complejo.telefono}</p>
         <p>Descripcion: {complejo.descripcion}</p>

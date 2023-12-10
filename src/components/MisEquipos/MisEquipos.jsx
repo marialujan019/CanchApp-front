@@ -5,14 +5,36 @@ import EditarEquipo from './EditarEquipo/EditarEquipo';
 import CrearEquipo from './CrearEquipo/CrearEquipo';
 import axios from 'axios';
 import { useUser } from '../UserContext';
+import { useNavigate } from 'react-router';
+import { consultarBaseDeDatos } from '../utils/Funciones';
+
+
+const columns = [
+  { key: "nombre_equipo", label: "Nombre del Equipo" },
+  { key: "cant_jugadores", label: "Cantidad de Jugadores" },
+  { key: "publico", label: "Estado" },
+  { key: "actions", label: "Acciones" }
+];
+
+const columnsEquiposDeFuera = [
+  { key: "nombre_equipo", label: "Nombre del Equipo" },
+  { key: "max_jug", label: "Cantidad de Jugadores" },
+  { key: "actions", label: "Acciones" }
+];
 
 const MisEquipos = () => {
   const { user } = useUser();
   const id_capitan = user.id;
+  //Variables para mostrar equipos
   const [misEquipos, setMisEquipos] = useState([]);
   const [jugadoresDelBack, setJugadoresDelBack] = useState([]);
+  const [equiposDeFuera, setEquiposDeFuera] = useState([]);
+  //Variable para ver los jugadores del equipo de fuera
+  const[jugadoresEquiposDeFuera, setJugadoresEquiposDeFuera] = useState([]);
   //Variable del ver jugadores
   const [showVerJugadoresModal, setShowVerJugadoresModal] = useState(false);
+  const [showVerJugadoresModal2, setShowVerJugadoresModal2] = useState(false);
+
   //Variable del editar jugadores
   const [showEditarJugadoresModal, setShowEditarJugadoresModal] = useState(false);
   const [idEquipoAEnviar, setIdEquipoAEnviar] = useState (null)
@@ -20,8 +42,8 @@ const MisEquipos = () => {
   const [nombreEquipoAEnviar, setNombreEquipoAEnviar] = useState (null)
   //Variable del crear jugadores
   const [showCrearEquipoModal, setShowCrearEquipoModal] = useState(false);
-
-
+  //Variable para ir a mis equipos
+  const navigate = useNavigate(); 
 
   //Función para obtener los equipos de un jugador
   useEffect(() => {
@@ -30,6 +52,12 @@ const MisEquipos = () => {
       setMisEquipos(datos.data);
     };
 
+    const fetchEquiposDeFuera = async () => {
+      const datos = await consultarBaseDeDatos(`../json/equiposDeMisEquipos.json`);
+      setEquiposDeFuera(datos);
+    };
+
+    fetchEquiposDeFuera()
     fetchEquipos();
   }, []);
 
@@ -74,9 +102,9 @@ const MisEquipos = () => {
   }
 
   
+  //Función para renderizar los equipos creados por el usuario
   const renderCell = useCallback((equipo, columnKey) => {
     const cellValue = equipo[columnKey];
-
     switch (columnKey) {
       case "nombre_equipo":
         return cellValue
@@ -108,62 +136,108 @@ const MisEquipos = () => {
     }
   }, []);
 
-  const columns = [
-    {
-      key: "nombre_equipo",
-      label: "Nombre del Equipo",
-    },
-    {
-      key: "cant_jugadores",
-      label: "Cantidad de Jugadores",
-    },
-    {
-      key: "publico",
-      label: "Estado",
-    },
-    {
-      key: "actions",
-      label: "Acciones",
-    },
-  ];
+  
+  //Función para traer los equipos en los que está el usuario, según el id_capitan
+  //Al ser el id_capitan lo mismo que el id_jugador del jugador te envio eso para que me traigas los equipos del back
+  //Onda, yo envio el id_jugador del usuario al back y me tiene que traer los equipos en los que está anotado
+  const fetchJugadoresDeFuera = async (id_capitan) => {
+    console.log(id_capitan)
+    const datos = await consultarBaseDeDatos(`../json/jugadoresDeUnEquipo.json`);
+    setJugadoresEquiposDeFuera(datos)
+    console.log(jugadoresEquiposDeFuera)
+    setShowVerJugadoresModal2(true);
+  };
+
+  //Función para traer los equipos en los que está el usuario
+  const renderCellEquiposDeFuera = useCallback((equipo, columnKey) => {
+    const cellValue = equipo[columnKey];
+  
+    switch (columnKey) {
+      case "nombre_equipo":
+        return cellValue;
+      case "max_jug":
+        return `${equipo.cant_jug}/${cellValue}`;
+      case "actions":
+        case "actions":
+        return (
+          <div className="flex items-center space-x-3 justify-center">
+            <Tooltip content="Ver detalles">
+              <button className="text-lg text-default-400 cursor-pointer active:opacity-50" onClick={() => fetchJugadoresDeFuera(id_capitan)}><i class="bi bi-eye"></i></button>
+            </Tooltip>
+            <Tooltip content="Editar equipo">
+            </Tooltip>
+            <Tooltip content="Eliminar equipo">
+              <button className="text-lg text-danger cursor-pointer active:opacity-50" onClick={() => handleEliminarEquipo(equipo.id_equipo, equipo.nombre_equipo)} ><i class="bi bi-trash"></i></button>
+            </Tooltip>
+          </div>
+        );
+      default:
+        return cellValue;
+    }
+  }, []);
+
+
 
   return (
     <div>
-      <h2>Mis Equipos</h2>
+        <Button onClick={handleCrearEquipo}>Crear equipo</Button>
+        <Button onClick={()=>{navigate("/buscarequipo")}}>Buscar equipo</Button>
 
-      {((misEquipos.length === 0) || misEquipos === null )? (
-        <p>No tienes equipos</p>
-      ) : (
-        <div>
-          <Table aria-label="Tabla de Equipos">
-         
-          <TableHeader columns={columns} >
-            {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
-          </TableHeader>
-          <TableBody items={misEquipos}>
+
+      <div>
+        <h2>Mis equipos creados</h2>
+        {((misEquipos.length === 0) || misEquipos === null )? (
+          <p>No tienes equipos</p>
+        ) : (
+          <div>
+            <Table aria-label="Tabla de Equipos">
+          
+            <TableHeader columns={columns} >
+              {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
+            </TableHeader>
+            <TableBody items={misEquipos}>
+              {(equipo) => (
+                <TableRow key={equipo.id_equipo}>
+                  {(columnKey) => <TableCell>{renderCell(equipo, columnKey)}</TableCell>}
+                </TableRow>
+              )}
+            </TableBody>
+            </Table>
+          </div>
+        )}
+      <div>
+      
+      <div>
+        <h2>Equipos</h2>
+      </div>
+          {((equiposDeFuera.length === 0) || equiposDeFuera === null) ? (
+            <p>No tienes equipos</p>
+          ) : (
+            <div>
+              <Table aria-label="Tabla de Equipos">
+                <TableHeader columns={columnsEquiposDeFuera}>
+                  {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
+                </TableHeader>
+                <TableBody items={equiposDeFuera}>
             {(equipo) => (
               <TableRow key={equipo.id_equipo}>
-                {(columnKey) => <TableCell>{renderCell(equipo, columnKey)}</TableCell>}
+                {(columnKey) => <TableCell>{renderCellEquiposDeFuera(equipo, columnKey)}</TableCell>}
               </TableRow>
             )}
           </TableBody>
-          </Table>
+
+              </Table>
+            </div>
+          )}
         </div>
-      )}
-
-      <Button onClick={handleCrearEquipo}>Crear equipo</Button>
-      <div>
-        
-      </div>
-
-
-      <div>
-        <CrearEquipo
-          show={showCrearEquipoModal}
-          onHide={() => setShowCrearEquipoModal(false)}
-          updateMisEquipos={updateMisEquipos} // Pasa la función para renderizar Mis Equipos como prop
-          equiposYaCreados={misEquipos}
-        />
+        <div>
+          <CrearEquipo
+            show={showCrearEquipoModal}
+            onHide={() => setShowCrearEquipoModal(false)}
+            updateMisEquipos={updateMisEquipos} // Pasa la función para renderizar Mis Equipos como prop
+            equiposYaCreados={misEquipos}
+          />
+        </div>
       </div>
 
 
@@ -171,6 +245,12 @@ const MisEquipos = () => {
         jugadores={jugadoresDelBack}
         show={showVerJugadoresModal}
         onHide={() => setShowVerJugadoresModal(false)}
+      />
+
+      <JugadoresModal
+        jugadores={jugadoresEquiposDeFuera}
+        show={showVerJugadoresModal2}
+        onHide={() => setShowVerJugadoresModal2(false)}
       />
 
       <EditarEquipo
