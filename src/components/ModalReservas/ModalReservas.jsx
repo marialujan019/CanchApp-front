@@ -1,23 +1,63 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { useReservasContext } from '../reservasContext';
 
-const ModalReservas = ({ show, onHide, nuevaReserva, equipos }) => {
+const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
+  const { agregarReserva } = useReservasContext(); // Mover esto aquí
   const [selectedEquipo, setSelectedEquipo] = useState('');
-  const navigate = useNavigate()
+  const navigate = useNavigate(); 
 
   const handleReservarClick = () => {
-    // Verificar si se ha seleccionado un equipo
     if (selectedEquipo) {
-      // Mostrar alert con los datos
       alert(
         `ID Jugador: ${nuevaReserva.id_jugador}\nID Complejo: ${nuevaReserva.id_complejo}\nID Cancha: ${nuevaReserva.id_cancha}\nFecha: ${nuevaReserva.fecha}\nHora: ${nuevaReserva.hora}\nID Equipo seleccionado: ${selectedEquipo}`
       );
     } else {
-      // Si no se ha seleccionado un equipo, mostrar un mensaje
       alert('Selecciona un equipo antes de reservar.');
     }
   };
+
+  const handleMisEquiposClick = () => {
+    if (origen === "complejo") {
+      Swal.fire({
+        title: "¿Quieres guardar la reserva?",
+        text: "Puedes continuar con ella en 'Mis reservas'",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, guardar la reserva",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const reservaData = {
+            id_jugador: nuevaReserva.id_jugador,
+            id_complejo: nuevaReserva.id_complejo,
+            id_cancha: nuevaReserva.id_cancha,
+            nombre_complejo: nuevaReserva.nombre_complejo,
+            direccion_complejo: nuevaReserva.direccion_complejo,
+            telefono_complejo: nuevaReserva.telefono_complejo,
+            nombre_cancha: nuevaReserva.nombre_cancha,
+            fecha: nuevaReserva.fecha,
+            hora: nuevaReserva.hora,
+          };
+          agregarReserva(reservaData);
+          console.log(reservaData);
+          Swal.fire({
+            text: "Tu equipo se guardó en 'Mis reservas'",
+            icon: "success",
+          });
+          navigate("/misReservas");
+        } else {
+          onHide();
+        }
+      });
+    } else if (origen === "reservas") {
+    }
+  };
+
 
   const renderEquiposSection = () => {
     if (equipos.length > 0) {
@@ -40,7 +80,7 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos }) => {
       return (
         <div>
           <p>No tienes equipos creados.</p>
-          <Button variant="primary"  onClick={() => navigate('/misEquipos')}>
+          <Button variant="primary" onClick={handleMisEquiposClick}>
             Crea un equipo
           </Button>
         </div>

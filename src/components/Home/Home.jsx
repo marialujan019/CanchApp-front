@@ -18,6 +18,7 @@ function Home() {
         axios.get('http://localhost:3001/logout')
         .then(res=> {
             if(res.data.Status === "Respuesta ok"){
+                console.log(res.data)
                 window.location.reload(true);
             } else {
                 alert('error');

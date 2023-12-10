@@ -35,12 +35,13 @@ import { UserProvider } from './components/UserContext';
 import BusquedaJugador from './components/BusquedaJugador/BusquedaJugador';
 import BusquedaEquipo from './components/BusquedaEquipo/BusquedaEquipo';
 
-//Mapa
+//Complejo
 import Mapa from './components/Mapa/Mapa';
-
-//Reserva
 import Complejo from './components/Complejo/Complejo';
-import FormularioReserva from './components/FormularioReserva/FormularioReserva';
+
+//Mis reservas
+import MisReservas from './components/MisReservas/MisReservas';
+import { ReservasProvider } from './components/reservasContext';
 
 //Mis equipos
 import MisEquipos from './components/MisEquipos/MisEquipos';
@@ -48,6 +49,7 @@ import MisEquipos from './components/MisEquipos/MisEquipos';
 //Historial
 import Historial from './components/Historial/Historial';
 
+//Mis reservas
 import ModalSeleccionEquipo from './components/BusquedaJugador/ModalSeleccionEquipo/ModalSeleccionEquipo';
 
 const equipos = [
@@ -108,11 +110,9 @@ class App extends Component {
     return (
       <NextUIProvider>
         <UserProvider>
+        <ReservasProvider>
           <div className="App">
             <BrowserRouter>
-
-            
-            
               <Header/>
           
               <Routes>
@@ -136,10 +136,9 @@ class App extends Component {
                 <Route path='/buscarequipo/' element={<BusquedaEquipo/>} />
           
 
-               {/* Reserva */}
+               {/* Complejo */}
                <Route path="/mapa" element={<Mapa/>} />
                <Route path="/complejo/:id_complejo" element={<Complejo />} />
-               <Route path="/reserva" element={<FormularioReserva />} />
           
               {/* Mis equipos */}
                <Route path="/misEquipos" element={<MisEquipos />} />
@@ -147,6 +146,8 @@ class App extends Component {
               {/* Historial */}
               <Route path="/historial" element={<Historial />} />
 
+              {/* Historial */}
+              <Route path="/misReservas" element={<MisReservas />} />
               
               {/* Modal para ver equipos */}
               <Route path="/historial" element={<ModalSeleccionEquipo equipos={equipos}/>} />
@@ -156,6 +157,7 @@ class App extends Component {
               <Footer/>
             </BrowserRouter>
           </div>
+        </ReservasProvider>
         </UserProvider>
       </NextUIProvider>
     );
