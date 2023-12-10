@@ -1,10 +1,9 @@
 import React, { useState, useEffect  } from 'react';
-import { consultarBaseDeDatos } from '../utils/Funciones';
 import './busquedaJugador.css';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, Button } from "@nextui-org/react";
 import ModalSeleccionEquipo from './ModalSeleccionEquipo/ModalSeleccionEquipo';
-
-const id_capitan = 42;
+import axios from 'axios';
+import { useUser } from '../UserContext';
 
 const columns = [
   { key: "nombre_apellido", label: "Nombre y Apellido" },
@@ -21,7 +20,9 @@ const BusquedaJugador = () => {
   //Estados para renderizar los jugadores
   const [jugadoresParaLaBusqueda, setJugadoresParaLaBusqueda] = useState([]);
   const [refreshPage, setRefreshPage] = useState(false);
+  const { user } = useUser();
 
+  const id_capitan = user.id;
   // Estados para los filtros
   const [filtroEdad, setFiltroEdad] = useState("");
   const [filtroSexo, setFiltroSexo] = useState("");
@@ -38,8 +39,8 @@ const BusquedaJugador = () => {
   // Primer renderizado de la pagina
   useEffect(() => {
     const fetchJugadores = async () => {
-      const datos = await consultarBaseDeDatos('../json/jugadoresParaBusqueda.json');
-      setJugadoresParaLaBusqueda(datos);
+      const datos = await axios.get('http://localhost:3001/jugadores/all');
+      setJugadoresParaLaBusqueda(datos.data);
     };
   
     fetchJugadores();
@@ -102,9 +103,9 @@ const BusquedaJugador = () => {
   //Manejo de solicitudes
   //Función para recibir los equipos desde el back enviando el id_capitan
   const fetchEquipos = async (id_capitan, idJugadorAInvitar) => {
-    const datos = await consultarBaseDeDatos(`../json/equiposDeUnJugadorParaBusqueda.json`);
+    const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_capitan}`);
     setIdJugadorAInvitar(idJugadorAInvitar);
-    setEquiposDelBack(datos);
+    setEquiposDelBack(datos.data);
     setShowSolicitudModal(true);
   };
 

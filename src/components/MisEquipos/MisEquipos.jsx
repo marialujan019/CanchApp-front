@@ -5,6 +5,7 @@ import EditarEquipo from './EditarEquipo/EditarEquipo';
 import CrearEquipo from './CrearEquipo/CrearEquipo';
 import axios from 'axios';
 import { useUser } from '../UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const MisEquipos = () => {
   const { user } = useUser();
@@ -20,8 +21,7 @@ const MisEquipos = () => {
   const [nombreEquipoAEnviar, setNombreEquipoAEnviar] = useState (null)
   //Variable del crear jugadores
   const [showCrearEquipoModal, setShowCrearEquipoModal] = useState(false);
-
-
+  const navigate = useNavigate()
 
   //Función para obtener los equipos de un jugador
   useEffect(() => {
@@ -71,6 +71,10 @@ const MisEquipos = () => {
 
   const handleCrearEquipo = (id_capitan) => {
     setShowCrearEquipoModal(true)
+  }
+
+  const handleBuscarEquipo = () => {
+    navigate(`/buscarequipo/${id_capitan}`);
   }
 
   
@@ -153,7 +157,8 @@ const MisEquipos = () => {
 
       <Button onClick={handleCrearEquipo}>Crear equipo</Button>
       <div>
-        
+      <Button onClick={handleBuscarEquipo}>Buscar equipo</Button>
+
       </div>
 
 

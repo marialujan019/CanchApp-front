@@ -133,7 +133,7 @@ class App extends Component {
 
                 {/* Busqueda */}
                 <Route path='/buscarjugador' element={<BusquedaJugador/>} />
-                <Route path='/buscarequipo/' element={<BusquedaEquipo/>} />
+                <Route path='/buscarequipo/:id_jugador' element={<BusquedaEquipo/>} />
           
 
                {/* Reserva */}

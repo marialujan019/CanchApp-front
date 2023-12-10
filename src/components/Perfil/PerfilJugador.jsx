@@ -10,6 +10,8 @@ const PerfilJugador = ({id}) => {
                 <h2>Mi perfil</h2>               
             </div>
             <div>
+            <button onClick={() => navigate('/misEquipos')} > Finalizar registro </button>
+
             </div>
            
         </div>

@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User } from '@nextui-org/react';
 import "./jugadoresModal.css";
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 const columns = [
   { key: "nombre", label: "Jugador" },
@@ -12,6 +13,7 @@ const columns = [
 ];
 
 const JugadoresModal = ({ jugadores, show, onHide }) => {
+  const navigate = useNavigate()
 
   const renderCell = useCallback((jugador, columnKey) => {
     const cellValue = jugador[columnKey];
@@ -38,6 +40,9 @@ const JugadoresModal = ({ jugadores, show, onHide }) => {
         return cellValue;
     }  }, []);
 
+    const handleBuscarJugadores =() => {
+      navigate('/buscarjugador')
+    }
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
@@ -64,6 +69,9 @@ const JugadoresModal = ({ jugadores, show, onHide }) => {
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
           Cerrar
+        </Button>
+        <Button variant="secondary" onClick={handleBuscarJugadores}>
+          Invitar jugadores
         </Button>
       </Modal.Footer>
     </Modal>
