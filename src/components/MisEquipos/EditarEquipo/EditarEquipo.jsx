@@ -1,12 +1,16 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Tooltip } from "@nextui-org/react";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_equipo, id_capitan, updateMisEquipos }) => {    const [equipoNombre, setEquipoNombre] = useState(nombre_equipo);
+
+const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_equipo, id_capitan, updateMisEquipos }) => {
+    const [equipoNombre, setEquipoNombre] = useState(nombre_equipo);
     const [equipoVisibilidad, setEquipoVisibilidad] = useState(visibilidad);
     const [nuevoCapitan, setNuevoCapitan] = useState(null);
     const [arregloJugadores, setArregloJugadores] = useState(jugadores);
-
+    const navigate = useNavigate()
     
     useEffect(() => {
         setEquipoNombre(nombre_equipo);
@@ -35,7 +39,7 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
     //Función que envia al back los datos del equipo editado
     //Si hay un nuevoCapitan, se debe eliminar este equipo
     //El id_capitan es el id proveniente del jugador que inició sesion
-    const handleConfirmar = () => {
+    const handleConfirmar = async () => {
         console.log({
           id_capitan,
           id_equipo,
@@ -44,7 +48,16 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
           arregloJugadores,
           nuevoCapitan,
         });
-        updateMisEquipos(); // Llama a la función para actualizar MisEquipos, actualizar bbdd
+        const idsJugadores = arregloJugadores.map((jugador) => jugador.id_jug);
+
+        await axios.post('http://localhost:3001/equipo/update',{
+          nombre_equipo: equipoNombre,
+        //  cant_max: data.cant_max,
+          capitan: nuevoCapitan ? nuevoCapitan : id_capitan,
+          id_jugadores: idsJugadores,
+          publico: equipoVisibilidad,
+          id_equipo: id_equipo
+        })
         onHide();
     };
 
@@ -62,7 +75,7 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
                 <Tooltip content="Ascender jugador">
                   <button
                     className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                    onClick={() => setNuevoCapitan(jugador.id_jugador)}
+                    onClick={() => setNuevoCapitan(jugador.id_jug)}
                   >
                     Ascender jugador
                   </button>
@@ -72,7 +85,7 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
                     className="text-lg text-danger cursor-pointer active:opacity-50"
                     onClick={() => {
                       const updatedJugadores = jugadores.filter(
-                        (j) => j.id_jugador !== jugador.id_jugador
+                        (j) => j.id_jug !== jugador.id_jug
                       );
                       setNuevoCapitan(null);
                       setArregloJugadores(updatedJugadores);
@@ -136,7 +149,7 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
                     </TableHeader>
                     <TableBody items={jugadores}>
                         {(jugador) => (
-                            <TableRow key={jugador.id_jugador}>
+                            <TableRow key={jugador.id_jug}>
                                 {(columnKey) => <TableCell>{renderCell(jugador, columnKey)}</TableCell>}
                             </TableRow>
                         )}
