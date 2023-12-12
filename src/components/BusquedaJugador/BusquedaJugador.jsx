@@ -110,7 +110,7 @@ const BusquedaJugador = () => {
   };
 
   return (
-    <div className='busquedaJugadorContainer'>
+    <div className='busquedaJugadorContainer main'>
       <div className='busquedaJugadorFiltroNombre'>
         <h4>Búsqueda por nombre o apellido</h4>
         <input
@@ -178,20 +178,23 @@ const BusquedaJugador = () => {
          </TableHeader>
          <TableBody>
             {jugadoresFiltrados.map((jugador) => (
-            <TableRow key={jugador.id_jugador}>
-              {columns.map((column) => (
-              <TableCell key={column.key}>
-                {column.key === "nombre_apellido" ? (
-                  `${jugador["nombre"]} ${jugador["apellido"]}`
-                  ) : column.key !== "solicitud" ? (
-                    jugador[column.key]
-                  ) : (
-                    <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jugador)}> Ver solicitud </Button>
-                  )}
-                </TableCell>
-              ))}
-
-               </TableRow>
+              <TableRow key={jugador.id_jugador}>
+                {columns.map((column) => (
+                  <TableCell key={column.key}>
+                    {column.key === "nombre_apellido" ? (
+                      `${jugador["nombre"]} ${jugador["apellido"]}`
+                    ) : column.key !== "solicitud" ? (
+                      column.key === "pie_habil" || column.key === "posicion" ? (
+                        jugador[column.key] == null ? "Información privada" : jugador[column.key]
+                      ) : (
+                        jugador[column.key]
+                      )
+                    ) : (
+                      <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jugador)}> Ver solicitud </Button>
+                    )}
+                  </TableCell>
+                ))}
+              </TableRow>
             ))}
           </TableBody>
         </Table>

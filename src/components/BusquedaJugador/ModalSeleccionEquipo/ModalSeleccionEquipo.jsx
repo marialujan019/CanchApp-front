@@ -3,22 +3,10 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button
 import { Modal } from 'react-bootstrap';
 
 const columns = [
-  {
-    key: "nombre_equipo",
-    label: "Nombre del Equipo",
-  },
-  {
-    key: "cant_jug",
-    label: "Cantidad de Jugadores",
-  },
-  {
-    key: "solicitud",
-    label: "Solicitud",
-  },
-  {
-    key: "estado",
-    label: "Estado",
-  },
+  { key: "nombre_equipo", label: "Nombre del Equipo" },
+  { key: "cant_jug", label: "Cantidad de Jugadores" },
+  { key: "solicitud", label: "Solicitud" },
+  { key: "estado", label: "Estado" },
 ];
 
 //Se trae el id del jugador al que le voy a enviar la solicitud y los equipos que tengo armados para agregar al jugador
@@ -43,27 +31,31 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
   const renderCell = (equipo, column) => {
     switch (column.key) {
       case 'cant_jug':
-        return `${equipo.cant_jug}/${equipo.max_jug}`;
+        return `${equipo.cant_jugadores}/${equipo.cant_max}`;
       case 'solicitud':
         if (equipo.estado === 'Aceptado') {
-          return <Button disabled color='success'>Aceptado</Button>;
+          return <Button disabled color='success'>Ya formas parte de este equipo</Button>;
         } else if (equipo.estado === 'Pendiente') {
           return (
             <Button onClick={() => toggleSolicitud(equipo)} color='danger'>
               Cancelar solicitud
             </Button>
           );
-        } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
+        } else if (equipo.estado === null || equipo.estado === undefined || equipo.estado === 'Rechazado') {
           return (
             <Button onClick={() => toggleSolicitud(equipo)} color='primary'>
-              Enviar solicitud
+              {equipo.estado ? 'Reenviar solicitud' : 'Enviar solicitud'}
             </Button>
           );
         }
+      case 'estado':
+        return equipo.estado || 'No enviado'; // Renderiza el estado o 'No enviado' si es null o undefined
       default:
         return equipo[column.key];
     }
   };
+
+  
 //ACA IRIAN LAS INVITACIONES
   return (
     <Modal show={show} onHide={onHide} centered>

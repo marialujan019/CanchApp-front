@@ -17,32 +17,34 @@ const JugadoresModal = ({ jugadores, show, onHide }) => {
 
   const renderCell = useCallback((jugador, columnKey) => {
     const cellValue = jugador[columnKey];
-
+  
     switch (columnKey) {
       case "nombre":
         return (
-    <User
-      avatarProps={{ radius: "lg", src: jugador.imagen }}
-      description={`Edad: ${jugador.edad}`}
-      name={`${jugador.nombre} ${jugador.apellido}`}
-      
-    >
-      {jugador.email}
-    </User>
-  );
+          <User
+            avatarProps={{ radius: "lg", src: jugador.imagen }}
+            description={`Edad: ${jugador.edad}`}
+            name={`${jugador.nombre} ${jugador.apellido}`}
+          >
+            {jugador.email}
+          </User>
+        );
       case "edad":
-      case "pie_habil":
       case "sexo":
-      case "posicion":
       case "telefono":
         return cellValue;
+      case "pie_habil":
+      case "posicion":
+        return cellValue || "Información privada";
       default:
         return cellValue;
-    }  }, []);
-
-    const handleBuscarJugadores =() => {
-      navigate('/buscarjugador')
     }
+  }, []);
+  
+
+  const handleBuscarJugadores =() => {
+    navigate('/buscarjugador')
+  }
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>

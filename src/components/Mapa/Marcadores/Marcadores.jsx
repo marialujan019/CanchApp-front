@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Popup, Marker } from 'react-leaflet';
 import { useNavigate } from 'react-router-dom';
 
-const Marcadores = ({ position, customIcon, id_complejo, nombre, direccion, telefono }) => {
+const Marcadores = ({ position, customIcon, id_complejo, nombre, direccion, telefono, markerRefs }) => {
+  const markerRef = useRef(null);
   const navigate = useNavigate();
 
-  //Esta función deberia tener un post, para el back, que pase el id_complejo
+  useEffect(() => {
+    markerRefs.current[id_complejo] = markerRef.current;
+  }, []);
+
   const pedirComplejo = () => {
     navigate(`/complejo/${id_complejo}`);
   };
-  
 
   return (
     <div>
-      <Marker position={position} icon={customIcon}>
+      <Marker position={position} icon={customIcon} ref={markerRef}>
         <Popup>
           {nombre}, {direccion}, {telefono}
           <div>

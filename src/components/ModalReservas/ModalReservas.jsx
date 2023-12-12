@@ -21,7 +21,7 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
   const handleReservarClick = () => {
     if (selectedEquipo) {
       alert(
-        `ID Jugador: ${nuevaReserva.id_jugador}\nID Complejo: ${nuevaReserva.id_complejo}\nID Cancha: ${nuevaReserva.id_cancha}\nFecha: ${nuevaReserva.fecha}\nHora: ${nuevaReserva.hora}\nID Equipo seleccionado: ${selectedEquipo}`
+        `ID Jugador: ${nuevaReserva.id_jugador}\nID Complejo: ${nuevaReserva.id_complejo}\nID Cancha: ${nuevaReserva.id_cancha}\nFecha: ${nuevaReserva.fecha}\nHora: ${nuevaReserva.hora}\nID Equipo seleccionado: ${selectedEquipo} \nID Agenda ${nuevaReserva.id_agenda}`
       );
       setReservas();
       navigate("/misEquipos");
@@ -62,9 +62,9 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
             nombre_cancha: nuevaReserva.nombre_cancha,
             fecha: nuevaReserva.fecha,
             hora: nuevaReserva.hora,
+            id_agenda: nuevaReserva.id_agendaDisponible
           };
           agregarReserva(reservaData);
-          console.log(reservaData);
           Swal.fire({
             text: "Tu equipo se guardó en 'Mis reservas'",
             icon: "success",
@@ -82,7 +82,6 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
 
   //Función para traer las reservas ya hechas por el usuario
   const renderEquiposSection = (id_jugador) => {
-    console.log(id_jugador)
     if (equipos.length > 0) {
       return (
         <div>

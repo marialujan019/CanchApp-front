@@ -1,0 +1,14 @@
+.bannerContainer {
+    height: 30vh;
+    background-image: url(https://pichangafutbol.todotorneos.com.ar/images/bg-breadcrumbs-1-1920x726.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.breadcrumbs {
+    color:white;
+    font-size: 3rem;
+}

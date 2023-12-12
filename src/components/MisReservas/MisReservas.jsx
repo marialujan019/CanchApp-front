@@ -4,6 +4,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button
 import ModalReservas from '../ModalReservas/ModalReservas';
 import { consultarBaseDeDatos } from '../utils/Funciones';
 import { useUser } from '../UserContext';
+import "./misReservas.css"
 
 const columns = [
   { key: "nombre_complejo", label: "Nombre Complejo" },
@@ -82,7 +83,7 @@ const MisReservas = () => {
   }, []);
 
   return (
-    <div>
+    <div className='main'>
       <h2>Reservas pendientes</h2>
       <Table aria-label="Mis Reservas">
         <TableHeader columns={columns}>

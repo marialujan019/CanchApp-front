@@ -1,6 +1,6 @@
 [
   {
-    "id_jugador":7,
+    "id_jug":7,
     "nombre": "Pan",
     "apellido": "No",
     "imagen":"https://picsum.photos/200/300",
@@ -12,7 +12,7 @@
   },
 
   {
-    "id_jugador":17,
+    "id_jug":17,
     "nombre": "Josefe",
     "apellido": "No",
     "imagen": "url",
@@ -23,7 +23,7 @@
     "posicion": "Mediocampista"
   },
   {
-    "id_jugador":5,
+    "id_jug":5,
     "nombre": "No se",
     "apellido": "Capaz",
     "imagen": "url",

@@ -28,3 +28,8 @@
   font-family: "bBigerOver";
   src: url(/public/fonts/bBigerOver.ttf);
 }
+
+.main {
+  min-height: 80vh;
+  background-color: #f2f2f2;
+}

@@ -49,8 +49,10 @@ import MisEquipos from './components/MisEquipos/MisEquipos';
 //Historial
 import Historial from './components/Historial/Historial';
 
-//Mis reservas
-import ModalSeleccionEquipo from './components/BusquedaJugador/ModalSeleccionEquipo/ModalSeleccionEquipo';
+
+//Mis solicitudes
+import MisSolicitudes from './components/MisSolicitudes/MisSolicitudes';
+
 
 const equipos = [
   {
@@ -114,15 +116,13 @@ class App extends Component {
           <div className="App">
             <BrowserRouter>
               <Header/>
-          
               <Routes>
-                
                 <Route path='/' element={<Inicio/>}/>
                 <Route path='/ingreso' element={
                   route === 'signin'
                   ? <Ingreso loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
                   : <Registro loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-              }/>
+                }/>
                 <Route path='/ingreso/registro' element={<FormularioRegistro/>}/>
                 <Route path='/ingreso/recuperar' element={<RecuperarContrasenia/>}/>
                 <Route path= '/home' element={<Home />}/>
@@ -146,12 +146,12 @@ class App extends Component {
               {/* Historial */}
               <Route path="/historial" element={<Historial />} />
 
-              {/* Historial */}
+              {/* Reservas */}
               <Route path="/misReservas" element={<MisReservas />} />
-              
-              {/* Modal para ver equipos */}
-              <Route path="/historial" element={<ModalSeleccionEquipo equipos={equipos}/>} />
 
+              {/* Solicitudes */}
+              <Route path="/misSolicitudes" element={<MisSolicitudes />} />
+              
 
               </Routes>
               <Footer/>

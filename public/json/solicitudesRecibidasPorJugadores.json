@@ -1,0 +1,24 @@
+[
+    {
+        "id_solicitud": 6,
+        "nombre": "juanpe",
+        "apellido": "si",
+        "imagen": "url",
+        "edad": 23,
+        "pie_habil": "Derecho",
+        "sexo": "Masculino",
+        "telefono": 21,
+        "posicion": "Arquero"
+    },    
+    {
+        "id_solicitud": 7,
+        "nombre": "Juana",
+        "apellido": "si",
+        "imagen": "url",
+        "edad": 23,
+        "pie_habil": "Izquierdo",
+        "sexo": "Femenino",
+        "telefono": 211,
+        "posicion": "Defensor"
+    }
+]

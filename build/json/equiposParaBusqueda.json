@@ -1,0 +1,23 @@
+[
+  {
+    "id_equipo":1,
+    "nombreEquipo": "Los cracks",
+    "cant_jug": 5,
+    "max_jug": 10,
+    "fecha": "1/2/3 08:00hs",
+    "nombreComplejo": "Complejos pedro" ,
+    "direccion" : "Marco antonio 132",
+    "estado": "No enviado"	
+  },
+  {
+    "id_equipo":3,
+    "nombreEquipo": "Los capos",
+    "cant_jug": 3,
+    "max_jug": 14,
+    "fecha": "1/2/3 08:00hs",
+    "hora": "08:00",
+    "nombreComplejo": "Complejos pedro" ,
+    "direccion": "Marco antonio 132",
+    "estado": "Pendiente"	
+  }
+]

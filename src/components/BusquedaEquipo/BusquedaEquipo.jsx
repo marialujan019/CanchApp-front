@@ -6,7 +6,7 @@ import {  useParams } from 'react-router-dom';
 
 const columns = [
   { key: "nombre_equipo", label: "Nombre del Equipo" },
-  { key: "fecha", label: "Fecha del proximo partido" },
+  { key: "proximo_partido", label: "Fecha del proximo partido" },
   { key: "cant_jugadores", label: "Jugadores" },
   { key: "solicitud", label: "Solicitud" },
   { key: "estado", label: "Estado" },
@@ -121,13 +121,18 @@ const BusquedaEquipo = () => {
                   {column.key === 'cant_jugadores' ? (
                     <>
                       <Button onClick={() => fetchJugadores(equipo.id_equipo)}>
-                      <i class="bi bi-eye"></i>  {equipo[column.key]}/{equipo.max_jug}
+                      <i class="bi bi-eye"></i>  {equipo[column.key]}/{equipo.cant_max}
                       </Button>
                     </>
                   ) : column.key === 'solicitud' ? (
                     renderButton(equipo)
                   ) : (
-                    equipo[column.key]
+                    // Modificación aquí
+                    column.key === 'proximo_partido' && equipo[column.key] === null ? (
+                      "Este equipo no tiene próximos partidos"
+                    ) : (
+                      equipo[column.key]
+                    )
                   )}
                 </TableCell>
               ))}

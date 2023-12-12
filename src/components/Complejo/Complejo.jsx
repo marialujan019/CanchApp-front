@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import ModalReservas from '../ModalReservas/ModalReservas';
 import axios from 'axios';
 import { useUser } from '../UserContext';
+import "./complejo.css"
 
 const Complejo = () => {
   //Variable para obtener el id del complejo mediante la ruta
@@ -51,7 +52,6 @@ const Complejo = () => {
         res => {
           var canchas = res.data.canchas
           if(canchas) {
-            console.log(canchas)
               setCanchas(canchas)
           } else {
               alert("Error al obtener canchas del complejo")
@@ -62,7 +62,6 @@ const Complejo = () => {
     }
 
     async function fetchEquiposDelJugador(id_jugador) { //Funcion para traer un json con los equipos creados por un jugador
-      console.log(id_jugador)
       const jsonDataEqipos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_jugador}`);
       setEquipos(jsonDataEqipos.data); //setEquipos(jsonDataEqipos.data);
     }
@@ -78,7 +77,6 @@ const Complejo = () => {
   const fetchFechas = async (fecha) => {
     const jsonDataFechas = await axios.get(`http://localhost:3001/complejo/agenda/turnos/${id_complejo}/${fecha}`);
     setFechas(jsonDataFechas.data);
-    console.log(jsonDataFechas.data)
     // Verificar si la fecha seleccionada es válida
     //Esto sirve para cuando el administrador no define una fecha, 
     //si el administrador no define una cierta fecha y el jugador quiere ver esa fecha no definida, me vas a enviar "fecha_seleccionada": null, entonces pongo que no está disponible
@@ -104,20 +102,23 @@ const Complejo = () => {
   const renderCell = (hora, cancha) => {
     const disponibles = fechas.horario_disponibilidad[hora]?.disponibles || [];
     const ocupadas = fechas.horario_disponibilidad[hora]?.ocupadas || [];
+  
+    const indiceDisponible = disponibles.findIndex(item => item.id_cancha === cancha.id_cancha);
 
-    if (disponibles.includes(cancha.id_cancha)) {
-      return <Button onClick={() => handleReservaClick(hora, cancha)}>Reservar</Button>;
-    } else if (ocupadas.includes(cancha.id_cancha)) {
+    if (disponibles.length > 0 && indiceDisponible !== -1) {
+      return <Button onClick={() => handleReservaClick(hora, cancha, disponibles[indiceDisponible])}>Reservar</Button>;
+    } else if (ocupadas.some(item => item.id_cancha === cancha.id_cancha)) {
       return "No disponible";
     } else {
-      return ""; 
+      return "";
     }
-  };
+};
+
 
 
   //Función para crear el formulario de reserva
-
-  const handleReservaClick = (hora, cancha, id_agendaDisponible) => {
+  const handleReservaClick = (hora, cancha, disponibles) => {
+    const id_agendaDisponible = disponibles.id_agenda;
     const reserva = {
       id_jugador: id_jugador,
       id_complejo: complejo.id_complejo,
@@ -130,25 +131,24 @@ const Complejo = () => {
       hora: hora,
       id_agenda: id_agendaDisponible
     };
-
+    console.log(id_agendaDisponible)
     setNuevaReserva(reserva);
     setShowModal(true);
   };
+  
 
   return (
-    <div>
-      <ModalReservas
-          show={showModal}
-          onHide={() => setShowModal(false)}
-          nuevaReserva={nuevaReserva}
-          equipos={equipos}
-          origen={"complejo"}
-        />
-      <div className='Complejo'>
-        <h2>{complejo.nombre_complejo}</h2>
-        <p>Dirección: {complejo.direccion}</p>
-        <p>Teléfono: {complejo.telefono}</p>
-        <p>Descripcion: {complejo.descripcion}</p>
+    <div className='ComplejoContainer main'>
+        <h2 className='tituloComplejo'>{complejo.nombre_complejo}</h2>
+      <div className='complejoDatosContainer'>
+        <div>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGrVGyZIpSiyAcGPcfo1jzHWNXMzxmTV8aYmgDBCi1-A&s" alt="" />
+        </div>
+        <div>
+          <p>Dirección: {complejo.direccion}</p>
+          <p>Teléfono: {complejo.telefono}</p>
+          <p>Descripcion: {complejo.descripcion}</p>
+        </div>
       </div>
   
       <div>
@@ -160,9 +160,9 @@ const Complejo = () => {
       {fechas && (
         <Table>
           <TableHeader>
-            <TableColumn>Horarios</TableColumn>
+            <TableColumn style={{ textAlign: 'center' }}>Horarios</TableColumn>
             {canchas.map((cancha) => (
-              <TableColumn key={cancha.id_cancha}>{cancha.nombre_cancha}</TableColumn>
+              <TableColumn key={cancha.id_cancha} style={{ textAlign: 'center' }}>{cancha.nombre_cancha}</TableColumn>
             ))}
           </TableHeader>
           <TableBody>
@@ -180,6 +180,14 @@ const Complejo = () => {
         </Table>
       )}
       </div>
+
+      <ModalReservas
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          nuevaReserva={nuevaReserva}
+          equipos={equipos}
+          origen={"complejo"}
+        />
     </div>
   );
 };

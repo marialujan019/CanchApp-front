@@ -36,10 +36,7 @@ function Home() {
                 
                 :
                 <div>
-                    Bienvenido a canchapp {user.nombre}. Acá podrás encontrar y reservar tu cancha
-                    <div>
-                        <Mapa/>
-                    </div>
+                    <Mapa nombre_usuario={user.nombre}/>
                 </div>)
                 :
                 <div>

@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  getKeyValue,
-} from "@nextui-org/react";
-
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/react";
 import axios from 'axios';
 
-import { consultarBaseDeDatos } from '../utils/Funciones';
+
+const columns = [
+  { key: "nombre_complejo", label: "Complejo" },
+  { key: "nombre_cancha", label: "Cancha" },
+  { key: "fechaYHora", label: "Fecha y Hora" },
+  { key: "nombre_equipo", label: "Equipo" },
+];
 
 const Historial = () => {
   //sacarlo del context
@@ -38,30 +35,15 @@ const Historial = () => {
   const partidosAJugar = historialData.filter(item => new Date(item.fechaYHora) > currentDate);
   const partidosJugados = historialData.filter(item => new Date(item.fechaYHora) <= currentDate);
 
-  const columns = [
-    {
-      key: "nombre_complejo",
-      label: "Complejo",
-    },
-    {
-      key: "nombre_cancha",
-      label: "Cancha",
-    },
-    {
-      key: "fechaYHora",
-      label: "Fecha y Hora",
-    },
-    {
-      key: "nombre_equipo",
-      label: "Equipo",
-    },
-  ];
+  
 
   return (
     <div>
+
       {/* Partidos a Jugar */}
       <h2>Partidos a Jugar</h2>
       <Table aria-label="Partidos a Jugar">
+        
         <TableHeader columns={columns} >
           {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
         </TableHeader>
