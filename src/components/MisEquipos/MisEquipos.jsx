@@ -54,7 +54,7 @@ const MisEquipos = () => {
     };
 
     const fetchEquiposDeFuera = async () => {
-      const datos = await axios.get(`http://localhost:3001/equipo/no_soy_capitan/${id_capitan}`)
+      const datos = await axios.get(`http://localhost:3001/equipo/no_soy_capitan/${id_capitan}`);
       setEquiposDeFuera(datos.data);
     };
 
@@ -159,21 +159,17 @@ const MisEquipos = () => {
       case "cant_max":
         return `${equipo.cant_jugadores}/${cellValue}`;
       case "actions":
-        case "actions":
         return (
           <div className="flex items-center space-x-3 justify-center">
             <Tooltip content="Ver detalles">
               <button className="text-lg text-default-400 cursor-pointer active:opacity-50" onClick={() => fetchJugadoresDeFuera(id_capitan, equipo.id_equipo)}><i class="bi bi-eye"></i></button>
-            </Tooltip>
-            <Tooltip content="Editar equipo">
             </Tooltip>
             <Tooltip content="Eliminar equipo">
               <button className="text-lg text-danger cursor-pointer active:opacity-50" onClick={() => handleEliminarEquipo(equipo.id_equipo, equipo.nombre_equipo)} ><i class="bi bi-trash"></i></button>
             </Tooltip>
           </div>
         );
-      default:
-        return cellValue;
+      
     }
   }, []);
 
