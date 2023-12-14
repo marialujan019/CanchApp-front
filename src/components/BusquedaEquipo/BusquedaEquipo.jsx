@@ -53,14 +53,11 @@ const BusquedaEquipo = () => {
   const toggleSolicitudes = async (equipo) => {
     if (equipo.estado === 'Pendiente') {
       await axios.delete(`http://localhost:3001/solicitudes/borrar/${id_jugador}/${equipo.id_equipo}`)
-      console.log(`Se canceló la solicitud del jugador ${id_jugador} del equipo ${equipo.id_equipo}`);
     } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
-      console.log("AGREGAR SOLICITUDDD")
       axios.post('http://localhost:3001/solicitudes', {
         id_jugador: id_jugador,
         id_equipo: equipo.id_equipo
       })
-      console.log(`Se envió la solicitud del jugador ${id_jugador} al equipo ${equipo.id_equipo}`);
     }
     setRefreshPage((prev) => !prev)
   };

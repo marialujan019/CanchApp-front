@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from '@nextui-org/react';
 import { Modal } from 'react-bootstrap';
+import axios from 'axios';
 
 const columns = [
   { key: "nombre_equipo", label: "Nombre del Equipo" },
@@ -17,14 +18,17 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
   //Y si se envia solicitud, lo mismo
   //El refrescar equipo es es para que me regreses los jugadores con sus nuevos estados para cambiar los botones
   const toggleSolicitud = async (equipo) => {
-    
+    console.log("Modal: " + equipo.estado)
+    console.log("Capitan: " + id_capitan)
+    console.log("invitado: " + idJugadorAInvitar)
     if (equipo.estado === 'Pendiente') {
-      const palabraClave = "cancelar"
-      console.log(`Se eliminó la solicitud del jugador ${idJugadorAInvitar} del equipo ${equipo.id_equipo}`);
+      await axios.delete(`http://localhost:3001/solicitudes/borrar/${idJugadorAInvitar}/${equipo.id_equipo}`)
       await refrescarEquipos(id_capitan, idJugadorAInvitar);
     } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
-      const palabraClave = "enviar"
-      console.log(`Se envió la solicitud del jugador ${idJugadorAInvitar} al equipo ${equipo.id_equipo}`);
+      axios.post('http://localhost:3001/solicitudes', {
+        id_jugador: idJugadorAInvitar,
+        id_equipo: equipo.id_equipo
+      })
       await refrescarEquipos(id_capitan, idJugadorAInvitar);
     }
   };
