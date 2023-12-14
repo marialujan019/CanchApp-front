@@ -18,16 +18,15 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
   //Y si se envia solicitud, lo mismo
   //El refrescar equipo es es para que me regreses los jugadores con sus nuevos estados para cambiar los botones
   const toggleSolicitud = async (equipo) => {
-    console.log("Modal: " + equipo.estado)
-    console.log("Capitan: " + id_capitan)
-    console.log("invitado: " + idJugadorAInvitar)
     if (equipo.estado === 'Pendiente') {
-      await axios.delete(`http://localhost:3001/solicitudes/borrar/${idJugadorAInvitar}/${equipo.id_equipo}`)
+      await axios.delete(`http://localhost:3001/invitaciones/borrar/${idJugadorAInvitar}/${equipo.id_equipo}`)
       await refrescarEquipos(id_capitan, idJugadorAInvitar);
     } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
-      axios.post('http://localhost:3001/solicitudes', {
+      console.log("ENRA POR ACA")
+      axios.post('http://localhost:3001/invitaciones', {
         id_jugador: idJugadorAInvitar,
-        id_equipo: equipo.id_equipo
+        id_equipo: equipo.id_equipo,
+        id_capitan: id_capitan
       })
       await refrescarEquipos(id_capitan, idJugadorAInvitar);
     }
@@ -43,13 +42,13 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
         } else if (equipo.estado === 'Pendiente') {
           return (
             <Button onClick={() => toggleSolicitud(equipo)} color='danger'>
-              Cancelar solicitud
+              Cancelar invitacion
             </Button>
           );
-        } else if (equipo.estado === null || equipo.estado === undefined || equipo.estado === 'Rechazado') {
+        } else if (equipo.estado === "Rechazado" || equipo.estado === "No enviado" || equipo.estado === 'Rechazado') {
           return (
             <Button onClick={() => toggleSolicitud(equipo)} color='primary'>
-              {equipo.estado ? 'Reenviar solicitud' : 'Enviar solicitud'}
+              Enviar invitacion
             </Button>
           );
         }

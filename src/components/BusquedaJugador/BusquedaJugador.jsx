@@ -109,8 +109,11 @@ const BusquedaJugador = () => {
 
   //Manejo de solicitudes
   //Función para recibir los equipos desde el back enviando el id_capitan
+
+//son los equipos del capitan a los cuales se puede unir el jugador
   const fetchEquipos = async (id_capitan, idJugadorAInvitar) => {
-    const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_capitan}`);
+    console.log("invitar jugador" + idJugadorAInvitar)
+    const datos = await axios.get(`http://localhost:3001/equipo/buscar/${id_capitan}/${idJugadorAInvitar}`);
     setIdJugadorAInvitar(idJugadorAInvitar);
     setEquiposDelBack(datos.data);
     setShowSolicitudModal(true);
@@ -185,7 +188,7 @@ const BusquedaJugador = () => {
          </TableHeader>
          <TableBody>
             {jugadoresFiltrados.map((jugador) => (
-              <TableRow key={jugador.id_jugador}>
+              <TableRow key={jugador.id_jug}>
                 {columns.map((column) => (
                   <TableCell key={column.key}>
                     {column.key === "nombre_apellido" ? (
@@ -197,7 +200,7 @@ const BusquedaJugador = () => {
                         jugador[column.key]
                       )
                     ) : (
-                      <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jugador)}> Ver solicitud </Button>
+                      <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jug)}> Ver solicitud </Button>
                     )}
                   </TableCell>
                 ))}
