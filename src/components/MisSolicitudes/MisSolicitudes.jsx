@@ -28,14 +28,14 @@ const MisSolicitudes = () => {
 
     async function fetchSolitudesRecibidasDeEquipos() {
       //endpoint invitaciones
-      const datos = await consultarBaseDeDatos('../json/solitudesRecibidasPorEquipos.json');
-      setSolitudesRecibidasDeEquipos(datos);
+      const datos = await axios.get(`http://localhost:3001/invitaciones/recibidas/${id_jugador}`)
+      setSolitudesRecibidasDeEquipos(datos.data);
     }
 
     async function fetchSolitudesEnviadasAJugadores() {
       //endpoint invitaicones
-      const datos = await consultarBaseDeDatos('../json/solicitudesEnviadasAJugadores.json');
-      setSolitudesEnviadasAJugadores(datos);
+      const datos = await axios.get(`http://localhost:3001/invitaciones/mis-invitaciones/${id_jugador}`)
+      setSolitudesEnviadasAJugadores(datos.data);
     }
 
     async function fetchSolitudesEnviadasAEquipos() {
@@ -53,12 +53,14 @@ const MisSolicitudes = () => {
 
   //Funcion que envia rechazar o aceptar al back y el id_solicitud
   const handleAceptarRechazar = (idSolicitud, estado) => {
+    //falta endpoint
     console.log(`ID Solicitud: ${idSolicitud}, Estado: ${estado}`);
     setRefreshPage((prev) => !prev)
   };
 
   //Funcion para ver los jugadores de un equipo
   const fetchJugadores = async (idEquipo) => {
+    //endpoint jugadores/equipo
     const datos = await consultarBaseDeDatos(`../json/jugadoresParaBusqueda.json`);
     setJugadoresDelBack(datos);
     setShowVerJugadoresModal(true);
@@ -108,14 +110,14 @@ const MisSolicitudes = () => {
         </TableHeader>
         <TableBody items={solitudesRecibidasDeEquipos}>
           {(item) => (
-            <TableRow key={item.id_solicitud}>
+            <TableRow key={item.id_invitacion}>
               <TableCell>{item.nombre_equipo}</TableCell>
               <TableCell>
                 <Button onClick={() => fetchJugadores(item.id_equipo)}>Ver Equipos</Button>
               </TableCell>
               <TableCell>
-                <Button onClick={() => handleAceptarRechazar(item.id_solicitud, 'Aceptado')}>Aceptar</Button>
-                <Button onClick={() => handleAceptarRechazar(item.id_solicitud, 'Rechazado')}>Rechazar</Button>
+                <Button onClick={() => handleAceptarRechazar(item.id_invitacion, 'Aceptado')}>Aceptar</Button>
+                <Button onClick={() => handleAceptarRechazar(item.id_invitacion, 'Rechazado')}>Rechazar</Button>
               </TableCell>
             </TableRow>
           )}
@@ -137,7 +139,7 @@ const MisSolicitudes = () => {
         </TableHeader>
         <TableBody items={solitudesEnviadasAJugadores}>
           {(item) => (
-            <TableRow key={item.id_solicitud}>
+            <TableRow key={item.id_invitacion}>
               <TableCell>{item.nombre}</TableCell>
               <TableCell>{item.apellido}</TableCell>
               <TableCell>{item.edad}</TableCell>
@@ -147,7 +149,7 @@ const MisSolicitudes = () => {
               <TableCell>
               {item.estado}
                 {item.estado === "Pendiente" && (
-                  <Button onClick={() => handleAceptarRechazar(item.id_solicitud, "Rechazado")}>Cancelar Solicitud</Button>
+                  <Button onClick={() => handleAceptarRechazar(item.id_invitacion, "Rechazado")}>Cancelar Solicitud</Button>
                 )}
               </TableCell>
             </TableRow>
