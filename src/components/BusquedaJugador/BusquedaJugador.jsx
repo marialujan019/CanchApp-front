@@ -48,21 +48,28 @@ const BusquedaJugador = () => {
   
   // Manejo de cambios en los filtros
   const handleFiltroEdadChange = (value) => {
+    //NO HAY EDAD EN LA BASE DE DATOS
     setFiltroEdad(value);
     setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
   };
   
   const handleFiltroSexoChange = (value) => {
+    const filtroSexo = jugadoresParaLaBusqueda.filter(item => item.sexo === value)
+    setJugadoresParaLaBusqueda(filtroSexo)
     setFiltroSexo(value);
     setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
   };
   
   const handleFiltroPieHabilChange = (value) => {
+    const filtroPieHabil = jugadoresParaLaBusqueda.filter(item => item.pie_habil === value)
+    setJugadoresParaLaBusqueda(filtroPieHabil)
     setFiltroPieHabil(value);
     setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
   };
   
   const handleFiltroPosicionChange = (value) => {
+    const filtroPosicion = jugadoresParaLaBusqueda.filter(item => item.posicion === value)
+    setJugadoresParaLaBusqueda(filtroPosicion)
     setFiltroPosicion(value);
     setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
   };

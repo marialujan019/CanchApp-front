@@ -17,6 +17,7 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
   //Y si se envia solicitud, lo mismo
   //El refrescar equipo es es para que me regreses los jugadores con sus nuevos estados para cambiar los botones
   const toggleSolicitud = async (equipo) => {
+    
     if (equipo.estado === 'Pendiente') {
       const palabraClave = "cancelar"
       console.log(`Se eliminó la solicitud del jugador ${idJugadorAInvitar} del equipo ${equipo.id_equipo}`);
