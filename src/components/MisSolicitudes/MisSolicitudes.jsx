@@ -52,17 +52,32 @@ const MisSolicitudes = () => {
   }, [refreshPage]);
 
   //Funcion que envia rechazar o aceptar al back y el id_solicitud
-  const handleAceptarRechazar = (idSolicitud, estado) => {
+  const handleAceptarRechazarSolicitud = (idSolicitud, estado) => {
     //falta endpoint
+    axios.post('http://localhost:3001/solicitudes/update', {
+      id_solicitud: idSolicitud,
+      estado: estado
+    })
     console.log(`ID Solicitud: ${idSolicitud}, Estado: ${estado}`);
+    setRefreshPage((prev) => !prev)
+  };
+
+   //Funcion que envia rechazar o aceptar al back y el id_solicitud
+   const handleAceptarRechazarInvitacion = (idInvitacion, estado) => {
+    //falta endpoint
+    axios.post('http://localhost:3001/invitaciones/update', {
+      id_invitacion: idInvitacion,
+      estado: estado
+    })
+    console.log(`ID Solicitud: ${idInvitacion}, Estado: ${estado}`);
     setRefreshPage((prev) => !prev)
   };
 
   //Funcion para ver los jugadores de un equipo
   const fetchJugadores = async (idEquipo) => {
     //endpoint jugadores/equipo
-    const datos = await consultarBaseDeDatos(`../json/jugadoresParaBusqueda.json`);
-    setJugadoresDelBack(datos);
+    const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
+    setJugadoresDelBack(datos.data);
     setShowVerJugadoresModal(true);
   };
 
@@ -91,8 +106,8 @@ const MisSolicitudes = () => {
               <TableCell>{item.telefono}</TableCell>
               <TableCell>{item.nombre_equipo}</TableCell>
               <TableCell>
-                <Button onClick={() => handleAceptarRechazar(item.id_solicitud, 'Aceptado')}>Aceptar</Button>
-                <Button onClick={() => handleAceptarRechazar(item.id_solicitud, 'Rechazado')}>Rechazar</Button>
+                <Button onClick={() => handleAceptarRechazarSolicitud(item.id_solicitud, 'Aceptado')}>Aceptar</Button>
+                <Button onClick={() => handleAceptarRechazarSolicitud(item.id_solicitud, 'Rechazado')}>Rechazar</Button>
               </TableCell>
             </TableRow>
           )}
@@ -116,8 +131,8 @@ const MisSolicitudes = () => {
                 <Button onClick={() => fetchJugadores(item.id_equipo)}>Ver Equipos</Button>
               </TableCell>
               <TableCell>
-                <Button onClick={() => handleAceptarRechazar(item.id_invitacion, 'Aceptado')}>Aceptar</Button>
-                <Button onClick={() => handleAceptarRechazar(item.id_invitacion, 'Rechazado')}>Rechazar</Button>
+                <Button onClick={() => handleAceptarRechazarInvitacion(item.id_invitacion, 'Aceptado')}>Aceptar</Button>
+                <Button onClick={() => handleAceptarRechazarInvitacion(item.id_invitacion, 'Rechazado')}>Rechazar</Button>
               </TableCell>
             </TableRow>
           )}
@@ -149,7 +164,7 @@ const MisSolicitudes = () => {
               <TableCell>
               {item.estado}
                 {item.estado === "Pendiente" && (
-                  <Button onClick={() => handleAceptarRechazar(item.id_invitacion, "Rechazado")}>Cancelar Solicitud</Button>
+                  <Button onClick={() => handleAceptarRechazarInvitacion(item.id_invitacion, "Rechazado")}>Cancelar Solicitud</Button>
                 )}
               </TableCell>
             </TableRow>
@@ -177,7 +192,7 @@ const MisSolicitudes = () => {
               <TableCell>{item.estado}</TableCell>
               <TableCell>
                 {item.estado === "Pendiente" && (
-                  <Button onClick={() => handleAceptarRechazar(item.id_solicitud, "Rechazado")}>Cancelar Solicitud</Button>
+                  <Button onClick={() => handleAceptarRechazarSolicitud(item.id_solicitud, "Rechazado")}>Cancelar Solicitud</Button>
                 )}
               </TableCell>
             </TableRow>
