@@ -48,23 +48,30 @@ const BusquedaJugador = () => {
   
   // Manejo de cambios en los filtros
   const handleFiltroEdadChange = (value) => {
+    //NO HAY EDAD EN LA BASE DE DATOS
     setFiltroEdad(value);
     setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
   };
   
   const handleFiltroSexoChange = (value) => {
+    const filtroSexo = jugadoresParaLaBusqueda.filter(item => item.sexo === value)
+    setJugadoresParaLaBusqueda(filtroSexo)
     setFiltroSexo(value);
-    setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
+   // setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
   };
   
   const handleFiltroPieHabilChange = (value) => {
+    const filtroPieHabil = jugadoresParaLaBusqueda.filter(item => item.pie_habil === value)
+    setJugadoresParaLaBusqueda(filtroPieHabil)
     setFiltroPieHabil(value);
-    setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
+  //  setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
   };
   
   const handleFiltroPosicionChange = (value) => {
+    const filtroPosicion = jugadoresParaLaBusqueda.filter(item => item.posicion === value)
+    setJugadoresParaLaBusqueda(filtroPosicion)
     setFiltroPosicion(value);
-    setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
+  //  setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
   };
   
   // Actualizar filtros y mostrar en consola
@@ -102,8 +109,11 @@ const BusquedaJugador = () => {
 
   //Manejo de solicitudes
   //Función para recibir los equipos desde el back enviando el id_capitan
+
+//son los equipos del capitan a los cuales se puede unir el jugador
   const fetchEquipos = async (id_capitan, idJugadorAInvitar) => {
-    const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_capitan}`);
+    console.log("invitar jugador" + idJugadorAInvitar)
+    const datos = await axios.get(`http://localhost:3001/equipo/buscar/${id_capitan}/${idJugadorAInvitar}`);
     setIdJugadorAInvitar(idJugadorAInvitar);
     setEquiposDelBack(datos.data);
     setShowSolicitudModal(true);
@@ -178,7 +188,7 @@ const BusquedaJugador = () => {
          </TableHeader>
          <TableBody>
             {jugadoresFiltrados.map((jugador) => (
-              <TableRow key={jugador.id_jugador}>
+              <TableRow key={jugador.id_jug}>
                 {columns.map((column) => (
                   <TableCell key={column.key}>
                     {column.key === "nombre_apellido" ? (
@@ -190,7 +200,7 @@ const BusquedaJugador = () => {
                         jugador[column.key]
                       )
                     ) : (
-                      <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jugador)}> Ver solicitud </Button>
+                      <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jug)}> Ver solicitud </Button>
                     )}
                   </TableCell>
                 ))}

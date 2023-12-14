@@ -147,7 +147,7 @@ class App extends Component {
               <Route path="/historial" element={<Historial />} />
 
               {/* Reservas */}
-              <Route path="/misReservas" element={<MisReservas />} />
+              <Route path="/misReservas/:id_jugador" element={<MisReservas />} />
 
               {/* Solicitudes */}
               <Route path="/misSolicitudes" element={<MisSolicitudes />} />

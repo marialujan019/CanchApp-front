@@ -14,6 +14,10 @@ function Perfil() {
   const [contrasena, setContrasena] = useState('');
   const [piernaHabil, setPiernaHabil] = useState('');
   const [posicion, setPosicion] = useState('');
+  const [sexo, setSexo] = useState('');
+  const [mail, setMail] = useState('');
+
+
 
   useEffect(() => {
     axios.post('http://localhost:3001/perfil', {
@@ -32,10 +36,13 @@ function Perfil() {
         }
         
         if(user.tipo === "jugador") {
+          console.log("DATOS JUGADOR: " + JSON.stringify( res.data))
           setNombre(res.data.nombre);
           setTelefono(res.data.telefono);
           setPiernaHabil(res.data.pierna_habil);
           setPosicion(res.data.posicion);
+          setMail(res.data.mail);
+          setSexo(res.data.sexo)
         }
 
       } else {
@@ -55,7 +62,7 @@ function Perfil() {
         <PerfilAdmin nombre={nombre} direccion={direccion} telefono={telefono} contrasena={contrasena}/>
       ) : (
         // Renderizar el perfil del jugador
-        <PerfilJugador nombre={nombre} telefono={telefono} piernaHabil={piernaHabil} posicion={posicion} />
+        <PerfilJugador id={user.id} nombre2={nombre} telefono2={telefono} piernaHabil={piernaHabil} posicion={posicion} sexo2={sexo} mail2={mail}/>
       )}
     </div>
   );

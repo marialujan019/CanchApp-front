@@ -10,7 +10,7 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
   const [equipo, setEquipo] = useState({
     nombre_equipo: '',
     publico: false,
-    max_jug: 0,
+    cant_max: 0,
   });
 
   const handleSubmit = async (e) => {
@@ -30,16 +30,17 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
     console.log(equipo);
     await axios.post('http://localhost:3001/crear_equipo', {
       nombre_equipo: equipo.nombre_equipo,
-      cant_jugador: equipo.max_jug,
       capitan: user.id,
       id_jugadores: [user.id],
-      ubicacion: equipo.ubicacion
+      ubicacion: equipo.ubicacion,
+      cant_max: equipo.cant_max,
+      publico: equipo.publico
     })
     
     setEquipo({
       nombre_equipo: '',
       publico: false,
-      max_jug: 0,
+      cant_max: 0,
     });
     onHide();
     updateMisEquipos();
@@ -61,18 +62,18 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
 
   const handleTipoEquipoChange = (e) => {
     const tipoEquipo = e.target.value;
-    let maxJug = 0;
+    let cant_max = 0;
 
     // Asignar el valor adecuado a max_jug según el tipo de equipo seleccionado
     switch (tipoEquipo) {
       case 'futbol5':
-        maxJug = 10;
+        cant_max = 10;
         break;
       case 'futbol7':
-        maxJug = 14;
+        cant_max = 14;
         break;
       case 'futbol11':
-        maxJug = 22;
+        cant_max = 22;
         break;
       default:
         break;
@@ -80,7 +81,7 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
 
     setEquipo({
       ...equipo,
-      max_jug: maxJug,
+      cant_max: cant_max,
     });
   };
 
@@ -125,8 +126,8 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
             <label>
               Seleccione el tipo de equipo:
               <select
-                name="max_jug"
-                value={equipo.max_jug === 0 ? '' : equipo.max_jug}
+                name="cant_max"
+                value={equipo.cant_max === 0 ? '' : equipo.cant_max}
                 onChange={handleTipoEquipoChange}
                 required
               >

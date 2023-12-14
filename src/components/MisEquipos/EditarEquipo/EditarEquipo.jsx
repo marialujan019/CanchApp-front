@@ -41,19 +41,10 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
     //Si hay un nuevoCapitan, se debe eliminar este equipo
     //El id_capitan es el id proveniente del jugador que inició sesion
     const handleConfirmar = async () => {
-        console.log({
-          id_capitan,
-          id_equipo,
-          nombre_equipo: equipoNombre,
-          publico: equipoVisibilidad,
-          arregloJugadores,
-          nuevoCapitan,
-        });
         const idsJugadores = arregloJugadores.map((jugador) => jugador.id_jug);
 
         await axios.post('http://localhost:3001/equipo/update',{
           nombre_equipo: equipoNombre,
-        //  cant_max: data.cant_max,
           capitan: nuevoCapitan ? nuevoCapitan : id_capitan,
           id_jugadores: idsJugadores,
           publico: equipoVisibilidad,

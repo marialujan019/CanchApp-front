@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from '@nextui-org/react';
 import { Modal } from 'react-bootstrap';
+import axios from 'axios';
 
 const columns = [
   { key: "nombre_equipo", label: "Nombre del Equipo" },
@@ -18,12 +19,15 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
   //El refrescar equipo es es para que me regreses los jugadores con sus nuevos estados para cambiar los botones
   const toggleSolicitud = async (equipo) => {
     if (equipo.estado === 'Pendiente') {
-      const palabraClave = "cancelar"
-      console.log(`Se eliminó la solicitud del jugador ${idJugadorAInvitar} del equipo ${equipo.id_equipo}`);
+      await axios.delete(`http://localhost:3001/invitaciones/borrar/${idJugadorAInvitar}/${equipo.id_equipo}`)
       await refrescarEquipos(id_capitan, idJugadorAInvitar);
     } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
-      const palabraClave = "enviar"
-      console.log(`Se envió la solicitud del jugador ${idJugadorAInvitar} al equipo ${equipo.id_equipo}`);
+      console.log("ENRA POR ACA")
+      axios.post('http://localhost:3001/invitaciones', {
+        id_jugador: idJugadorAInvitar,
+        id_equipo: equipo.id_equipo,
+        id_capitan: id_capitan
+      })
       await refrescarEquipos(id_capitan, idJugadorAInvitar);
     }
   };
@@ -38,13 +42,13 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
         } else if (equipo.estado === 'Pendiente') {
           return (
             <Button onClick={() => toggleSolicitud(equipo)} color='danger'>
-              Cancelar solicitud
+              Cancelar invitacion
             </Button>
           );
-        } else if (equipo.estado === null || equipo.estado === undefined || equipo.estado === 'Rechazado') {
+        } else if (equipo.estado === "Rechazado" || equipo.estado === "No enviado" || equipo.estado === 'Rechazado') {
           return (
             <Button onClick={() => toggleSolicitud(equipo)} color='primary'>
-              {equipo.estado ? 'Reenviar solicitud' : 'Enviar solicitud'}
+              Enviar invitacion
             </Button>
           );
         }
