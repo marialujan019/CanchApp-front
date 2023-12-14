@@ -111,6 +111,13 @@ const Header = () => {
             >
               Mis solicitudes
             </Link>
+            <Link
+              to="/misReservas"
+              className="nav-link"
+              onClick={() => updateBreadcrumbs(['Inicio', 'Mis reservas'])}
+            >
+              Mis reservas
+            </Link>
             
           </nav>
         </header>
