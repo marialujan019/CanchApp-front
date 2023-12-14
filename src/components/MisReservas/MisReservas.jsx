@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useReservasContext } from '../reservasContext';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
 import ModalReservas from '../ModalReservas/ModalReservas';
-import { consultarBaseDeDatos } from '../utils/Funciones';
 import { useUser } from '../UserContext';
 import "./misReservas.css"
+import axios from 'axios';
+import {  useParams } from 'react-router-dom';
+
 
 const columns = [
   { key: "nombre_complejo", label: "Nombre Complejo" },
@@ -31,6 +33,7 @@ const MisReservas = () => {
   //Variables para manejar las reservas
   const { misReservas, eliminarReserva } = useReservasContext();
   const [reservasHechas, setReservasHechas] = useState([]);
+  const { id_jugador } = useParams();
 
   //Variable para continuar con la reserva
   const [showModal, setShowModal] = useState(false);
@@ -39,15 +42,11 @@ const MisReservas = () => {
   //Variable para recibir los equipos del jugador
   const [equipos, setEquipos] = useState([]);
 
-  //Id del jugador
-  const { user } = useUser();
-  const id_jugador = user.id;
-
   // Se tiene que llamar a los equipos del jugador para que pueda elegir
   const fetchEquipos = async (id_jugador) => {
     console.log(id_jugador)
-    const datos = await consultarBaseDeDatos(`../json/equiposDeUnJugador.json`);
-    setEquipos(datos);
+    const datos = await axios.get(`http://localhost:3001/equipo/soy_capitan/${id_jugador}`);
+    setEquipos(datos.data);
   };
 
   // Se envían estos datos al modalReservas para continuar con la reserva
@@ -75,8 +74,9 @@ const MisReservas = () => {
   //Función que debe enviar el id_jugador y recibir las reservas ya hechas
   useEffect(() => {
     const fetchReservas = async () => {
-      const datos = await consultarBaseDeDatos(`../json/reservas.json`);
-      setReservasHechas(datos);
+      console.log(id_jugador)
+      const datos = await axios.get(`http://localhost:3001/reservas/mis-reservas/${id_jugador}`);
+      setReservasHechas(datos.data);
     };
 
     fetchReservas();

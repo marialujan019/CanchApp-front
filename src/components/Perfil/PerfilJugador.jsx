@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./perfilJugador.css";
+import axios from 'axios';
 
-const PerfilJugador = ({ nombre, telefono: telefonoInicial, pie_habil, posicion }) => {
-  const [mail, setMail] = useState("alex@gmail.com");
-  const [telefono, setTelefono] = useState(telefonoInicial);
-  const [sexo, setSexo] = useState("Prefiero no decirlo");
-  const [contrasena, setContrasena] = useState("1234");
+const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mail2 }) => {
+  const [mail, setMail] = useState(mail2);
+  const [nombre, setNombre] = useState(nombre2);
+  const [telefono, setTelefono] = useState(telefono2);
+  const [sexo, setSexo] = useState(sexo2);
+  const [posicion, setPosicion] = useState(posicion2);
+  const [pie_habil, setPiernaHabil] = useState(pieHabil);
+  const [contrasena, setContrasena] = useState("");
   const [nuevaContrasena, setNuevaContrasena] = useState("");
   const [editandoMail, setEditandoMail] = useState(false);
   const [editandoTelefono, setEditandoTelefono] = useState(false);
@@ -14,6 +18,19 @@ const PerfilJugador = ({ nombre, telefono: telefonoInicial, pie_habil, posicion 
   const [editandoPieHabil, setEditandoPieHabil] = useState(false);
   const [editandoPosicion, setEditandoPosicion] = useState(false);
 
+  useEffect( () => {
+    const data =  axios.post('http://localhost:3001/perfil', {
+      tipo: "jugador",
+      id: id
+    }).then(res => {
+    setNombre(res.data.nombre);
+    setTelefono(res.data.telefono);
+    setPiernaHabil(res.data.pierna_habil);
+    setPosicion(res.data.posicion);
+    setMail(res.data.mail);
+    setSexo(res.data.sexo)})
+
+  });
 
   //Los console.log son las cosas que envio al back
   const handleEditarMail = () => {
@@ -152,7 +169,7 @@ const PerfilJugador = ({ nombre, telefono: telefonoInicial, pie_habil, posicion 
                   </div>
                 ) : (
                   <p>
-                    {pie_habil == null ? "Prefiero no decirlo" : pie_habil}
+                    {pieHabil == null ? "Prefiero no decirlo" : pieHabil}
                     <button onClick={handleEditarPieHabil}>Editar</button>
                   </p>
                 )}

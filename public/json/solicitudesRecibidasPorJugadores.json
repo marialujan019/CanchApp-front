@@ -8,7 +8,10 @@
         "pie_habil": "Derecho",
         "sexo": "Masculino",
         "telefono": 21,
-        "posicion": "Arquero"
+        "posicion": "Arquero",
+        "nombre_equipo": "hola",
+        "id_jugador": 12,
+        "id_equipo": 1
     },    
     {
         "id_solicitud": 7,
@@ -19,6 +22,9 @@
         "pie_habil": "Izquierdo",
         "sexo": "Femenino",
         "telefono": 211,
-        "posicion": "Defensor"
+        "posicion": "Defensor",
+        "nombre_equipo": "chay",
+        "id_jugador": 12,
+        "id_equipo": 1
     }
 ]

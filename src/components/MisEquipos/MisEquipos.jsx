@@ -6,9 +6,6 @@ import CrearEquipo from './CrearEquipo/CrearEquipo';
 import axios from 'axios';
 import { useUser } from '../UserContext';
 import { useNavigate } from 'react-router';
-import { consultarBaseDeDatos } from '../utils/Funciones';
-
-
 
 const columns = [
   { key: "nombre_equipo", label: "Nombre del Equipo" },
@@ -87,6 +84,7 @@ const MisEquipos = () => {
   //Funcion para eliminar el equipo
   const handleEliminarEquipo = (id_equipo, nombre_equipo) => {
     // Puedes realizar aquí las operaciones necesarias para eliminar el equipo
+    axios.delete(`http://localhost:3001/equipo/borrar/${id_equipo}`)
     console.log(`Se ha eliminado el equipo ${nombre_equipo} ${id_equipo}`);
   };
 
@@ -94,7 +92,7 @@ const MisEquipos = () => {
   //Basicamente envio esta funcion al editarEquipos para que, cuando se confirmen los cambios, se refresque la pagina
   const updateMisEquipos = async () => {
     //update a la bade de datos
-    const datos = await axios.get(`http://localhost:3001/equipo/mis_equipos/${id_capitan}`);
+    const datos = await axios.get(`http://localhost:3001/equipo/soy_capitan/${id_capitan}`);
     setMisEquipos(datos.data);
   };
 
@@ -163,9 +161,6 @@ const MisEquipos = () => {
           <div className="flex items-center space-x-3 justify-center">
             <Tooltip content="Ver detalles">
               <button className="text-lg text-default-400 cursor-pointer active:opacity-50" onClick={() => fetchJugadoresDeFuera(id_capitan, equipo.id_equipo)}><i class="bi bi-eye"></i></button>
-            </Tooltip>
-            <Tooltip content="Eliminar equipo">
-              <button className="text-lg text-danger cursor-pointer active:opacity-50" onClick={() => handleEliminarEquipo(equipo.id_equipo, equipo.nombre_equipo)} ><i class="bi bi-trash"></i></button>
             </Tooltip>
           </div>
         );

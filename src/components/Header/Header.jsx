@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './header.css'; // Asegúrate de tener un archivo CSS para el estilo
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
@@ -17,6 +17,8 @@ const Header = () => {
   const location = useLocation();
   const responseData = location.state && location.state.responseData;
   const { user } = useUser();
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     axios.get('http://localhost:3001').then((res) => {
@@ -41,6 +43,7 @@ const Header = () => {
   const handleLogout = () => {
     axios.get('http://localhost:3001/logout').then((res) => {
       if (res.data.Status === 'Respuesta ok') {
+        navigate('/ingreso')
         window.location.reload(true);
       } else {
         alert('error');
@@ -111,7 +114,13 @@ const Header = () => {
             >
               Mis solicitudes
             </Link>
-            
+            <Link
+              to={`misReservas/${user.id}`}
+              className="nav-link"
+              onClick={() => updateBreadcrumbs(['Inicio', 'Mis reservas'])}
+            >
+              Mis reservas
+            </Link>
           </nav>
         </header>
         <Banner breadcrumbs={breadcrumbs} />

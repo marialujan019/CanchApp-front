@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
 import { consultarBaseDeDatos } from '../utils/Funciones';
 import JugadoresModal from '../JugadoresModal/JugadoresModal';
+import { useUser } from '../UserContext';
+import axios from 'axios';
+
 const MisSolicitudes = () => {
   const [solitudesRecibidasDeJugadores, setSolitudesRecibidasDeJugadores] = useState([]);
   const [solitudesRecibidasDeEquipos, setSolitudesRecibidasDeEquipos] = useState([]);
@@ -10,28 +13,35 @@ const MisSolicitudes = () => {
   const [showVerJugadoresModal, setShowVerJugadoresModal] = useState(false);
   const [jugadoresDelBack, setJugadoresDelBack] = useState([]);
   const [refreshPage, setRefreshPage] = useState(false);
+  const { user } = useUser();
 
+  const id_jugador = user.id;
+  
   useEffect(() => {
 
     //Voy a necesitar todos estos json con el id jugador, cada uno representa un tipo de solicitud
     async function fetchSolitudesRecibidasDeJugadores() {
-      const datos = await consultarBaseDeDatos('../json/solicitudesRecibidasPorJugadores.json');
-      setSolitudesRecibidasDeJugadores(datos);
+      //endpoin solicitudes./solicitudes/recibidas/
+      const datos = await axios.get(`http://localhost:3001/solicitudes/recibidas/${id_jugador}`)
+      setSolitudesRecibidasDeJugadores(datos.data);
     }
 
     async function fetchSolitudesRecibidasDeEquipos() {
+      //endpoint invitaciones
       const datos = await consultarBaseDeDatos('../json/solitudesRecibidasPorEquipos.json');
       setSolitudesRecibidasDeEquipos(datos);
     }
 
     async function fetchSolitudesEnviadasAJugadores() {
+      //endpoint invitaicones
       const datos = await consultarBaseDeDatos('../json/solicitudesEnviadasAJugadores.json');
       setSolitudesEnviadasAJugadores(datos);
     }
 
     async function fetchSolitudesEnviadasAEquipos() {
-      const datos = await consultarBaseDeDatos('../json/solicitudesEnviadasAEquipos.json');
-      setSolitudesEnviadasAEquipos(datos);
+      //endpoint solicitudes, /solicitudes/mis-solicitudes/:id
+      const datos = await axios.get(`http://localhost:3001/solicitudes/mis-solicitudes/${id_jugador}`)
+      setSolitudesEnviadasAEquipos(datos.data);
     }
 
     // Ejecuta las funciones de obtención de datos
@@ -56,7 +66,7 @@ const MisSolicitudes = () => {
 
   return (
     <div>
-      <h2>Solicitudes Recibidas de Jugadores</h2>
+      <h2>Los siguientes jugadores quieren unirse a tus equipo: </h2>
       <Table aria-label="Solicitudes Recibidas de Jugadores">
         <TableHeader columns={[
           { key: "nombre", label: "Nombre" },
@@ -64,6 +74,7 @@ const MisSolicitudes = () => {
           { key: "edad", label: "Edad" },
           { key: "sexo", label: "Sexo" },
           { key: "telefono", label: "Teléfono" },
+          { key: "nombre_equipo", label: "Nombre equipo"},
           { key: "acciones", label: "Acciones" },
         ]}>
           {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
@@ -76,6 +87,7 @@ const MisSolicitudes = () => {
               <TableCell>{item.edad}</TableCell>
               <TableCell>{item.sexo}</TableCell>
               <TableCell>{item.telefono}</TableCell>
+              <TableCell>{item.nombre_equipo}</TableCell>
               <TableCell>
                 <Button onClick={() => handleAceptarRechazar(item.id_solicitud, 'Aceptado')}>Aceptar</Button>
                 <Button onClick={() => handleAceptarRechazar(item.id_solicitud, 'Rechazado')}>Rechazar</Button>
@@ -85,7 +97,7 @@ const MisSolicitudes = () => {
         </TableBody>
       </Table>
 
-      <h2>Solicitudes Recibidas de Equipos</h2>
+      <h2>Los siguientes euqipos quieren que te unas a ellos: </h2>
       <Table aria-label="Solicitudes Recibidas de Equipos">
         <TableHeader columns={[
           { key: "nombre_equipo", label: "Nombre del Equipo" },
@@ -110,7 +122,7 @@ const MisSolicitudes = () => {
         </TableBody>
       </Table>
 
-      <h2>Solicitudes Enviadas a Jugadores</h2>
+      <h2>Haz invitado a los siguientes jugadors a que se unan a tu equipo:</h2>
       <Table aria-label="Solicitudes Enviadas a Jugadores">
         <TableHeader columns={[
           { key: "nombre", label: "Nombre" },
@@ -143,7 +155,7 @@ const MisSolicitudes = () => {
         </TableBody>
       </Table>
 
-      <h2>Solicitudes Enviadas a Equipos</h2>
+      <h2>Equipos a los que quieres unirte: </h2>
       <Table aria-label="Solicitudes Enviadas a Equipos">
         <TableHeader columns={[
           { key: "nombre_equipo", label: "Nombre del Equipo" },
