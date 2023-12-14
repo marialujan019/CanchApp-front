@@ -12,6 +12,12 @@ function Perfil() {
   const [direccion, setDireccion] = useState('')  
   const [telefono, setTelefono] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const [piernaHabil, setPiernaHabil] = useState('');
+  const [posicion, setPosicion] = useState('');
+  const [sexo, setSexo] = useState('');
+  const [mail, setMail] = useState('');
+
+
 
   useEffect(() => {
     axios.post('http://localhost:3001/perfil', {
@@ -20,10 +26,24 @@ function Perfil() {
     })
     .then(res => {
       if (res.data.Status === "Respuesta ok") {
-        setNombre(res.data.nombre);
-        setDireccion(res.data.direccion);
-        setTelefono(res.data.telefono);
-        setContrasena(res.data.contrasena);
+        console.log(res.data)
+        console.log("Tipo: " + user.tipo)
+        if(user.tipo === "administrador") {
+          setNombre(res.data.nombre);
+          setDireccion(res.data.direccion);
+          setTelefono(res.data.telefono);
+          setContrasena(res.data.contrasena);
+        }
+        
+        if(user.tipo === "jugador") {
+          console.log("DATOS JUGADOR: " + JSON.stringify( res.data))
+          setNombre(res.data.nombre);
+          setTelefono(res.data.telefono);
+          setPiernaHabil(res.data.pierna_habil);
+          setPosicion(res.data.posicion);
+          setMail(res.data.mail);
+          setSexo(res.data.sexo)
+        }
 
       } else {
         alert(res.data.Message);
@@ -42,7 +62,7 @@ function Perfil() {
         <PerfilAdmin nombre={nombre} direccion={direccion} telefono={telefono} contrasena={contrasena}/>
       ) : (
         // Renderizar el perfil del jugador
-        <PerfilJugador nombre={nombre} direccion={direccion} telefono={telefono} contrasena={contrasena} />
+        <PerfilJugador id={user.id} nombre2={nombre} telefono2={telefono} piernaHabil={piernaHabil} posicion={posicion} sexo2={sexo} mail2={mail}/>
       )}
     </div>
   );

@@ -1,0 +1,35 @@
+[
+    {
+        "id_complejo":"1",
+        "nombre": "pepito",
+        "direccion": "Pasaje Uspallata 552, Argentina, Chaco, Resitencia",
+        "telefono": "32321",
+        "latitud": "-27.4613063",
+        "longitud": "-58.984803"
+    },
+    {
+        "id_complejo":"2",
+        "nombre": "nombre_2",
+        "direccion": "dirección_2",
+        "telefono": "teléfono_2",
+        "latitud": "-27.448505",
+        "longitud": "-59.0819164"
+    },
+    {
+        "id_complejo":"3",
+        "nombre": "nombre_3",
+        "direccion": "dirección_3",
+        "telefono": "teléfono_3",
+        "latitud": "-27.458735",
+        "longitud": "-59.0302855"
+    },
+    {
+        "id_complejo":"4",
+        "nombre": "nombre_4",
+        "direccion": "dirección_4",
+        "telefono": "teléfono_4",
+        "latitud": "-27.464733",
+        "longitud": "-59.0167662"
+    }
+]
+  

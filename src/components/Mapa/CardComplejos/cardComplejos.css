@@ -1,0 +1,33 @@
+.complejoCardsContainer {
+    max-height: 400px;
+    overflow-y: scroll;
+    width: 400px;
+}
+
+.cardComplejo {
+    background-color: #ffffff ;
+}
+
+.botonesCardComplejos {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    white-space: nowrap;
+}
+
+.cardComplejoTitulo {
+    color: #006400;
+}
+.cardComplejoTexto {
+    color: #333333;
+}
+
+.botonCardComplejo {
+    color: #333333;
+    border-color: #ffcc99;
+}
+
+.complejoCardDatos {
+    display: flex;
+    flex-direction: row;
+}

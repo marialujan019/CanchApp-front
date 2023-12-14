@@ -1,4 +1,28 @@
+.inicioMapaContainer  {
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+.bannerInicioMapa {
+    height: 60px;
+    width: 100%;
+}
+.bannerMapa {
+    display: block; 
+    height: auto;
+    max-width: 100%;
+}
+.mapaContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .mapa{
-    width: 600px;
-    height: 600px;
+    width: 50vw;
+    height: 73vh
+}
+
+.busquedaComplejoMapa {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    height: 7vh;
 }

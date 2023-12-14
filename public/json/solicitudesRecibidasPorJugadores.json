@@ -1,0 +1,30 @@
+[
+    {
+        "id_solicitud": 6,
+        "nombre": "juanpe",
+        "apellido": "si",
+        "imagen": "url",
+        "edad": 23,
+        "pie_habil": "Derecho",
+        "sexo": "Masculino",
+        "telefono": 21,
+        "posicion": "Arquero",
+        "nombre_equipo": "hola",
+        "id_jugador": 12,
+        "id_equipo": 1
+    },    
+    {
+        "id_solicitud": 7,
+        "nombre": "Juana",
+        "apellido": "si",
+        "imagen": "url",
+        "edad": 23,
+        "pie_habil": "Izquierdo",
+        "sexo": "Femenino",
+        "telefono": 211,
+        "posicion": "Defensor",
+        "nombre_equipo": "chay",
+        "id_jugador": 12,
+        "id_equipo": 1
+    }
+]
