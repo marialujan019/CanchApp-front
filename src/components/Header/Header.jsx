@@ -63,20 +63,16 @@ const Header = () => {
               className="nav-link"
             >
               Inicio
-            </Link>
-            <Link
-              to="/mapa"
-              className="nav-link"
-
-            >
-              Buscar complejo
-            </Link>
-            <button className="btn btn-danger" onClick={handleLogout}>
+          </Link>
+          <Link to="/mapa" className="nav-link">
+            Buscar complejo
+          </Link>
+          <button className="btn btn-danger" onClick={handleLogout}>
               Salir
-            </button>
-            <Link
+          </button>
+          <Link
               to={`/perfil/${user.tipo}/${user.id}`}
-              className="nav-link
+              className="nav-link"
             >
               Mi perfil
             </Link>
