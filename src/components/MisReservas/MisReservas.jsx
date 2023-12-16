@@ -83,18 +83,24 @@ const MisReservas = () => {
   }, []);
 
   return (
-    <div className='main'>
-      <h2>Reservas pendientes</h2>
-      <Table aria-label="Mis Reservas">
-        <TableHeader columns={columns}>
-          {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+    <div className='main centradoDeTabla'>
+      <div className="tablaContainer">
+      <h3 className='tituloTabla'>Reservas pendientes</h3>
+      <Table aria-label="Mis Reservas" removeWrapper>
+        <TableHeader className='rounded-none'>
+          {columns.map((column) => (
+            <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
+              {column.label}
+            </TableColumn>
+          ))}
         </TableHeader>
-        <TableBody items={misReservas}>
-          {(reserva) => (
-            <TableRow key={`${id_jugador}-${reserva.fecha}-${reserva.hora}`}>
+        <TableBody>
+          {misReservas.map((reserva) => (
+            <TableRow key={`${id_jugador}-${reserva.fecha}-${reserva.hora}`} className='py-0 px-0 contenidoTabla'>
               {columns.map((column) => (
-                <TableCell key={column.key}>
-                  {column.key === "acciones" ? (
+                <TableCell key={`${id_jugador}-${column.key}`} className='py-0 px-0'>
+                  {column.key === 'acciones' ? (
+
                     <>
                       <Button onClick={() => handleContinuarReserva(reserva)}>Continuar reserva</Button>
                       <Button onClick={() => handleEliminarReserva(id_jugador, reserva.fecha, reserva.hora)}>
@@ -107,26 +113,34 @@ const MisReservas = () => {
                 </TableCell>
               ))}
             </TableRow>
-          )}
+          ))}
         </TableBody>
       </Table>
+    </div>
 
-      <h2>Reservas hechas</h2>
-      <Table aria-label="Reservas Hechas">
-        <TableHeader columns={columns2}>
-          {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+      <div className="tablaContainer">
+      <h3 className='tituloTabla'>Reservas hechas</h3>
+      <Table aria-label="Reservas Hechas" removeWrapper>
+        <TableHeader className='rounded-none'>
+          {columns2.map((column) => (
+            <TableColumn key={column.key} className='headerTabla py-0 px-0' style={{ textAlign: 'center' }}>
+              {column.label}
+            </TableColumn>
+          ))}
         </TableHeader>
-        <TableBody items={reservasHechas}>
-          {(reserva) => (
-          <TableRow key={`${reserva.id_reserva}-${reserva.fecha}-${reserva.hora}`}>
-            {columns2.map((column) => (
-              <TableCell key={column.key}>{reserva[column.key]}</TableCell>
-            ))}
-          </TableRow>
-          )}
+        <TableBody>
+          {reservasHechas.map((reserva) => (
+            <TableRow key={`${reserva.id_reserva}-${reserva.fecha}-${reserva.hora}`} className='py-0 px-0 contenidoTabla'>
+              {columns2.map((column) => (
+                <TableCell key={`${reserva.id_reserva}-${column.key}`} className='py-0 px-0'>
+                  {reserva[column.key]}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
-
+    </div>
       <ModalReservas 
         show={showModal} 
         onHide={() => setShowModal(false)} 

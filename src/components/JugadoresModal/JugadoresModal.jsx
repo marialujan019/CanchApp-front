@@ -12,7 +12,8 @@ const columns = [
   { key: "telefono", label: "Teléfono" },
 ];
 
-const JugadoresModal = ({ jugadores, show, onHide }) => {
+const JugadoresModal = ({ jugadores, show, onHide, invitarJugadores }) => {
+
   const navigate = useNavigate()
 
   const renderCell = useCallback((jugador, columnKey) => {
@@ -72,9 +73,11 @@ const JugadoresModal = ({ jugadores, show, onHide }) => {
         <Button variant="secondary" onClick={onHide}>
           Cerrar
         </Button>
-        <Button variant="secondary" onClick={handleBuscarJugadores}>
-          Invitar jugadores
-        </Button>
+        {invitarJugadores && (
+          <Button variant="secondary" onClick={handleBuscarJugadores}>
+            Invitar jugadores
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

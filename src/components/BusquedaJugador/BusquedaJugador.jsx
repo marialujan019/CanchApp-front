@@ -177,39 +177,44 @@ const BusquedaJugador = () => {
             </select>
           </label>
         </div>
-
         <Button color="primary" onClick={handleLimpiarFiltros}>Eliminar Filtros</Button>
       </div>
 
-      <div>
-        <Table aria-label="Tabla con contenido dinámico">
-         <TableHeader columns={columns}>
-           {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
-         </TableHeader>
-         <TableBody>
-            {jugadoresFiltrados.map((jugador) => (
-              <TableRow key={jugador.id_jug}>
-                {columns.map((column) => (
-                  <TableCell key={column.key}>
-                    {column.key === "nombre_apellido" ? (
-                      `${jugador["nombre"]} ${jugador["apellido"]}`
-                    ) : column.key !== "solicitud" ? (
-                      column.key === "pie_habil" || column.key === "posicion" ? (
-                        jugador[column.key] == null ? "Información privada" : jugador[column.key]
+      <div className='centradoDeTabla'>
+        <div className="tablaContainer">
+          <h3 className='tituloTabla'>Jugadores disponibles</h3>
+          <Table aria-label="si" removeWrapper>
+            <TableHeader className='rounded-none'>
+              {columns.map((column) => (
+                <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
+                  {column.label}
+                </TableColumn>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {jugadoresFiltrados.map((jugador) => (
+                <TableRow key={jugador.id_jug} className='py-0 px-0 contenidoTabla'>
+                  {columns.map((column) => (
+                    <TableCell key={`${jugador.id_jug}-${column.key}`} className='py-0 px-0'>
+                      {column.key === 'nombre_apellido' ? (
+                        `${jugador.nombre} ${jugador.apellido}`
+                      ) : column.key !== 'solicitud' ? (
+                        column.key === 'pie_habil' || column.key === 'posicion' ? (
+                          jugador[column.key] == null ? "Información privada" : jugador[column.key]
+                        ) : (
+                          jugador[column.key]
+                        )
                       ) : (
-                        jugador[column.key]
-                      )
-                    ) : (
-                      <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jug)}> Ver solicitud </Button>
-                    )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+                        <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jug)}> Ver solicitud </Button>
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
-
       <ModalSeleccionEquipo
         equipos={equiposDelBack}
         show={showSolicitudModal}

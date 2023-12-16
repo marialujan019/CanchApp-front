@@ -32,10 +32,6 @@ const Header = () => {
     });
   }, [responseData]);
 
-  const updateBreadcrumbs = (crumbs) => {
-    setBreadcrumbs(crumbs);
-  };
-
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -56,16 +52,22 @@ const Header = () => {
   return (
     auth ? (
       <>
-        <header className="header">
+        <nav className="header">
           <div className="logo">Logo</div>
           <button className="menu-button" onClick={toggleMenu}>
             <i className="bi bi-list" />
           </button>
-          <nav className={`nav ${menuOpen ? 'open' : ''}`}>
-            <Link
+          <section className={`nav ${menuOpen ? 'open' : ''}`}>
+          <Link
               to="/home"
               className="nav-link"
-              onClick={() => updateBreadcrumbs(['Inicio', 'Buscar complejo'])}
+            >
+              Inicio
+            </Link>
+            <Link
+              to="/mapa"
+              className="nav-link"
+
             >
               Buscar complejo
             </Link>
@@ -74,56 +76,51 @@ const Header = () => {
             </button>
             <Link
               to={`/perfil/${user.tipo}/${user.id}`}
-              className="nav-link"
-              onClick={() => updateBreadcrumbs(['Inicio', 'Mi perfil'])}
+              className="nav-link
             >
               Mi perfil
             </Link>
             <Link
               to="/misEquipos"
               className="nav-link"
-              onClick={() => updateBreadcrumbs(['Inicio', 'Mis equipos'])}
             >
               Mis equipos
             </Link>
             <Link
               to={`buscarequipo/${user.id}`}
               className="nav-link"
-              onClick={() => updateBreadcrumbs(['Inicio', 'Buscar equipo'])}
             >
               Buscar equipo
             </Link>
             <Link
               to="/buscarjugador"
               className="nav-link"
-              onClick={() => updateBreadcrumbs(['Inicio', 'Buscar jugadores'])}
             >
               Buscar jugadores
             </Link>
             <Link
               to="/historial"
               className="nav-link"
-              onClick={() => updateBreadcrumbs(['Inicio', 'Mi historial'])}
             >
               Mi historial
             </Link>
             <Link
               to="/misSolicitudes"
               className="nav-link"
-              onClick={() => updateBreadcrumbs(['Inicio', 'Mis solicitudes'])}
+
             >
               Mis solicitudes
             </Link>
             <Link
               to={`misReservas/${user.id}`}
               className="nav-link"
-              onClick={() => updateBreadcrumbs(['Inicio', 'Mis reservas'])}
             >
               Mis reservas
             </Link>
-          </nav>
-        </header>
-        <Banner breadcrumbs={breadcrumbs} />
+          </section>
+        </nav>
+        <Banner />
+
       </>
     ) : (
       <header className="header">
@@ -132,10 +129,11 @@ const Header = () => {
           <i className="bi bi-list" />
         </button>
         <nav className={`nav ${menuOpen ? 'open' : ''}`}>
-          <Link to="/home" className="nav-link" onClick={() => updateBreadcrumbs(['Inicio'])}>
+          <Link to="/home" className="nav-link">
             Inicio
           </Link>
-          <Link to="/ingreso" className="nav-link" onClick={() => updateBreadcrumbs(['Inicio', 'Ingresar'])}>
+          <Link to="/ingreso" className="nav-link">
+
             Ingresar
           </Link>
         </nav>
