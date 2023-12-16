@@ -13,7 +13,7 @@ const CardComplejos = ({ complejos, cambiarPosicionZoom }) => {
   return (
     <div className='complejoCardsContainer'>
       {complejos.map((complejo) => (
-        <Card key={complejo.id_complejo} className="cardComplejo my-3">
+        <Card key={complejo.id_complejo} className="cardComplejo my-2">
             <img 
             className='complejoCardImagen'
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGrVGyZIpSiyAcGPcfo1jzHWNXMzxmTV8aYmgDBCi1-A&s" 
@@ -26,7 +26,7 @@ const CardComplejos = ({ complejos, cambiarPosicionZoom }) => {
                   <p className='text-base p-0 m-0 cardComplejoTexto'>Teléfono: {complejo.telefono}</p>
               </CardBody>
               <div className='botonesCardComplejos gap-2 pr-5'>
-                <Button variant="bordered" size="sm" className="botonCardComplejo" onClick={() => {cambiarPosicionZoom(complejo.latitud, complejo.longitud, 20, complejo.id_complejo);}}>
+                <Button variant="bordered" size="sm" className="botonCardComplejo" onClick={() => {cambiarPosicionZoom(complejo.latitud, complejo.longitud, 15, complejo.id_complejo);}}>
                   Ver en mapa <i className="bi bi-eye" />
                 </Button>
                 <Button variant="bordered" size="sm" className="botonCardComplejo" onClick={()=> {pedirComplejo(complejo.id_complejo)}}>Reservar <i className="bi bi-clipboard-check"/></Button>

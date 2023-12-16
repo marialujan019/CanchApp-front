@@ -96,7 +96,7 @@ const BusquedaEquipo = () => {
   console.log("Equipos filtrados: " + jsonString)
 
   return (
-    <div>
+    <div className='centradoDeTabla'>
       <div className='busquedaEquipoFiltroNombre'>
         <h4>Búsqueda por nombre</h4>
         <input
@@ -106,37 +106,45 @@ const BusquedaEquipo = () => {
         />
       </div>
 
-      <Table aria-label="Equipos">
-        <TableHeader columns={columns}>
-          {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
-        </TableHeader>
-        <TableBody>
-          {equiposFiltrados.map((equipo) => (
-            <TableRow key={equipo.id_equipo}>
-              {columns.map((column) => (
-                <TableCell key={column.key}>
-                  {column.key === 'cant_jugadores' ? (
-                    <>
-                      <Button onClick={() => fetchJugadores(equipo.id_equipo)}>
-                      <i class="bi bi-eye"></i>  {equipo[column.key]}/{equipo.cant_max}
-                      </Button>
-                    </>
-                  ) : column.key === 'solicitud' ? (
-                    renderButton(equipo)
-                  ) : (
-                    // Modificación aquí
-                    column.key === 'proximo_partido' && equipo[column.key] === null ? (
-                      "Este equipo no tiene próximos partidos"
+      <div className="tablaContainer">
+        <h3 className='tituloTabla'>Jugadores disponibles</h3>
+        <Table aria-label="Equipos" removeWrapper>
+          <TableHeader className='rounded-none'>
+            {columns.map((column) => (
+              <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
+                {column.label}
+              </TableColumn>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {equiposFiltrados.map((equipo) => (
+              <TableRow key={equipo.id_equipo} className='py-0 px-0 contenidoTabla'>
+                {columns.map((column) => (
+                  <TableCell key={`${equipo.id_equipo}-${column.key}`} className='py-0 px-0'>
+                    {column.key === 'cant_jugadores' ? (
+                      <>
+                        <Button onClick={() => fetchJugadores(equipo.id_equipo)}>
+                          <i className="bi bi-eye"></i> {equipo[column.key]}/{equipo.cant_max}
+                        </Button>
+                      </>
+                    ) : column.key === 'solicitud' ? (
+                      renderButton(equipo)
                     ) : (
-                      equipo[column.key]
-                    )
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                      // Modificación aquí
+                      column.key === 'proximo_partido' && equipo[column.key] === null ? (
+                        "Este equipo no tiene próximos partidos"
+                      ) : (
+                        equipo[column.key]
+                      )
+                    )}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      
 
       <JugadoresModal
         jugadores={jugadoresDeVerJugadores}

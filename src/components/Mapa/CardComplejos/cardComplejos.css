@@ -1,11 +1,16 @@
 .complejoCardsContainer {
-    max-height: 400px;
+    height: 73vh;
     overflow-y: scroll;
-    width: 400px;
+    width: 50vw; 
 }
 
+/* CARDS */
 .cardComplejo {
     background-color: #ffffff ;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-radius: 20px;
 }
 
 .botonesCardComplejos {
@@ -29,5 +34,9 @@
 
 .complejoCardDatos {
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+.complejoCardImagen {
+    width: 30%;
 }

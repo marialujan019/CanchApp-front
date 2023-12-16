@@ -33,3 +33,35 @@
   min-height: 80vh;
   background-color: #f2f2f2;
 }
+
+/* TABLAS */
+.centradoDeTabla {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.tablaContainer {
+  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 20px;
+  width: 80vw;
+}
+.tituloTabla {
+  text-align: center;
+  background-color:rgb(150, 223, 40);
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 20px 20px 0 0;
+  margin-bottom: 0;
+}
+.headerTabla {
+  background-color: black;
+  color: white;
+  border-radius: none;
+  border-top-right-radius: none;
+  border-bottom-right-radius: none;
+}
+.contenidoTabla {
+
+}

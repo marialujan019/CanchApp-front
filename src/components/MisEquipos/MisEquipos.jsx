@@ -176,48 +176,62 @@ const MisEquipos = () => {
         <Button onClick={()=>{navigate(`/buscarequipo/${id_capitan}`)}}>Buscar equipo</Button>
 
 
-      <div>
-        <h2>Mis equipos creados</h2>
+      <div className='centradoDeTabla'>
         {((misEquipos.length === 0) || misEquipos === null )? (
           <p>No tienes equipos</p>
         ) : (
-          <div>
-            <Table aria-label="Tabla de Equipos">
-          
-            <TableHeader columns={columns} >
-              {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
-            </TableHeader>
-            <TableBody items={misEquipos}>
-              {(equipo) => (
-                <TableRow key={equipo.id_equipo}>
-                  {(columnKey) => <TableCell>{renderCell(equipo, columnKey)}</TableCell>}
-                </TableRow>
-              )}
-            </TableBody>
+          <div className='tablaContainer'>
+            <h3 className='tituloTabla'>Equipos creados</h3>
+            <Table  removeWrapper>
+              <TableHeader className='rounded-none'>
+                {columns.map((column) => (
+                  <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
+                    {column.label}
+                  </TableColumn>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {misEquipos.map((equipo) => (
+                  <TableRow key={equipo.id_equipo} className='py-0 px-0 contenidoTabla'>
+                    {columns.map((column) => (
+                      <TableCell key={`${equipo.id_equipo}-${column.key}`} className='py-0 px-0'>
+                        {renderCell(equipo, column.key)}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
             </Table>
           </div>
         )}
       <div>
       
       <div>
-        <h2>Equipos</h2>
       </div>
           {((equiposDeFuera.length === 0) || equiposDeFuera === null) ? (
             <p>No tienes equipos</p>
           ) : (
-            <div>
-              <Table aria-label="Tabla de Equipos">
-                <TableHeader columns={columnsEquiposDeFuera}>
-                  {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
+            <div className="tablaContainer">
+              <h3 className='tituloTabla'>Equipos</h3>
+              <Table aria-label="Tabla de Equipos" removeWrapper>
+                <TableHeader className='rounded-none'>
+                  {columnsEquiposDeFuera.map((column) => (
+                    <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
+                      {column.label}
+                    </TableColumn>
+                  ))}
                 </TableHeader>
-                <TableBody items={equiposDeFuera}>
-            {(equipo) => (
-              <TableRow key={equipo.id_equipo}>
-                {(columnKey) => <TableCell>{renderCellEquiposDeFuera(equipo, columnKey)}</TableCell>}
-              </TableRow>
-            )}
-          </TableBody>
-
+                <TableBody>
+                  {equiposDeFuera.map((equipo) => (
+                    <TableRow key={equipo.id_equipo} className='py-0 px-0 contenidoTabla'>
+                      {columnsEquiposDeFuera.map((column) => (
+                        <TableCell key={`${equipo.id_equipo}-${column.key}`} className='py-0 px-0'>
+                          {renderCellEquiposDeFuera(equipo, column.key)}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
               </Table>
             </div>
           )}
@@ -237,6 +251,7 @@ const MisEquipos = () => {
         jugadores={jugadoresDelBack}
         show={showVerJugadoresModal}
         onHide={() => setShowVerJugadoresModal(false)}
+        invitarJugadores={true}
       />
 
       <JugadoresModal

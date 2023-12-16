@@ -28,41 +28,25 @@
     color: orange;
 }
 
-
-/* Seccion 2  */
-.inicioSeccion2 {
-    color: black;
-    background-color: #e5e5e5;
-}
-/* Titulo seccion 2*/
-.inicioSeccion2Titulo {
+.inicioSeccionTitulo {
     padding-top: 20px;
     font-size: 4rem;
 }
-/* Cards */
-.inicioCardsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+
+/* Seccion 2  */
+.inicioSeccion2 {
+
 }
- 
-/*TARJETAS DE FUNCIONALIDADES*/
-.inicioCard {
+/* Titulo seccion 2*/
+
+.inicioSeccion2Container{}
+
+.cardInicioSeccion2 {
+    border: black 2px solid;
+
+}
+
+/* CARDS */
+.cardInicio {
     width: 350px;
-    margin: 20px;
-    padding: 10px;
-    background-color: rgb(167, 162, 162);
-    transition: transform 0.3s; /* Transición para la propiedad "transform" */
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para resaltar las tarjetas */
-}
-
-.inicioCard img {
-    height: 80px;
-    width: 80px;
-}
-
-/* Efecto de animación al pasar el mouse sobre las tarjetas */
-.inicioCard:hover {
-    transform: scale(1.09); /* Escala la tarjeta al 105% de su tamaño original */
-    box-shadow: 4px 8px 12px rgba(0, 0, 0, 0.2); /* Aumenta la sombra para resaltar aún más */
 }
