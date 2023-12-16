@@ -27,6 +27,7 @@ const CardComplejos = ({ complejos, cambiarPosicionZoom }) => {
               </CardBody>
               <div className='botonesCardComplejos gap-2 pr-5'>
                 <Button variant="bordered" size="sm" className="botonCardComplejo" onClick={() => {cambiarPosicionZoom(complejo.latitud, complejo.longitud, 15, complejo.id_complejo);}}>
+
                   Ver en mapa <i className="bi bi-eye" />
                 </Button>
                 <Button variant="bordered" size="sm" className="botonCardComplejo" onClick={()=> {pedirComplejo(complejo.id_complejo)}}>Reservar <i className="bi bi-clipboard-check"/></Button>

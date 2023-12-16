@@ -55,7 +55,6 @@ const Mapa = () => {
    const filteredComplejos = data.filter(complejo =>
     complejo.nombre_complejo.toLowerCase().includes(searchTerm.toLowerCase())
 );
-
   return (
     <div className=' main'>
       

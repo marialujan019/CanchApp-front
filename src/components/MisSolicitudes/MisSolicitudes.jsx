@@ -224,12 +224,6 @@ const MisSolicitudes = () => {
           </TableBody>
         </Table>
       </div>
-
-
-      
-
-      
-
       <JugadoresModal
         jugadores={jugadoresDelBack}
         show={showVerJugadoresModal}

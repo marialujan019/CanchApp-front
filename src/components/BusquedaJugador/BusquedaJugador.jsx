@@ -177,7 +177,6 @@ const BusquedaJugador = () => {
             </select>
           </label>
         </div>
-
         <Button color="primary" onClick={handleLimpiarFiltros}>Eliminar Filtros</Button>
       </div>
 
@@ -216,8 +215,6 @@ const BusquedaJugador = () => {
           </Table>
         </div>
       </div>
-      
-
       <ModalSeleccionEquipo
         equipos={equiposDelBack}
         show={showSolicitudModal}

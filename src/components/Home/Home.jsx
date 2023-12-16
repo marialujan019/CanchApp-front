@@ -9,6 +9,7 @@ import { useUser } from '../UserContext';
 
 import Administrador from "../Perfil/Administrador";
 import InicioSesion from "../InicioSesion/InicioSesion";
+import Mapa from "../Mapa/Mapa";
 
 function Home() {
     const { user } = useUser();

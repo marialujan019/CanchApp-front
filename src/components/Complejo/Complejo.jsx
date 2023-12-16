@@ -107,6 +107,7 @@ const Complejo = () => {
 
     if (disponibles.length > 0 && indiceDisponible !== -1) {
       return <Button size="sm" onClick={() => handleReservaClick(hora, cancha, disponibles[indiceDisponible])}>Reservar</Button>;
+
     } else if (ocupadas.some(item => item.id_cancha === cancha.id_cancha)) {
       return "No disponible";
     } else {

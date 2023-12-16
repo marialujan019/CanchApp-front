@@ -207,6 +207,7 @@ const MisEquipos = () => {
       <div>
       
       <div>
+
       </div>
           {((equiposDeFuera.length === 0) || equiposDeFuera === null) ? (
             <p>No tienes equipos</p>
@@ -252,6 +253,7 @@ const MisEquipos = () => {
         show={showVerJugadoresModal}
         onHide={() => setShowVerJugadoresModal(false)}
         invitarJugadores={true}
+
       />
 
       <JugadoresModal

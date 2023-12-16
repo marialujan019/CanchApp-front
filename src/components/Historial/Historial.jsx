@@ -87,7 +87,7 @@ const Historial = () => {
         </TableBody>
       </Table>
     </div>
-      
+
     </div>
   );
 };

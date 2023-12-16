@@ -13,6 +13,7 @@ const Header = () => {
   const [message, setMessage] = useState('');
   const [tipo, setTipo] = useState('');
   const [id, setId] = useState('');
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
   const location = useLocation();
   const responseData = location.state && location.state.responseData;
   const { user } = useUser();
@@ -66,6 +67,7 @@ const Header = () => {
             <Link
               to="/mapa"
               className="nav-link"
+
             >
               Buscar complejo
             </Link>
@@ -74,7 +76,7 @@ const Header = () => {
             </button>
             <Link
               to={`/perfil/${user.tipo}/${user.id}`}
-              className="nav-link"
+              className="nav-link
             >
               Mi perfil
             </Link>
@@ -105,6 +107,7 @@ const Header = () => {
             <Link
               to="/misSolicitudes"
               className="nav-link"
+
             >
               Mis solicitudes
             </Link>
@@ -117,6 +120,7 @@ const Header = () => {
           </section>
         </nav>
         <Banner />
+
       </>
     ) : (
       <header className="header">
@@ -129,6 +133,7 @@ const Header = () => {
             Inicio
           </Link>
           <Link to="/ingreso" className="nav-link">
+
             Ingresar
           </Link>
         </nav>

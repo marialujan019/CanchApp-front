@@ -144,8 +144,6 @@ const BusquedaEquipo = () => {
           </TableBody>
         </Table>
       </div>
-      
-
       <JugadoresModal
         jugadores={jugadoresDeVerJugadores}
         show={showJugadoresModal}

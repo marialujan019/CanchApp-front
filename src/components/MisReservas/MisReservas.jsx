@@ -100,6 +100,7 @@ const MisReservas = () => {
               {columns.map((column) => (
                 <TableCell key={`${id_jugador}-${column.key}`} className='py-0 px-0'>
                   {column.key === 'acciones' ? (
+
                     <>
                       <Button onClick={() => handleContinuarReserva(reserva)}>Continuar reserva</Button>
                       <Button onClick={() => handleEliminarReserva(id_jugador, reserva.fecha, reserva.hora)}>
@@ -140,8 +141,6 @@ const MisReservas = () => {
         </TableBody>
       </Table>
     </div>
-      
-
       <ModalReservas 
         show={showModal} 
         onHide={() => setShowModal(false)} 

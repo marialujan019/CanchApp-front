@@ -13,6 +13,7 @@ const columns = [
 ];
 
 const JugadoresModal = ({ jugadores, show, onHide, invitarJugadores }) => {
+
   const navigate = useNavigate()
 
   const renderCell = useCallback((jugador, columnKey) => {
