@@ -106,15 +106,13 @@ const Complejo = () => {
     const indiceDisponible = disponibles.findIndex(item => item.id_cancha === cancha.id_cancha);
 
     if (disponibles.length > 0 && indiceDisponible !== -1) {
-      return <Button onClick={() => handleReservaClick(hora, cancha, disponibles[indiceDisponible])}>Reservar</Button>;
+      return <Button size="sm" onClick={() => handleReservaClick(hora, cancha, disponibles[indiceDisponible])}>Reservar</Button>;
     } else if (ocupadas.some(item => item.id_cancha === cancha.id_cancha)) {
       return "No disponible";
     } else {
       return "";
     }
-};
-
-
+  };
 
   //Función para crear el formulario de reserva
   const handleReservaClick = (hora, cancha, disponibles) => {
@@ -156,28 +154,31 @@ const Complejo = () => {
         <input type="date" id="fecha" onChange={(e) => handleFechaSeleccionada(e.target.value)} />
       </div>
   
-      <div className='Grilla'>
+      <div className='centradoDeTabla'>
       {fechas && (
-        <Table>
-          <TableHeader>
-            <TableColumn style={{ textAlign: 'center' }}>Horarios</TableColumn>
-            {canchas.map((cancha) => (
-              <TableColumn key={cancha.id_cancha} style={{ textAlign: 'center' }}>{cancha.nombre_cancha}</TableColumn>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {Object.keys(fechas.horario_disponibilidad).map((hora) => (
-              <TableRow key={hora}>
-                <TableCell>{hora}</TableCell>
-                {canchas.map((cancha) => (
-                  <TableCell key={`${hora}-${cancha.id_cancha}`}>
-                    {renderCell(hora, cancha)}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <div className='tablaContainer'>
+          <h3 className='tituloTabla'>Título de la Tabla</h3>
+          <Table removeWrapper>
+            <TableHeader className='rounded-none'>
+              <TableColumn style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>Horarios</TableColumn>
+              {canchas.map((cancha) => (
+                <TableColumn key={cancha.id_cancha} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>{cancha.nombre_cancha}</TableColumn>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {Object.keys(fechas.horario_disponibilidad).map((hora) => (
+                <TableRow key={hora} className='py-0 px-0 contenidoTabla'>
+                  <TableCell className='py-0 px-0'>{hora}</TableCell>
+                  {canchas.map((cancha) => (
+                    <TableCell className='py-0 px-0' key={`${hora}-${cancha.id_cancha}`}>
+                      {renderCell(hora, cancha)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       )}
       </div>
 

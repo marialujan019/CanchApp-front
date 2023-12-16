@@ -13,7 +13,7 @@ const customIcon = new Icon({
   iconSize: [38, 38]
 });
 
-const Mapa = ({nombre_usuario}) => {
+const Mapa = () => {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [mapPosition, setMapPosition] = useState([-27.4613063, -58.984803]);
@@ -21,28 +21,40 @@ const Mapa = ({nombre_usuario}) => {
   const markerRefs = useRef({});
 
   useEffect(() => {
-      async function fetchData() {
-          const jsonData = await axios.get('http://localhost:3001/popups');
-          setData(jsonData.data);
-      }
+    async function fetchData() {
+      const jsonData = await axios.get('http://localhost:3001/popups');
+      setData(jsonData.data);
+    }
 
-      fetchData();
+    fetchData();
   }, []);
 
-  // Función para filtrar por nombre
-  const filteredComplejos = data.filter(complejo =>
-      complejo.nombre_complejo.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Actualizar referencias a los marcadores cuando cambie la lista de complejos
+  useEffect(() => {
+    const newMarkerRefs = {};
+    data.forEach((item) => {
+      newMarkerRefs[item.id_complejo] = markerRefs.current[item.id_complejo];
+    });
+    markerRefs.current = newMarkerRefs;
+  }, [data]);
 
   // Función para que se cambie la vista del mapa según la cancha
   const cambiarPosicionZoom = (latitud, longitud, nuevoZoom, id_complejo) => {
-      setMapPosition([latitud, longitud]);
-      setMapZoom(nuevoZoom);
-      console.log("Marcador Refs:", markerRefs.current);
-    const marker = markerRefs.current[id_complejo];
-    marker.openPopup();
+    setMapPosition([latitud, longitud]);
+    setMapZoom(nuevoZoom);
+    setTimeout(() => {
+      const marker = markerRefs.current[id_complejo];
+      if (marker) {
+        marker.openPopup();
+      }
+    }, 0);
   };
 
+
+   // Función para filtrar por nombre
+   const filteredComplejos = data.filter(complejo =>
+    complejo.nombre_complejo.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
   return (
     <div className=' main'>

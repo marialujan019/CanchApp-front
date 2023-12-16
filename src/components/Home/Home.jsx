@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useUser } from '../UserContext';
 
 import Administrador from "../Perfil/Administrador";
-import Mapa from "../Mapa/Mapa";
+import InicioSesion from "../InicioSesion/InicioSesion";
 
 function Home() {
     const { user } = useUser();
@@ -36,14 +36,12 @@ function Home() {
                 
                 :
                 <div>
-                    <Mapa nombre_usuario={user.nombre}/>
+                    <InicioSesion nombre_usuario={user.nombre}/>
                 </div>)
                 :
                 <div>
                     <Inicio/>
                 </div>
-
-
             } 
         </div>
     )

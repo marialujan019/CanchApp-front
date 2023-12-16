@@ -38,46 +38,56 @@ const Historial = () => {
   
 
   return (
-    <div>
+    <div className='main centradoDeTabla'>
 
-      {/* Partidos a Jugar */}
-      <h2>Partidos a Jugar</h2>
-      <Table aria-label="Partidos a Jugar">
-        
-        <TableHeader columns={columns} >
-          {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
+      <div className="tablaContainer">
+        <h3 className='tituloTabla'>Partidos a Jugar</h3>
+        <Table aria-label="Partidos a Jugar" removeWrapper>
+          <TableHeader className='rounded-none'>
+            {columns.map((column) => (
+              <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
+                {column.label}
+              </TableColumn>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {partidosAJugar.map((item) => (
+              <TableRow key={item.id_reserva} className='py-0 px-0 contenidoTabla'>
+                {columns.map((column) => (
+                  <TableCell key={`${item.id_reserva}-${column.key}`} className='py-0 px-0'>
+                    {getKeyValue(item, column.key)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      
+      <div className="tablaContainer">
+      <h3 className='tituloTabla'>Partidos Jugados</h3>
+      <Table aria-label="Partidos Jugados" removeWrapper>
+        <TableHeader className='rounded-none'>
+          {columns.map((column) => (
+            <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
+              {column.label}
+            </TableColumn>
+          ))}
         </TableHeader>
-        <TableBody items={partidosAJugar}>
-          {(item) => (
-            <TableRow key={item.id_reserva}>
-              {(columnKey) => (
-                <TableCell key={columnKey}>
-                  {getKeyValue(item, columnKey)}
+        <TableBody>
+          {partidosJugados.map((item) => (
+            <TableRow key={item.id_reserva} className='py-0 px-0 contenidoTabla'>
+              {columns.map((column) => (
+                <TableCell key={`${item.id_reserva}-${column.key}`} className='py-0 px-0'>
+                  {getKeyValue(item, column.key)}
                 </TableCell>
-              )}
+              ))}
             </TableRow>
-          )}
+          ))}
         </TableBody>
       </Table>
-
-      {/* Partidos Jugados */}
-      <h2>Partidos Jugados</h2>
-      <Table aria-label="Partidos Jugados">
-        <TableHeader columns={columns} >
-          {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
-        </TableHeader>
-        <TableBody items={partidosJugados}>
-          {(item) => (
-            <TableRow key={item.id_reserva}>
-              {(columnKey) => (
-                <TableCell key={columnKey}>
-                  {getKeyValue(item, columnKey)}
-                </TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+    </div>
+      
     </div>
   );
 };
