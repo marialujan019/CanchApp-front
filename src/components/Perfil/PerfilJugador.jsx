@@ -11,6 +11,7 @@ const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mai
   const [pie_habil, setPiernaHabil] = useState(pieHabil);
   const [contrasena, setContrasena] = useState("");
   const [nuevaContrasena, setNuevaContrasena] = useState("");
+  const [mailEditado, setMailEditado] = useState(mail2);
   const [editandoMail, setEditandoMail] = useState(false);
   const [editandoTelefono, setEditandoTelefono] = useState(false);
   const [editandoSexo, setEditandoSexo] = useState(false);
@@ -19,7 +20,7 @@ const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mai
   const [editandoPosicion, setEditandoPosicion] = useState(false);
 
   useEffect( () => {
-    const data =  axios.post('http://localhost:3001/perfil', {
+    axios.post('http://localhost:3001/perfil', {
       tipo: "jugador",
       id: id
     }).then(res => {
@@ -39,6 +40,10 @@ const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mai
 
   const handleGuardarMail = () => {
     console.log("Mail editado:", mail);
+    axios.put(`http://localhost:3001/perfil/update/${id}`, {
+      mail: mailEditado,
+      mailViejo: mail2
+    })
     setEditandoMail(false);
   };
 
@@ -48,6 +53,9 @@ const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mai
 
   const handleGuardarTelefono = () => {
     console.log("Teléfono editado:", telefono);
+    axios.put(`http://localhost:3001/perfil/update/${id}`, {
+      telefono: telefono
+    })
     setEditandoTelefono(false);
   };
 
@@ -57,6 +65,9 @@ const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mai
 
   const handleGuardarSexo = () => {
     console.log("Sexo editado:", sexo);
+    axios.put(`http://localhost:3001/perfil/update/${id}`, {
+      sexo: sexo
+    })
     setEditandoSexo(false);
   };
 
@@ -66,6 +77,9 @@ const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mai
 
   const handleGuardarContrasena = () => {
     console.log("Contraseña editada:", nuevaContrasena);
+    axios.put(`http://localhost:3001/perfil/update/${id}`, {
+      contrasena: contrasena
+    })
     setContrasena(nuevaContrasena);
     setEditandoContrasena(false);
   };
@@ -76,6 +90,9 @@ const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mai
 
   const handleGuardarPieHabil = (valorSeleccionado) => {
     console.log("Pie habil editado:", valorSeleccionado === "Prefiero no decirlo" ? null : valorSeleccionado);
+    axios.put(`http://localhost:3001/perfil/update/${id}`, {
+      pierna_habil: pie_habil
+    })
     setEditandoPieHabil(false);
   };
 
@@ -85,6 +102,9 @@ const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mai
 
   const handleGuardarPosicion = (valorSeleccionado) => {
     console.log("Posición editada:", valorSeleccionado === "Prefiero no decirlo" ? null : valorSeleccionado);
+    axios.put(`http://localhost:3001/perfil/update/${id}`, {
+      posicion: posicion
+    })
     setEditandoPosicion(false);
   };
 
@@ -104,7 +124,7 @@ const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mai
                 <h4>Mail</h4>
                 {editandoMail ? (
                   <div>
-                    <input type="text" value={mail} onChange={(e) => setMail(e.target.value)} />
+                    <input type="text" value={mailEditado} onChange={(e) => setMailEditado(e.target.value)} />
                     <button onClick={handleGuardarMail}>Guardar</button>
                   </div>
                 ) : (
