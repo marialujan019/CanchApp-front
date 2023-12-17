@@ -22,7 +22,6 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
       await axios.delete(`http://localhost:3001/invitaciones/borrar/${idJugadorAInvitar}/${equipo.id_equipo}`)
       await refrescarEquipos(id_capitan, idJugadorAInvitar);
     } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
-      console.log("ENRA POR ACA")
       axios.post('http://localhost:3001/invitaciones', {
         id_jugador: idJugadorAInvitar,
         id_equipo: equipo.id_equipo,
