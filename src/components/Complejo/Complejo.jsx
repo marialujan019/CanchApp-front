@@ -265,7 +265,7 @@ const Complejo = () => {
           show={showModal}
           onHide={() => setShowModal(false)}
           nuevaReserva={nuevaReserva}
-          equipos={equipos}
+          equipos={[]}
           origen={"complejo"}
         />
     </div>
