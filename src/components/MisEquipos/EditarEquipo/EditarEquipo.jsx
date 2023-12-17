@@ -3,8 +3,6 @@ import { Modal, Button } from 'react-bootstrap';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Tooltip } from "@nextui-org/react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { async } from 'q';
-
 
 const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_equipo, id_capitan, updateMisEquipos }) => {
     const [equipoNombre, setEquipoNombre] = useState(nombre_equipo);
@@ -37,20 +35,17 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
         setEquipoVisibilidad(!equipoVisibilidad);
     };
 
-    //Función que envia al back los datos del equipo editado
-    //Si hay un nuevoCapitan, se debe eliminar este equipo
-    //El id_capitan es el id proveniente del jugador que inició sesion
     const handleConfirmar = async () => {
         const idsJugadores = arregloJugadores.map((jugador) => jugador.id_jug);
-
-        await axios.post('http://localhost:3001/equipo/update',{
+        await axios.post('http://localhost:3001/equipo/update', {
           nombre_equipo: equipoNombre,
           capitan: nuevoCapitan ? nuevoCapitan : id_capitan,
           id_jugadores: idsJugadores,
           publico: equipoVisibilidad,
           id_equipo: id_equipo
         })
-        onHide();
+        .then(updateMisEquipos())
+        .then(onHide())
     };
 
     const updateJugadoresEquipo = async (id) => {

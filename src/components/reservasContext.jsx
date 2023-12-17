@@ -10,10 +10,12 @@ export const ReservasProvider = ({ children }) => {
   };
 
   const eliminarReserva = (idJugador, fecha, hora) => {
-    const nuevasReservas = misReservas.filter(
-      (reserva) => !(reserva.id_jugador === idJugador && reserva.fecha === fecha && reserva.hora === hora)
-    );
-    setMisReservas(nuevasReservas);
+    setMisReservas((prevMisReservas) => {
+      const nuevasReservas = prevMisReservas.filter(
+        (reserva) => !(reserva.id_jugador === idJugador && reserva.fecha === fecha && reserva.hora === hora)
+      );
+      return nuevasReservas;
+    });
   };
 
   return (

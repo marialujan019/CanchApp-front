@@ -235,7 +235,7 @@ const Complejo = () => {
         {fechas && (
           <div className='tablaContainer'>
             <h3 className='tituloTabla'>Fecha seleccionada {formatDate(fechaSeleccionada)}</h3>
-            <Table removeWrapper >
+            <Table removeWrapper aria-label="Tabla de fechas">
               <TableHeader isCompact className='rounded-none'>
                 <TableColumn style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>Horarios</TableColumn>
                 {canchas.map((cancha) => (

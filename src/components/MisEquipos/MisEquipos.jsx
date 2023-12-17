@@ -90,18 +90,15 @@ const MisEquipos = () => {
   };
 
   //Funcion para renderizar nuevamente Mis Equipos
-  //Basicamente envio esta funcion al editarEquipos para que, cuando se confirmen los cambios, se refresque la pagina
   const updateMisEquipos = async () => {
-    //update a la bade de datos
     const datos = await axios.get(`http://localhost:3001/equipo/soy_capitan/${id_capitan}`);
     setMisEquipos(datos.data);
   };
 
-  const handleCrearEquipo = (id_capitan) => {
+  const handleCrearEquipo = () => {
     setShowCrearEquipoModal(true)
   }
 
-  
   //Función para renderizar los equipos creados por el usuario
   const renderCell = useCallback((equipo, columnKey) => {
     const cellValue = equipo[columnKey];
@@ -183,7 +180,7 @@ const MisEquipos = () => {
         ) : (
           <div className='tablaContainer'>
             <h3 className='tituloTabla'>Equipos creados</h3>
-            <Table isStriped removeWrapper>
+            <Table isStriped removeWrapper aria-label="Tabla de equipos creados">
               <TableHeader className='rounded-none'>
                 {columns.map((column) => (
                   <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
