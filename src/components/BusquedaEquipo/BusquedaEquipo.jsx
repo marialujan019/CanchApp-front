@@ -108,7 +108,7 @@ const BusquedaEquipo = () => {
 
       <div className="tablaContainer">
         <h3 className='tituloTabla'>Jugadores disponibles</h3>
-        <Table aria-label="Equipos" removeWrapper>
+        <Table aria-label="Equipos" removeWrapper className="scrollable-table">
           <TableHeader className='rounded-none'>
             {columns.map((column) => (
               <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>

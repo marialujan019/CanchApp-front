@@ -126,7 +126,6 @@ const PerfilJugador = ({ id, nombre2, telefono2, pieHabil, posicion2, sexo2, mai
                   </p>
                 )}
               </div>
-              {/* Nuevo campo "sexo" */}
               <div className="data">
                 <h4>Sexo</h4>
                 {editandoSexo ? (

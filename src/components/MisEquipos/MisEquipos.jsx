@@ -6,6 +6,7 @@ import CrearEquipo from './CrearEquipo/CrearEquipo';
 import axios from 'axios';
 import { useUser } from '../UserContext';
 import { useNavigate } from 'react-router';
+import "./misEquipos.css"
 
 const columns = [
   { key: "nombre_equipo", label: "Nombre del Equipo" },
@@ -171,7 +172,7 @@ const MisEquipos = () => {
 
 
   return (
-    <div>
+    <div className='fondo'>
         <Button onClick={handleCrearEquipo}>Crear equipo</Button>
         <Button onClick={()=>{navigate(`/buscarequipo/${id_capitan}`)}}>Buscar equipo</Button>
 
@@ -182,7 +183,7 @@ const MisEquipos = () => {
         ) : (
           <div className='tablaContainer'>
             <h3 className='tituloTabla'>Equipos creados</h3>
-            <Table  removeWrapper>
+            <Table isStriped removeWrapper>
               <TableHeader className='rounded-none'>
                 {columns.map((column) => (
                   <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
@@ -192,7 +193,7 @@ const MisEquipos = () => {
               </TableHeader>
               <TableBody>
                 {misEquipos.map((equipo) => (
-                  <TableRow key={equipo.id_equipo} className='py-0 px-0 contenidoTabla'>
+                  <TableRow key={equipo.id_equipo} className='py-0 px-0 contenidoTabla '>
                     {columns.map((column) => (
                       <TableCell key={`${equipo.id_equipo}-${column.key}`} className='py-0 px-0'>
                         {renderCell(equipo, column.key)}
@@ -214,7 +215,7 @@ const MisEquipos = () => {
           ) : (
             <div className="tablaContainer">
               <h3 className='tituloTabla'>Equipos</h3>
-              <Table aria-label="Tabla de Equipos" removeWrapper>
+              <Table aria-label="Tabla de Equipos" removeWrapper isStriped >
                 <TableHeader className='rounded-none'>
                   {columnsEquiposDeFuera.map((column) => (
                     <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>

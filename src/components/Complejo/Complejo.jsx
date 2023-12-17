@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 import { useParams } from 'react-router-dom';
 import ModalReservas from '../ModalReservas/ModalReservas';
 import axios from 'axios';
 import { useUser } from '../UserContext';
 import "./complejo.css"
+import Carousel from 'react-bootstrap/Carousel';
+
+
+const images = [
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Cancha_sintetica.jpg/1200px-Cancha_sintetica.jpg',
+  'https://vallealto.mx/wp-content/uploads/2021/04/IMG_0181-scaled.jpg',
+  'https://obs.ucr.ac.cr/wp-content/uploads/2022/09/Cancha-de-Futbol.png',
+  'https://sport-12.com/wp-content/uploads/2022/02/Cancha-Chapultepec_cuadrado.jpg',
+  'https://pastosinteticoprecio.com/wp-content/uploads/2018/02/Construccion-de-Canchas-de-Futbol-7-1024x609.jpg',
+];
 
 const Complejo = () => {
   //Variable para obtener el id del complejo mediante la ruta
@@ -27,6 +37,17 @@ const Complejo = () => {
   //Variable para manejar el formulario de reserva
   const [nuevaReserva, setNuevaReserva] = useState({});
   const [showModal, setShowModal] = useState(false);
+
+  //Galeria
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageClick = (index) => {
+    setSelectedImage(images[index]);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedImage(null);
+  };
 
   useEffect(() => {
     if (Object.keys(nuevaReserva).length > 0) {
@@ -106,7 +127,7 @@ const Complejo = () => {
     const indiceDisponible = disponibles.findIndex(item => item.id_cancha === cancha.id_cancha);
 
     if (disponibles.length > 0 && indiceDisponible !== -1) {
-      return <Button size="sm" onClick={() => handleReservaClick(hora, cancha, disponibles[indiceDisponible])}>Reservar</Button>;
+      return <button className='complejoBotonReservar' onClick={() => handleReservaClick(hora, cancha, disponibles[indiceDisponible])}>Reservar</button>;
 
     } else if (ocupadas.some(item => item.id_cancha === cancha.id_cancha)) {
       return "No disponible";
@@ -136,52 +157,109 @@ const Complejo = () => {
   };
   
 
+  //Funcion para cambiar formato de fecha
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const selectedDate = new Date(dateString);
+    selectedDate.setDate(selectedDate.getDate() + 1); // Sumar un día
+    return selectedDate.toLocaleDateString(undefined, options);
+  };
+  
+  
+  
+
   return (
     <div className='ComplejoContainer main'>
-        <h2 className='tituloComplejo'>{complejo.nombre_complejo}</h2>
+
+      <div className='complejoHeader'>
+        <h2 className='tituloComplejo text-left m-0'>{complejo.nombre_complejo}</h2>
+        <p className='text-left complejoDireccion m-0'><i class="bi bi-geo-alt"></i>{complejo.direccion}</p>
+      </div>
+
       <div className='complejoDatosContainer'>
-        <div>
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGrVGyZIpSiyAcGPcfo1jzHWNXMzxmTV8aYmgDBCi1-A&s" alt="" />
-        </div>
-        <div>
-          <p>Dirección: {complejo.direccion}</p>
-          <p>Teléfono: {complejo.telefono}</p>
-          <p>Descripcion: {complejo.descripcion}</p>
+        <div className='centradoDeCarrouselContainer'>
+          <div className='carrouselContainer'>
+            <Carousel>
+              {images.map((image, index) => (
+                <Carousel.Item key={index}>
+                  <img
+                    className="d-block w-100 imageGallery"
+                    src={image}
+                    alt={"si"}
+                    onClick={() => handleImageClick(index)}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+            {selectedImage && (
+              <div className="modal-overlay" onClick={handleCloseModal}>
+                <div className="modalGallery">
+                  <img src={selectedImage} alt="Selected" />
+                </div>
+              </div>
+            )}
         </div>
       </div>
-  
-      <div>
-        <label htmlFor="fecha">Seleccione una fecha:</label>
-        <input type="date" id="fecha" onChange={(e) => handleFechaSeleccionada(e.target.value)} />
+
+      <div className='centradoDeComplejoDatos'>
+        <div className='complejoDatos text-left'>
+          <div className='complejoAdministrador'>
+            <strong className='m-0'>Administrador nombre_administrador</strong>
+            <p className='m-0'>Administrador iniciante: lleva 3 meses usasndo CanchApp</p>
+          </div>
+
+          <div className='complejoDescripcion'>
+            <p className='m-0'><strong>Descripcion:</strong></p>
+            <p className='m-0'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem a, inventore ullam animi dolores similique error omnis iusto sapiente? Vero, alias in consequuntur ipsa autem facilis quas veniam dolorem nobis sunt, architecto asperiores distinctio enim quidem totam officia? Sit, in ducimus. Quibusdam omnis amet quia a iusto ipsum libero ipsa.</p>
+          </div>
+
+            <div className='complejoInfo'> 
+              <p className='m-0'><strong>Teléfono:</strong> {complejo.telefono}</p>
+              <p className='m-0'><strong>Horarios del club:</strong> horarios</p>
+            </div>
+          </div>
+        </div>
       </div>
-  
+      
+      
       <div className='centradoDeTabla'>
-      {fechas && (
-        <div className='tablaContainer'>
-          <h3 className='tituloTabla'>Título de la Tabla</h3>
-          <Table removeWrapper>
-            <TableHeader className='rounded-none'>
-              <TableColumn style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>Horarios</TableColumn>
-              {canchas.map((cancha) => (
-                <TableColumn key={cancha.id_cancha} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>{cancha.nombre_cancha}</TableColumn>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {Object.keys(fechas.horario_disponibilidad).map((hora) => (
-                <TableRow key={hora} className='py-0 px-0 contenidoTabla'>
-                  <TableCell className='py-0 px-0'>{hora}</TableCell>
-                  {canchas.map((cancha) => (
-                    <TableCell className='py-0 px-0' key={`${hora}-${cancha.id_cancha}`}>
-                      {renderCell(hora, cancha)}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        
+        <div className='complejoElegirFecha'>
+          <div>
+           <strong><label htmlFor="fecha">Seleccione una fecha:</label></strong>
+            <input type="date" id="fecha" onChange={(e) => handleFechaSeleccionada(e.target.value)} />
+          </div>
         </div>
-      )}
+    
+        <div>
+        {fechas && (
+          <div className='tablaContainer'>
+            <h3 className='tituloTabla'>Fecha seleccionada {formatDate(fechaSeleccionada)}</h3>
+            <Table removeWrapper >
+              <TableHeader isCompact className='rounded-none'>
+                <TableColumn style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>Horarios</TableColumn>
+                {canchas.map((cancha) => (
+                  <TableColumn key={cancha.id_cancha} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>{cancha.nombre_cancha}</TableColumn>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {Object.keys(fechas.horario_disponibilidad).map((hora) => (
+                  <TableRow key={hora} className='py-0 px-0 contenidoTabla'>
+                    <TableCell className='py-1 px-0'>{hora}</TableCell>
+                    {canchas.map((cancha) => (
+                      <TableCell className='py-1 px-0' key={`${hora}-${cancha.id_cancha}`}>
+                        {renderCell(hora, cancha)}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+        </div>
       </div>
+      
 
       <ModalReservas
           show={showModal}
