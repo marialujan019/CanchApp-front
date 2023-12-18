@@ -44,9 +44,12 @@ const MisReservas = () => {
 
   // Se tiene que llamar a los equipos del jugador para que pueda elegir
   const fetchEquipos = async (id_jugador) => {
-    console.log(id_jugador)
-    const datos = await axios.get(`http://localhost:3001/equipo/soy_capitan/${id_jugador}`);
-    setEquipos(datos.data);
+    try {
+      const datos = await axios.get(`http://localhost:3001/equipo/soy_capitan/${id_jugador}`);
+      setEquipos(datos.data);
+    } catch (error) {
+      console.error("Error al obtener equipos:", error);
+    }
   };
 
   // Se envían estos datos al modalReservas para continuar con la reserva
@@ -56,8 +59,8 @@ const MisReservas = () => {
       id_jugador: id_jugador,
       id_complejo: reserva.id_complejo,
       nombre_complejo: reserva.nombre_complejo,
-      direccion_complejo: reserva.direccion,
-      telefono_complejo: reserva.telefono,
+      direccion_complejo: reserva.direccion_complejo,
+      telefono_complejo: reserva.telefono_complejo,
       id_cancha: reserva.id_cancha,
       nombre_cancha: reserva.nombre_cancha,
       fecha: reserva.fecha,
@@ -67,25 +70,32 @@ const MisReservas = () => {
     setContinuarReserva(nuevaReserva);
   };
 
-  const handleEliminarReserva = (idJugador, fecha, hora) => {
-    eliminarReserva(idJugador, fecha, hora);
+  const handleEliminarReserva = async (idJugador, fecha, hora) => {
+    try {
+      await eliminarReserva(parseInt(idJugador), fecha, hora);
+    } catch (error) {
+      console.error("Error al eliminar reserva:", error);
+    };
   };
 
   //Función que debe enviar el id_jugador y recibir las reservas ya hechas
   useEffect(() => {
     const fetchReservas = async () => {
-      console.log(id_jugador)
-      const datos = await axios.get(`http://localhost:3001/reservas/mis-reservas/${id_jugador}`);
-      setReservasHechas(datos.data);
+      try {
+        const datos = await axios.get(`http://localhost:3001/reservas/mis-reservas/${id_jugador}`);
+        setReservasHechas(datos.data);
+      } catch (error) {
+        console.error("Error al obtener reservas:", error);
+      }
     };
 
     fetchReservas();
-  }, []);
+  }, [id_jugador]); 
 
   return (
     <div className='main centradoDeTabla'>
       <div className="tablaContainer">
-      <h3 className='tituloTabla'>Reservas pendientes</h3>
+      <h3 className='tituloTabla'>Continuar reserva</h3>
       <Table aria-label="Mis Reservas" removeWrapper>
         <TableHeader className='rounded-none'>
           {columns.map((column) => (
@@ -146,7 +156,7 @@ const MisReservas = () => {
         onHide={() => setShowModal(false)} 
         nuevaReserva={continuarReserva} 
         equipos={equipos} 
-        origen={"complejo"} 
+        origen={"reservas"} 
       />
     </div>
   );

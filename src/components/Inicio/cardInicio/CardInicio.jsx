@@ -6,12 +6,13 @@ const CardInicio = ({ imagenSrc, titulo, descripcion }) => {
   return (
     <Card className='cardInicio'>
       <img src={imagenSrc} alt={titulo} className='cardInicioImagen opacity-100'/>
-      <div className=''>
         <CardBody className='p-2'>
-          <h4 className='text-base p-0 m-0 '>{titulo}</h4>
-          <p className='text-base p-0 m-0'>{descripcion}</p>
+          <div className='inicioCardBody'>
+            <h4 className='text-base p-0 m-0 InicioTituloCard'>{titulo}</h4>
+            <p className='text-base p-0 m-0 InicioTextoCard'>{descripcion}</p>
+          </div>
+         
         </CardBody>
-      </div>
     </Card>
   );
 };

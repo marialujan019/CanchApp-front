@@ -6,6 +6,7 @@ import CrearEquipo from './CrearEquipo/CrearEquipo';
 import axios from 'axios';
 import { useUser } from '../UserContext';
 import { useNavigate } from 'react-router';
+import "./misEquipos.css"
 
 const columns = [
   { key: "nombre_equipo", label: "Nombre del Equipo" },
@@ -89,18 +90,15 @@ const MisEquipos = () => {
   };
 
   //Funcion para renderizar nuevamente Mis Equipos
-  //Basicamente envio esta funcion al editarEquipos para que, cuando se confirmen los cambios, se refresque la pagina
   const updateMisEquipos = async () => {
-    //update a la bade de datos
     const datos = await axios.get(`http://localhost:3001/equipo/soy_capitan/${id_capitan}`);
     setMisEquipos(datos.data);
   };
 
-  const handleCrearEquipo = (id_capitan) => {
+  const handleCrearEquipo = () => {
     setShowCrearEquipoModal(true)
   }
 
-  
   //Función para renderizar los equipos creados por el usuario
   const renderCell = useCallback((equipo, columnKey) => {
     const cellValue = equipo[columnKey];
@@ -171,18 +169,21 @@ const MisEquipos = () => {
 
 
   return (
-    <div>
+    <div className='fondo'>
         <Button onClick={handleCrearEquipo}>Crear equipo</Button>
         <Button onClick={()=>{navigate(`/buscarequipo/${id_capitan}`)}}>Buscar equipo</Button>
 
 
       <div className='centradoDeTabla'>
         {((misEquipos.length === 0) || misEquipos === null )? (
-          <p>No tienes equipos</p>
+          <div>
+            <p>No tienes equipos creados</p>
+            <Button onClick={handleCrearEquipo}>Crear equipo</Button>
+          </div>
         ) : (
           <div className='tablaContainer'>
             <h3 className='tituloTabla'>Equipos creados</h3>
-            <Table  removeWrapper>
+            <Table isStriped removeWrapper aria-label="Tabla de equipos creados">
               <TableHeader className='rounded-none'>
                 {columns.map((column) => (
                   <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
@@ -192,7 +193,7 @@ const MisEquipos = () => {
               </TableHeader>
               <TableBody>
                 {misEquipos.map((equipo) => (
-                  <TableRow key={equipo.id_equipo} className='py-0 px-0 contenidoTabla'>
+                  <TableRow key={equipo.id_equipo} className='py-0 px-0 contenidoTabla '>
                     {columns.map((column) => (
                       <TableCell key={`${equipo.id_equipo}-${column.key}`} className='py-0 px-0'>
                         {renderCell(equipo, column.key)}
@@ -210,11 +211,15 @@ const MisEquipos = () => {
 
       </div>
           {((equiposDeFuera.length === 0) || equiposDeFuera === null) ? (
-            <p>No tienes equipos</p>
+            <div>
+              <p>No estás en ningún equipo </p>
+              <Button onClick={()=>{navigate(`/buscarequipo/${id_capitan}`)}}>Buscar equipo</Button>
+            </div>
+
           ) : (
             <div className="tablaContainer">
               <h3 className='tituloTabla'>Equipos</h3>
-              <Table aria-label="Tabla de Equipos" removeWrapper>
+              <Table aria-label="Tabla de Equipos" removeWrapper isStriped >
                 <TableHeader className='rounded-none'>
                   {columnsEquiposDeFuera.map((column) => (
                     <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>

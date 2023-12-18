@@ -1,0 +1,82 @@
+/* Reset.css */
+
+/* Establecer el box model para todos los elementos */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Establecer la fuente y el tamaño del texto predeterminados */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  /* Eliminar la decoración de enlace predeterminada */
+  a {
+    text-decoration: none;
+  }
+  
+  /* Establecer estilos de lista predeterminados */
+  ul, ol {
+    list-style: none;
+  }
+  
+.app {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    flex: 0 0 calc(33.33% - 20px); /* Ajusta el ancho para tres tarjetas por fila */
+    transition: transform 0.2s ease-in-out; /* Añade una transición para el efecto de zoom */
+  }
+
+  .card:hover {
+    transform: scale(1.05); /* Aplica un aumento de escala cuando el cursor está sobre la tarjeta */
+  }
+  
+  .card img {
+    width: auto;
+    height: auto;
+    border: none;
+  }
+
+  .card-content {
+    text-decoration: none; /* Eliminar decoración del enlace */
+
+  }
+
+  .card-content::before {
+    border: none;
+  }
+  /* style.css */
+
+.card-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Espacio entre filas */
+  }
+  
+  .card a,
+  .card a:link,
+  .card a:visited,
+  .card a:hover,
+  .card a:active {
+    text-decoration: none; /* Eliminar decoración del enlace */
+    color: inherit; /* Heredar el color del texto del elemento padre (puede necesitar ajustes) */
+  }
+  

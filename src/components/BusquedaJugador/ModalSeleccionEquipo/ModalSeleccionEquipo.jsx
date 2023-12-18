@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from '@nextui-org/react';
 import { Modal } from 'react-bootstrap';
 import axios from 'axios';
@@ -10,27 +10,25 @@ const columns = [
   { key: "estado", label: "Estado" },
 ];
 
-//Se trae el id del jugador al que le voy a enviar la solicitud y los equipos que tengo armados para agregar al jugador
 const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refrescarEquipos, show, onHide }) => {
+  const [modalKey, setModalKey] = useState(0);
 
-  //Esta fnción lo que hace es que, si el capitan cancela una solicitud que envió al jugador, envia el id_equipo y el id_jugadorAInVitar al back
-  //Entonces, se elimina la solicitud, entonces el jugador deja de estar "Pendiente" para estar "No enviado"
-  //Y si se envia solicitud, lo mismo
-  //El refrescar equipo es es para que me regreses los jugadores con sus nuevos estados para cambiar los botones
-  const toggleSolicitud = async (equipo) => {
-    if (equipo.estado === 'Pendiente') {
-      await axios.delete(`http://localhost:3001/invitaciones/borrar/${idJugadorAInvitar}/${equipo.id_equipo}`)
-      await refrescarEquipos(id_capitan, idJugadorAInvitar);
-    } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
-      axios.post('http://localhost:3001/invitaciones', {
-        id_jugador: idJugadorAInvitar,
-        id_equipo: equipo.id_equipo,
-        id_capitan: id_capitan
-      })
-      await refrescarEquipos(id_capitan, idJugadorAInvitar);
-    }
+  const toggleEnviarSolicitud = async (equipo) => {
+    await axios.post('http://localhost:3001/invitaciones', {
+      id_jugador: idJugadorAInvitar,
+      id_equipo: equipo.id_equipo,
+      id_capitan: id_capitan,
+    });
+    await refrescarEquipos(id_capitan, idJugadorAInvitar);
+    setModalKey((prevKey) => prevKey + 1);
   };
-  
+
+  const toggleCancelarSolicitud = async (equipo) => {
+    await axios.delete(`http://localhost:3001/invitaciones/borrar/${idJugadorAInvitar}/${equipo.id_equipo}`)
+    .then(await refrescarEquipos(id_capitan, idJugadorAInvitar))
+    .then(setModalKey((prevKey) => prevKey + 1))
+  };
+
   const renderCell = (equipo, column) => {
     switch (column.key) {
       case 'cant_jug':
@@ -40,28 +38,26 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
           return <Button disabled color='success'>Ya formas parte de este equipo</Button>;
         } else if (equipo.estado === 'Pendiente') {
           return (
-            <Button onClick={() => toggleSolicitud(equipo)} color='danger'>
+            <Button onClick={() => toggleCancelarSolicitud(equipo)} color='danger'>
               Cancelar invitacion
             </Button>
           );
         } else if (equipo.estado === "Rechazado" || equipo.estado === "No enviado" || equipo.estado === 'Rechazado') {
           return (
-            <Button onClick={() => toggleSolicitud(equipo)} color='primary'>
+            <Button onClick={() => toggleEnviarSolicitud(equipo)} color='primary'>
               Enviar invitacion
             </Button>
           );
         }
       case 'estado':
-        return equipo.estado || 'No enviado'; // Renderiza el estado o 'No enviado' si es null o undefined
+        return equipo.estado || 'No enviado';
       default:
         return equipo[column.key];
     }
   };
 
-  
-//ACA IRIAN LAS INVITACIONES
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} key={modalKey} onHide={onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title>Equipos Disponibles</Modal.Title>
       </Modal.Header>
@@ -99,4 +95,3 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
 };
 
 export default ModalSeleccionEquipo;
-

@@ -37,7 +37,7 @@ function Home() {
                 
                 :
                 <div>
-                    <InicioSesion nombre_usuario={user.nombre}/>
+                    <InicioSesion nombre_usuario={user.nombre} id={user.id}/>
                 </div>)
                 :
                 <div>

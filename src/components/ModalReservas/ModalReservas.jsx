@@ -10,6 +10,7 @@ import { useUser } from '../UserContext';
 const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
   //Contexto de reserva
   const { agregarReserva } = useReservasContext();
+  const { eliminarReserva } = useReservasContext();
   //Variables para manejar el botón de "Crear equipo"
   const [selectedEquipo, setSelectedEquipo] = useState('');
   const navigate = useNavigate(); 
@@ -20,8 +21,11 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
 
   const handleReservarClick = () => {
     if (selectedEquipo) {
+      const { id_jugador, fecha, hora } = nuevaReserva;
+      eliminarReserva(parseInt(id_jugador), fecha, hora);
+  
       alert(
-        `ID Jugador: ${nuevaReserva.id_jugador}\nID Complejo: ${nuevaReserva.id_complejo}\nID Cancha: ${nuevaReserva.id_cancha}\nFecha: ${nuevaReserva.fecha}\nHora: ${nuevaReserva.hora}\nID Equipo seleccionado: ${selectedEquipo} \nID Agenda ${nuevaReserva.id_agenda}`
+        `ID Jugador: ${id_jugador}\nID Complejo: ${nuevaReserva.id_complejo}\nID Cancha: ${nuevaReserva.id_cancha}\nFecha: ${nuevaReserva.fecha}\nHora: ${nuevaReserva.hora}\nID Equipo seleccionado: ${selectedEquipo} \nID Agenda ${nuevaReserva.id_agenda}`
       );
       setReservas();
       navigate("/misEquipos");
@@ -29,6 +33,7 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
       alert('Selecciona un equipo antes de reservar.');
     }
   };
+  
 
   const setReservas = () => {
     axios.post('http://localhost:3001/reservar', {
@@ -81,7 +86,7 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
 
 
   //Función para traer las reservas ya hechas por el usuario
-  const renderEquiposSection = (id_jugador) => {
+  const renderEquiposSection = () => {
     if (equipos.length > 0) {
       return (
         <div>

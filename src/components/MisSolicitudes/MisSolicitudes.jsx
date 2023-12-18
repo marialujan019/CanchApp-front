@@ -84,7 +84,7 @@ const MisSolicitudes = () => {
   return (
     <div className='main centradoDeTabla'>
       <div className="tablaContainer">
-        <h3 className='tituloTabla'>Los siguientes jugadores quieren unirse a tus equipo: </h3>
+        <h3 className='tituloTabla'>Los siguientes jugadores quieren unirse a tu equipo: </h3>
         <Table aria-label="Solicitudes Recibidas de Jugadores" removeWrapper>
           <TableHeader className='rounded-none'>
             {[
@@ -122,7 +122,7 @@ const MisSolicitudes = () => {
       
 
       <div className="tablaContainer">
-        <h3 className='tituloTabla'>Los siguientes euqipos quieren que te unas a ellos: </h3>
+        <h3 className='tituloTabla'>Los siguientes equipos quieren que te unas a ellos: </h3>
         <Table aria-label="Solicitudes Recibidas de Equipos" removeWrapper>
           <TableHeader className='rounded-none'>
             {[

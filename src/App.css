@@ -27,11 +27,18 @@
 @font-face {
   font-family: "bBigerOver";
   src: url(/public/fonts/bBigerOver.ttf);
+
+}
+@font-face {
+  font-family: "bebas";
+  src: url(/public/fonts/BebasKai-Regular.otf);
 }
 
+body {
+  background-color: #f2f2f2;
+}
 .main {
   min-height: 80vh;
-  background-color: #f2f2f2;
 }
 
 /* TABLAS */
@@ -45,23 +52,41 @@
   display: grid;
   grid-template-columns: 1fr;
   margin-top: 20px;
-  width: 80vw;
+  border: solid #333333 1px;
+  border-radius: 20px;
+  box-shadow: 10px 5px 10px 0px rgba(0,0,0,0.38);
+  margin-bottom: 20px;
 }
 .tituloTabla {
   text-align: center;
-  background-color:rgb(150, 223, 40);
+  background-color:#00b300;
   color: white;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  border-radius: 20px 20px 0 0;
   margin-bottom: 0;
+  border-radius: 20px 20px 0 0;
+  font-family: "bebas";
+  letter-spacing: 2px;
+  width: 80vw;
+  padding: 10px;
 }
 .headerTabla {
-  background-color: black;
+  background-color: #333333;
   color: white;
   border-radius: none;
   border-top-right-radius: none;
   border-bottom-right-radius: none;
+  border-spacing :0;
+}
+tr {
+  margin: 0 !important; 
 }
 .contenidoTabla {
 
+}
+.contenidoTabla:hover {
+  background-color: #c9c9c9;
+}
+.scrollable-table {
+  overflow-x: scroll;
+  max-width: 100%; /* Ajusta según sea necesario */
 }

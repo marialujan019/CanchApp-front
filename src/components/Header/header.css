@@ -1,57 +1,57 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #333;
-    color: white;
-    height: 10vh;
-  }
-  
-  .logo {
-    font-size: 24px;
-  }
-  
-  .logoinicio {
-    width:150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+  height: 10vh;
+}
+
+img, video {
+  max-width: 15vh;
+  height: auto;
+}
+
+.logoinicio {
+  width:150px;
+}
+
+.menu-button {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+}
+
+@media (max-width: 800px) {
+  .menu-button {
+    display: block;
   }
 
-  .menu-button {
-    display: none;
-    font-size: 24px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
-  
   .nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background-color: #333;
+    padding: 10px;
+  }
+
+  .nav.open {
     display: flex;
-    gap: 20px;
   }
-  
-  .nav-link {
-    text-decoration: none;
-    color: white;
-  }
-  
-  @media (max-width: 800px) {
-    .menu-button {
-      display: block;
-    }
-  
-    .nav {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 70px;
-      right: 20px;
-      background-color: #333;
-      padding: 10px;
-    }
-  
-    .nav.open {
-      display: flex;
-    }
-  }
-  
+}
