@@ -245,7 +245,7 @@ const Complejo = () => {
               <TableBody>
                 {Object.keys(fechas.horario_disponibilidad).map((hora) => (
                   <TableRow key={hora} className='py-0 px-0 contenidoTabla'>
-                    <TableCell className='py-1 px-0'>{hora}</TableCell>
+                    <TableCell className='py-1 px-0'>{`${hora + ":00"}`}</TableCell>
                     {canchas.map((cancha) => (
                       <TableCell className='py-1 px-0' key={`${hora}-${cancha.id_cancha}`}>
                         {renderCell(hora, cancha)}
