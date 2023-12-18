@@ -176,7 +176,10 @@ const MisEquipos = () => {
 
       <div className='centradoDeTabla'>
         {((misEquipos.length === 0) || misEquipos === null )? (
-          <p>No tienes equipos</p>
+          <div>
+            <p>No tienes equipos creados</p>
+            <Button onClick={handleCrearEquipo}>Crear equipo</Button>
+          </div>
         ) : (
           <div className='tablaContainer'>
             <h3 className='tituloTabla'>Equipos creados</h3>
@@ -208,7 +211,11 @@ const MisEquipos = () => {
 
       </div>
           {((equiposDeFuera.length === 0) || equiposDeFuera === null) ? (
-            <p>No tienes equipos</p>
+            <div>
+              <p>No estás en ningún equipo </p>
+              <Button onClick={()=>{navigate(`/buscarequipo/${id_capitan}`)}}>Buscar equipo</Button>
+            </div>
+
           ) : (
             <div className="tablaContainer">
               <h3 className='tituloTabla'>Equipos</h3>

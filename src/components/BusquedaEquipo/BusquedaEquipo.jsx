@@ -3,6 +3,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button
 import JugadoresModal from '../JugadoresModal/JugadoresModal';
 import axios from 'axios';
 import {  useParams } from 'react-router-dom';
+import {Input} from "@nextui-org/react";
 
 const columns = [
   { key: "nombre_equipo", label: "Nombre del Equipo" },
@@ -16,7 +17,6 @@ const BusquedaEquipo = () => {
 
   //Estados para renderizar los equipos
   const [equiposParaLaBusqueda, setEquiposParaLaBusqueda] = useState([]);
-  const [refreshPage, setRefreshPage] = useState(false);
   const { id_jugador } = useParams();
 
   //Estados para renderizar la selección de equipos
@@ -26,7 +26,7 @@ const BusquedaEquipo = () => {
   //Estados para el filtro
   const [filtroNombre, setFiltroNombre] = useState('');
 
-  //Primer renderizado de la pagina, se renderiza cada vez que cambio el valor de refreshPage
+  //Primer renderizado de la pagina
   useEffect(() => {
     const fetchEquipos = async () => {
       const datos = await axios.get(`http://localhost:3001/equipo/buscar/${id_jugador}`)
@@ -35,8 +35,7 @@ const BusquedaEquipo = () => {
     };
   
     fetchEquipos();
-  }, [refreshPage]);
-
+  }, []);
 
   //Esta función recibe el id_equipo el cual hay que mandarlo al back para recibir los datos
   //Los datos van a ser un arreglo de jugadores con el mismo id_equipo. Es decir, el arreglo de jugadores del equipo
@@ -51,16 +50,20 @@ const BusquedaEquipo = () => {
   //Lo que hago es enviarte el id del equipo al que le quiero enviar solicitud y mi id
   //Con esto, vos los agregar a la base de datos y deberias cambiar el estado del equipo
   const toggleSolicitudes = async (equipo) => {
-    if (equipo.estado === 'Pendiente') {
-      await axios.delete(`http://localhost:3001/solicitudes/borrar/${id_jugador}/${equipo.id_equipo}`)
-    } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
-      axios.post('http://localhost:3001/solicitudes', {
-        id_jugador: id_jugador,
-        id_equipo: equipo.id_equipo
-      })
+    try {
+      if (equipo.estado === 'Pendiente') {
+        await axios.delete(`http://localhost:3001/solicitudes/borrar/${id_jugador}/${equipo.id_equipo}`);
+      } else if (equipo.estado == 'No enviado' || equipo.estado == 'Rechazado') {
+        await axios.post('http://localhost:3001/solicitudes', {
+          id_jugador: id_jugador,
+          id_equipo: equipo.id_equipo
+        }).then(console.log(equipo.id_equipo, id_jugador))
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
     }
-    setRefreshPage((prev) => !prev)
   };
+  
 
   const renderButton = (equipo) => {
     if (equipo.estado === 'Aceptado') {
@@ -96,18 +99,24 @@ const BusquedaEquipo = () => {
   console.log("Equipos filtrados: " + jsonString)
 
   return (
-    <div className='centradoDeTabla'>
+    <div className='centradoDeTabla busquedaJugadorContainer'>
       <div className='busquedaEquipoFiltroNombre'>
-        <h4>Búsqueda por nombre</h4>
-        <input
-          type='text'
+        <Input
+          className='busquedaEquipoFiltroNombre'
+          type="text"
+          placeholder="Busqueda por nombre"
           value={filtroNombre}
           onChange={handleNombreChange}
+          startContent={
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small"><i class="bi bi-search"></i></span>
+            </div>
+          }
         />
       </div>
 
       <div className="tablaContainer">
-        <h3 className='tituloTabla'>Jugadores disponibles</h3>
+        <h3 className='tituloTabla'>Equipos disponibles</h3>
         <Table aria-label="Equipos" removeWrapper className="scrollable-table">
           <TableHeader className='rounded-none'>
             {columns.map((column) => (

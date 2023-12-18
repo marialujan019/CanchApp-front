@@ -226,7 +226,7 @@ const Complejo = () => {
         
         <div className='complejoElegirFecha'>
           <div>
-           <strong><label htmlFor="fecha">Seleccione una fecha:</label></strong>
+           <strong><label htmlFor="fecha" className='complejoLabel'>Seleccione una fecha:</label></strong>
             <input type="date" id="fecha" onChange={(e) => handleFechaSeleccionada(e.target.value)} />
           </div>
         </div>

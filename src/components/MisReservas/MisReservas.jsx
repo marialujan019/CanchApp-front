@@ -95,7 +95,7 @@ const MisReservas = () => {
   return (
     <div className='main centradoDeTabla'>
       <div className="tablaContainer">
-      <h3 className='tituloTabla'>Reservas pendientes</h3>
+      <h3 className='tituloTabla'>Continuar reserva</h3>
       <Table aria-label="Mis Reservas" removeWrapper>
         <TableHeader className='rounded-none'>
           {columns.map((column) => (
