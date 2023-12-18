@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useUser } from '../UserContext';
 import Banner from '../Banner/Banner';
+import logo from '../../imagen/LogoHeader.png'
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,7 +54,7 @@ const Header = () => {
     auth ? (
       <>
         <nav className="header">
-          <div className="logo">Logo</div>
+          <div className="logo"><img src={logo} /></div>
           <button className="menu-button" onClick={toggleMenu}>
             <i className="bi bi-list" />
           </button>
@@ -64,55 +65,15 @@ const Header = () => {
             >
               Inicio
           </Link>
-          <Link to="/mapa" className="nav-link">
-            Buscar complejo
-          </Link>
-          <button className="btn btn-danger" onClick={handleLogout}>
-              Salir
-          </button>
           <Link
               to={`/perfil/${user.tipo}/${user.id}`}
               className="nav-link"
             >
               Mi perfil
             </Link>
-            <Link
-              to="/misEquipos"
-              className="nav-link"
-            >
-              Mis equipos
-            </Link>
-            <Link
-              to={`buscarequipo/${user.id}`}
-              className="nav-link"
-            >
-              Buscar equipo
-            </Link>
-            <Link
-              to="/buscarjugador"
-              className="nav-link"
-            >
-              Buscar jugadores
-            </Link>
-            <Link
-              to="/historial"
-              className="nav-link"
-            >
-              Mi historial
-            </Link>
-            <Link
-              to="/misSolicitudes"
-              className="nav-link"
-
-            >
-              Mis solicitudes
-            </Link>
-            <Link
-              to={`misReservas/${user.id}`}
-              className="nav-link"
-            >
-              Mis reservas
-            </Link>
+          <button className="btn btn-danger" onClick={handleLogout}>
+              Salir
+          </button>
           </section>
         </nav>
         <Banner />
@@ -120,7 +81,7 @@ const Header = () => {
       </>
     ) : (
       <header className="header">
-        <div className="logo"> logo </div>
+        <div className="logo"><img src={logo} /></div>
         <button className="menu-button" onClick={toggleMenu}>
           <i className="bi bi-list" />
         </button>

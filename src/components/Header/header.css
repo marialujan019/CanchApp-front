@@ -8,9 +8,10 @@
     height: 10vh;
   }
   
-  .logo {
-    font-size: 24px;
-  }
+  img, video {
+    max-width: 15vh;
+    height: auto;
+}
   
   .logoinicio {
     width:150px;
