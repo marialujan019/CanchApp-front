@@ -1,6 +1,3 @@
-.inicio {
-    background-color: #1a1a1a;
-}
 /* SECCION 1 */
 .inicioSeccion1 {
     height: 90vh;
@@ -9,73 +6,91 @@
     align-items: self-start;
     justify-content: center;
     padding-left: 30px;
-    background-image: url(/public/images/inicio/image.jpg);
+    background-image: url(/public/images/inicio/image.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    color: white
 }
 
-/* Titulo seccion 1*/
 .inicioSeccion1 h1 {
-    font-size: 7rem;
+    font-size: 6.5rem;
     font-family: "bBigerOver";
 }
 
-.inicioSeccion1 p{
-    text-align: start;
-    font-size: 4rem;
-}
 
 .inicioColoreadoApp {
-    color: orange;
+    color: #0E690C;
 }
 
 .inicioSeccionTitulo {
-    padding-top: 20px;
+
     font-size: 4rem;
+    font-family: "bebas";
+}
+.inicioSeccion1Texto {
+    font-family: "bebas";
+    font-size: 2rem;
+    width: 80%;
 }
 
 /* Seccion 2  */
 .inicioSeccion2 {
-    color: #e0e0e0
-
+    margin-top: 100px;
+    height: 80vh;
 }
-.inicioSeccion2TextoContainer {
-    background-color: #333232;
-    margin: 20px 10vh;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 10px 5px 10px 0px rgba(0,0,0,0.38);
+.inicioSeccion2ConocenosCentrado {
+    display: flex; 
+    justify-content: center;
 }
-
-.inicioSeccion2Container{}
-
-.cardInicioSeccion2 {
-    border: black 2px solid;
-
+.inicioSeccion2Conocenos {
+    display: flex; 
 }
-
+.inicioSeccion2ConocenosTexto {
+    width: 60%;
+    padding: 0 70px;
+}
+.inicioSeccion2ConocenosImagen {
+    border-radius: 50%;
+}
 /* CARDS */
 .cardInicio {
-    width: 330px;
+    width: 300px;
+    height: 100%;
     border-radius: 30px;
 }
 .inicioCardBody {
-    padding: 20px;
+    padding: 10px;
 }
 .InicioTituloCard {
     color:black;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.22);
+    font-family: "bebas";
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+    padding-bottom: 10px !important;
 }
 .InicioTextoCard { 
 }
 
 /* Banner registro */
-.inicioBannerRegistrarse {
-    height: 40vh;
-    background-color: #6bfc6b;
+.inicioSeccionBanner {
+    background-image: url(/public/images/inicio/banner.png);
+    background-position: bottom;
+    height: 80vh;
+    margin-top: 25px;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10vh;
 }
-.inicioBannerRegistrarseTitulo {
-
+.inicioSeccionBannerTitulo {
+    font-size: 2.5rem;
+    font-family: "bebas";
+}
+.inicioSeccionCardsContainer {
+    margin-top: 25px;
+    min-height: 350px;
+    gap: 30px;
 }
