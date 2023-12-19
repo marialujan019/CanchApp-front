@@ -1,0 +1,117 @@
+.complejoCardsContainer {
+    height: 73vh;
+    overflow-y: scroll;
+    width: 48vw;
+}
+
+.complejoCardsContainer::-webkit-scrollbar {
+    width: 0px;
+}
+
+
+/* CARDS */
+.cardComplejo {
+    background-color: #ffffff ;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.botonesCardComplejos {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    white-space: nowrap;
+}
+
+.cardComplejoTitulo {
+    color: #006400;
+    font-size: 1.3rem;
+}
+.cardComplejoTexto {
+    color: #333333;
+}
+
+.botonCardComplejo {
+    color: #333333;
+    border-color: #0b975d;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.botonCardComplejo:hover {
+    background-color: #0b975d;
+    color: #333333;;
+}
+
+.complejoCardDatos {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.complejoCardImagen {
+    width: 30%;
+}
+
+
+@media (max-width: 900px) {
+    .complejoCardsContainer {
+        height: auto;
+        width: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin: 30px;
+    }
+    .botonVerMapa {
+        display: none;
+    }
+
+    
+    /* CARDS */
+    .cardComplejo {
+        background-color: #ffffff ;
+        display: flex;
+        flex-direction: column;
+        width: 350px;
+        border-radius: 20px;
+    }
+    
+    .botonesCardComplejos {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        white-space: nowrap;
+    }
+    
+    .cardComplejoTitulo {
+        color: #006400;
+        font-size: 1.3rem;
+    }
+    .cardComplejoTexto {
+        color: #333333;
+    }
+    
+    .botonCardComplejo {
+        color: #333333;
+        border-color: #0b975d;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    
+    .botonCardComplejo:hover {
+        background-color: #0b975d;
+        color: #333333;;
+    }
+    
+    .complejoCardDatos {
+        display: flex;
+        flex-direction: column;
+        align-items: normal;
+        width: auto;
+    }
+    .complejoCardImagen {
+        width: auto;
+    }
+    
+}

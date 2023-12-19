@@ -1,56 +1,58 @@
+/* header.css */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #333;
-    color: white;
-  }
-  
-  .logo {
-    font-size: 24px;
-  }
-  
-  .logoinicio {
-    width:150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333333;
+  color: white;
+  padding: 10px 20px;
+  letter-spacing: 0px;
+}
+
+.logo {
+  width: 70px;
+}
+
+.menu-button {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+.nav {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+}
+
+@media (max-width: 800px) {
+  .menu-button {
+    display: block;
   }
 
-  .menu-button {
-    display: none;
-    font-size: 24px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
-  
   .nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background-color: #333;
+    padding: 10px;
+  }
+
+  .nav.open {
     display: flex;
-    gap: 20px;
   }
-  
-  .nav-link {
-    text-decoration: none;
-    color: white;
-  }
-  
-  @media (max-width: 800px) {
-    .menu-button {
-      display: block;
-    }
-  
-    .nav {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 70px;
-      right: 20px;
-      background-color: #333;
-      padding: 10px;
-    }
-  
-    .nav.open {
-      display: flex;
-    }
-  }
-  
+}
+
+.botonSalir {
+  background-color: red;
+  border-radius: 20px;
+}

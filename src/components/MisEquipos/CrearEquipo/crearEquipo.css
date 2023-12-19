@@ -1,0 +1,21 @@
+.formularioCrearEquipoContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 0;
+}
+
+.modalCEImgaenContainer{
+}
+.modalCEImgaen{
+    height: 100%;
+    border-radius: 20px 0 0 20px;
+}
+
+.formularioCrearEquipoContainer {
+    padding: 0;
+}
+.modalReservaTextoContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

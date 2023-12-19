@@ -59,6 +59,7 @@
     padding: 0 40px 0 10px;
     transition: .3s ease all;
     border: solid transparent;
+    color: black;
 }
 .formularioInput:focus {
     border: 3px solid rgb(0, 255, 0);
@@ -112,14 +113,14 @@ input[value]:not([value=""]) + .formularioIconoInput {
     color: green;
 }
 .bi-x-circle {
-    color: #FF8C00;
+    color: red;
 }
 
 
 
 /* Mensaje por si el input está mal escrito */
 .leyendaError {
-    color: #FF8C00;
+    color: red;
 }
 /* Boton enviar del formulario */
 .formularioBotonSubmitcontainer {

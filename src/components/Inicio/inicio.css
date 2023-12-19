@@ -6,63 +6,108 @@
     align-items: self-start;
     justify-content: center;
     padding-left: 30px;
-    background-image: url(/public/images/inicio/image.jpg);
+    background-image: url(/public/images/inicio/image.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    color: white;
+    position: relative;
 }
 
-/* Titulo seccion 1*/
 .inicioSeccion1 h1 {
-    font-size: 7rem;
+    font-size: 6.5rem;
     font-family: "bBigerOver";
 }
 
-.inicioSeccion1 p{
-    text-align: start;
-    font-size: 4rem;
-}
 
 .inicioColoreadoApp {
-    color: orange;
+    color: #0E690C;
 }
 
+.inicioSeccionTitulo {
 
+    font-size: 4rem;
+    font-family: "bebas";
+}
+.inicioSeccion1Texto {
+    font-family: "bebas";
+    font-size: 2rem;
+    width: 80%;
+}
+
+/* Banner inicio seccion 1 */
+.inicioSeccion1Banner {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.445);
+    backdrop-filter: blur(10px);
+    padding: 10px 0;
+    color: #f3f3f3;
+}
+.inicioSeccion1BannerCardIncono {
+    font-size: 30px;
+}
 /* Seccion 2  */
 .inicioSeccion2 {
-    color: black;
-    background-color: #e5e5e5;
+    margin-top: 100px;
+    height: 80vh;
 }
-/* Titulo seccion 2*/
-.inicioSeccion2Titulo {
-    padding-top: 20px;
-    font-size: 4rem;
-}
-/* Cards */
-.inicioCardsContainer {
-    display: flex;
-    flex-wrap: wrap;
+.inicioSeccion2ConocenosCentrado {
+    display: flex; 
     justify-content: center;
 }
- 
-/*TARJETAS DE FUNCIONALIDADES*/
-.inicioCard {
-    width: 350px;
-    margin: 20px;
+.inicioSeccion2Conocenos {
+    display: flex; 
+}
+.inicioSeccion2ConocenosTexto {
+    width: 60%;
+    padding: 0 70px;
+}
+.inicioSeccion2ConocenosImagen {
+    border-radius: 50%;
+}
+/* CARDS */
+.cardInicio {
+    width: 300px;
+    height: 100%;
+    border-radius: 30px;
+}
+.inicioCardBody {
     padding: 10px;
-    background-color: rgb(167, 162, 162);
-    transition: transform 0.3s; /* Transición para la propiedad "transform" */
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para resaltar las tarjetas */
+}
+.InicioTituloCard {
+    color:black;
+    font-family: "bebas";
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+    padding-bottom: 10px !important;
+}
+.InicioTextoCard { 
 }
 
-.inicioCard img {
-    height: 80px;
-    width: 80px;
+/* Banner registro */
+.inicioSeccionBanner {
+    background-image: url(/public/images/inicio/banner.png);
+    background-position: bottom;
+    height: 80vh;
+    margin-top: 25px;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10vh;
 }
-
-/* Efecto de animación al pasar el mouse sobre las tarjetas */
-.inicioCard:hover {
-    transform: scale(1.09); /* Escala la tarjeta al 105% de su tamaño original */
-    box-shadow: 4px 8px 12px rgba(0, 0, 0, 0.2); /* Aumenta la sombra para resaltar aún más */
+.inicioSeccionBannerTitulo {
+    font-size: 2.5rem;
+    font-family: "bebas";
+}
+.inicioSeccionCardsContainer {
+    margin-top: 25px;
+    min-height: 350px;
+    gap: 30px;
 }

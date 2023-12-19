@@ -1,0 +1,16 @@
+.bannerContainer {
+    height: 40vh;
+    background-image: url(/public/images/header/Banner.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bannerTitulo {
+    font-size: 4.5rem;
+    font-family: "bebas";
+    color: #fafafa;
+    letter-spacing: 5px;
+}

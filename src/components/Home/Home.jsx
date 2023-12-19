@@ -8,14 +8,18 @@ import axios from 'axios';
 import { useUser } from '../UserContext';
 
 import Administrador from "../Perfil/Administrador";
+import InicioSesion from "../InicioSesion/InicioSesion";
+import Mapa from "../Mapa/Mapa";
 
 function Home() {
     const { user } = useUser();
+    console.log(user)
     const handleLogout = () => {
         
         axios.get('http://localhost:3001/logout')
         .then(res=> {
             if(res.data.Status === "Respuesta ok"){
+                console.log(res.data)
                 window.location.reload(true);
             } else {
                 alert('error');
@@ -33,19 +37,12 @@ function Home() {
                 
                 :
                 <div>
-                    Bienvenido a canchapp {user.nombre}. Acá podrás encontrar y reservar tu cancha
-                    <div>
-                        <button className="btn btn-danger" onClick={handleLogout}>
-                        Salir
-                        </button>
-                    </div>
+                    <InicioSesion nombre_usuario={user.nombre} id={user.id}/>
                 </div>)
                 :
                 <div>
                     <Inicio/>
                 </div>
-
-
             } 
         </div>
     )

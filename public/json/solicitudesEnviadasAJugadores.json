@@ -1,0 +1,28 @@
+[
+    {
+        "id_solicitud": 3,
+        "nombre_equipo": "Los capos",
+        "nombre": "juanpe",
+        "apellido": "si",
+        "imagen": "url",
+        "edad": 23,
+        "pie_habil": "Derecho",
+        "sexo": "Masculino",
+        "telefono": 21,
+        "posicion": "Arquero",
+        "estado": "Pendiente"
+    },
+    {
+        "id_solicitud": 4,
+        "nombre_equipo": "Los cracks",
+        "nombre": "Juana",
+        "apellido": "si",
+        "imagen": "url",
+        "edad": 23,
+        "pie_habil": "Izquierdo",
+        "sexo": "Femenino",
+        "telefono": 211,
+        "posicion": "Defensor",
+        "estado": "Rechazado"
+    }
+]

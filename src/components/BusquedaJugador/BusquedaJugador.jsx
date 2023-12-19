@@ -1,217 +1,247 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { consultarBaseDeDatos } from '../utils/Funciones';
-import PlantillaJugador from '../PlantillaJugador/PlantillaJugador';
+import React, { useState, useEffect  } from 'react';
 import './busquedaJugador.css';
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, Button } from "@nextui-org/react";
+import ModalSeleccionEquipo from './ModalSeleccionEquipo/ModalSeleccionEquipo';
+import axios from 'axios';
+import { useUser } from '../UserContext';
+import {Input} from "@nextui-org/react";
+import { Select, SelectItem } from '@nextui-org/react';
 
-const FILTRO_EDAD = {
-  '5-13': 'Edad 5-13',
-  '13-18': 'Edad 13-18',
-  'mayores-18': 'Mayores de 18',
-};
+const columns = [
+  { key: "nombre_apellido", label: "Nombre y Apellido" },
+  { key: "edad", label: "Edad" },
+  { key: "pie_habil", label: "Pie Hábil" },
+  { key: "sexo", label: "Sexo" },
+  { key: "telefono", label: "Teléfono" },
+  { key: "posicion", label: "Posición" },
+  { key: "solicitud", label: "Solicitud" },
+];
 
-const FILTRO_SEXO = {
-  M: 'Masculino',
-  F: 'Femenino',
-};
 
 const BusquedaJugador = () => {
-  const [datosDeLaAPI, setDatosDeLaAPI] = useState([]);
-  const [filtros, setFiltros] = useState({
-    edadFiltro: null,
-    sexoFiltro: null,
-    pieHabilFiltro: null,
-    posicionFiltro: null,
-    nombreBusqueda: '',
-  });
+  //Estados para renderizar los jugadores
+  const [jugadoresParaLaBusqueda, setJugadoresParaLaBusqueda] = useState([]);
+  const [refreshPage, setRefreshPage] = useState(false);
+  const { user } = useUser();
+  const [jugadoresOriginales, setJugadoresOriginales] = useState([]);
 
-  const filtrarPorEdad = useCallback((jugador) => {
-    if (filtros.edadFiltro) {
-      if (filtros.edadFiltro === '5-13') {
-        return jugador.edad >= 5 && jugador.edad <= 13;
-      } else if (filtros.edadFiltro === '13-18') {
-        return jugador.edad >= 13 && jugador.edad <= 18;
-      } else if (filtros.edadFiltro === 'mayores-18') {
-        return jugador.edad > 18;
-      }
-    }
-    return true;
-  }, [filtros.edadFiltro]);
 
-  const filtrarPorSexo = useCallback((jugador) => {
-    if (filtros.sexoFiltro) {
-      return jugador.sexo === filtros.sexoFiltro;
-    }
-    return true;
-  }, [filtros.sexoFiltro]);
+  const id_capitan = user.id;
+  // Estados para los filtros
+  const [filtroEdad, setFiltroEdad] = useState("");
+  const [filtroSexo, setFiltroSexo] = useState("");
+  const [filtroPieHabil, setFiltroPieHabil] = useState("");
+  const [filtroPosicion, setFiltroPosicion] = useState("");
+  const [filtroNombre, setFiltroNombre] = useState('');
 
-  const filtrarPorPieHabil = useCallback((jugador) => {
-    if (filtros.pieHabilFiltro) {
-      return jugador.pie_habil === filtros.pieHabilFiltro;
-    }
-    return true;
-  }, [filtros.pieHabilFiltro]);
+  //Estados para renderizar la selección de equipos
+  const [equiposDelBack, setEquiposDelBack] = useState([])
+  const [showSolicitudModal, setShowSolicitudModal] = useState(false);  
+  const [idJugadorAInvitar, setIdJugadorAInvitar] = useState();
 
-  const filtrarPorPosicion = useCallback((jugador) => {
-    if (filtros.posicionFiltro) {
-      return jugador.posicion === filtros.posicionFiltro;
-    }
-    return true;
-  }, [filtros.posicionFiltro]);
-
-  const filtrarPorNombre = useCallback((jugador) => {
-    if (filtros.nombreBusqueda) {
-      const nombreMinusculas = jugador.nombre.toLowerCase();
-      const busquedaMinusculas = filtros.nombreBusqueda.toLowerCase();
+  // Primer renderizado de la pagina
+  useEffect(() => {
+    const fetchJugadores = async () => {
+      const datos = await axios.get(`http://localhost:3001/jugadores/${id_capitan}`);
+      setJugadoresOriginales(datos.data);
+      setJugadoresParaLaBusqueda(datos.data);
+    };
   
-      return nombreMinusculas.startsWith(busquedaMinusculas);
-    }
-    return true;
-  }, [filtros.nombreBusqueda]);
+    fetchJugadores();
+  }, [refreshPage]);
+
   
+  // Manejo de cambios en los filtros
+  // Manejo de cambios en los filtros
+const handleFiltroEdadChange = (value) => {
+  let filtroEdadResult = [];
 
-  useEffect(() => { //Esta es la funcion que me trae los jugadores de la base de datos
-    consultarBaseDeDatos('../json/jugadoresParaBusqueda.json')
-    .then((listaJugadoresObtenidos) => {
+  switch (value) {
+    case "5-13":
+      filtroEdadResult = jugadoresOriginales.filter((item) => item.edad >= 5 && item.edad <= 13);
+      break;
+    case "13-18":
+      filtroEdadResult = jugadoresOriginales.filter((item) => item.edad >= 13 && item.edad <= 18);
+      break;
+    case "mayores18":
+      filtroEdadResult = jugadoresOriginales.filter((item) => item.edad > 18);
+      break;
+    default:
+      filtroEdadResult = jugadoresOriginales;
+      break;
+  }
 
-      const jugadoresFiltrados = listaJugadoresObtenidos
-        .filter(filtrarPorEdad)
-        .filter(filtrarPorSexo)
-        .filter(filtrarPorPieHabil)
-        .filter(filtrarPorPosicion)
-        .filter(filtrarPorNombre);
-        
-        console.log(filtros)
-        //filtros es la variable que se envia al back, cada vez que se aplica un filtro, este objeto se modifica
-      setDatosDeLaAPI(jugadoresFiltrados);
+  setJugadoresParaLaBusqueda(filtroEdadResult);
+  setFiltroEdad(value);
+};
 
-    })
-  }, [filtros, filtrarPorEdad, filtrarPorSexo, filtrarPorPieHabil, filtrarPorPosicion, filtrarPorNombre]);
+const handleFiltroSexoChange = (value) => {
+  const filtroSexo = jugadoresOriginales.filter((item) => item.sexo === value);
+  setJugadoresParaLaBusqueda(filtroSexo);
+  setFiltroSexo(value);
+};
 
-  const toggleFiltro = (filtroName, valor) => {
-    setFiltros((prevFiltros) => ({
-      ...prevFiltros,
-      [filtroName]: prevFiltros[filtroName] === valor ? null : valor,
-    }));
+const handleFiltroPieHabilChange = (value) => {
+  const filtroPieHabil = jugadoresOriginales.filter((item) => item.pie_habil === value);
+  setJugadoresParaLaBusqueda(filtroPieHabil);
+  setFiltroPieHabil(value);
+};
+
+const handleFiltroPosicionChange = (value) => {
+  const filtroPosicion = jugadoresOriginales.filter((item) => item.posicion === value);
+  setJugadoresParaLaBusqueda(filtroPosicion);
+  setFiltroPosicion(value);
+};
+
+
+  
+  // Restablecer filtros
+  const handleLimpiarFiltros = () => {
+    setFiltroEdad("");
+    setFiltroSexo("");
+    setFiltroPieHabil("");
+    setFiltroPosicion("");
+    setJugadoresParaLaBusqueda(jugadoresOriginales);
+    setRefreshPage((prev) => !prev); // Cambiar refreshPage para refrescar la página
   };
+  
 
-  const limpiarFiltros = () => {
-    setFiltros({
-      edadFiltro: null,
-      sexoFiltro: null,
-      pieHabilFiltro: null,
-      posicionFiltro: null,
-      nombreBusqueda: '',
-    });
+  const handleNombreChange = (e) => {
+    const input = e.target.value.toLowerCase();
+    setFiltroNombre(input);
+  };
+  
+  const jugadoresFiltrados = jugadoresParaLaBusqueda.filter(
+    (jugador) =>
+      jugador.nombre.toLowerCase().startsWith(filtroNombre.toLowerCase()) ||
+      jugador.apellido.toLowerCase().startsWith(filtroNombre.toLowerCase()) ||
+      `${jugador.nombre} ${jugador.apellido}`.toLowerCase().startsWith(filtroNombre.toLowerCase())
+  );
+  
+
+
+//son los equipos del capitan a los cuales se puede unir el jugador
+  const fetchEquipos = async (id_capitan, idJugadorAInvitar) => {
+    console.log("invitar jugador" + idJugadorAInvitar)
+    const datos = await axios.get(`http://localhost:3001/equipo/buscar/${id_capitan}/${idJugadorAInvitar}`);
+    setIdJugadorAInvitar(idJugadorAInvitar);
+    setEquiposDelBack(datos.data);
+    setShowSolicitudModal(true);
   };
 
   return (
-    <div className='busquedaJugadorContainer'>
-      <div className='busquedaJugadorFiltros'>
-        <h3>Filtros</h3>
+    <div className='busquedaJugadorContainer main'>
+      <div className='busquedaJugadorFiltroNombre'>
+        <Input
+          className='busquedaEquipoFiltroNombre'
+          type="text"
+          placeholder="Busqueda por nombre"
+          value={filtroNombre}
+          onChange={handleNombreChange}
+          startContent={
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small"><i class="bi bi-search"></i></span>
+            </div>
+          }
+          endContent={
+            <div className='busquedaJugadorFiltros'>
+              <div className='busquedaJugadorFiltroEdad'>
+                <label>
+                  <select value={filtroEdad} onChange={(e) => handleFiltroEdadChange(e.target.value)}>
+                    <option value="">Edad</option>
+                    <option value="5-13">5-13</option>
+                    <option value="13-18">13-18</option>
+                    <option value="mayores18">Mayores de 18</option>
+                  </select>
+                </label>
+              </div>
 
-        <div className='busquedaJugadorFiltroEdad'>
-          <h4>Filtros por edad</h4>
-          {Object.entries(FILTRO_EDAD).map(([valor, label]) => (
-            <label key={valor}>
-              <input
-                type='checkbox'
-                checked={filtros.edadFiltro === valor}
-                onChange={() => toggleFiltro('edadFiltro', valor)}
-              />{' '}
-              {label}
-            </label>
-          ))}
-        </div>
+              <div className='busquedaJugadorFiltroSexo'>
+                <label>
+                  <select value={filtroSexo} onChange={(e) => handleFiltroSexoChange(e.target.value)}>
+                    <option value="">Sexo</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                  </select>
+                </label>
+              </div>
 
-        <div className='busquedaJugadorFiltroSexo'>
-          <h4>Filtro por sexo</h4>
-          {Object.entries(FILTRO_SEXO).map(([valor, label]) => (
-            <label key={valor}>
-              <input
-                type='checkbox'
-                checked={filtros.sexoFiltro === valor}
-                onChange={() => toggleFiltro('sexoFiltro', valor)}
-              />{' '}
-              {label}
-            </label>
-          ))}
-        </div>
+              <div className='busquedaJugadorFiltroPieHabil'>
+                <label>
+                  <select value={filtroPieHabil} onChange={(e) => handleFiltroPieHabilChange(e.target.value)}>
+                    <option value="">Pié habil</option>
+                    <option value="derecho">Derecho</option>
+                    <option value="izquierdo">Izquierdo</option>
+                  </select>
+                </label>
+              </div>
 
-        <div className='busquedaJugadorFiltroPieHabil'>
-          <h4>Filtro por pie hábil</h4>
-          <label>
-            <input
-              type='checkbox'
-              checked={filtros.pieHabilFiltro === 'Derecho'}
-              onChange={() => toggleFiltro('pieHabilFiltro', 'Derecho')}
-            />{' '}
-            Derecho
-          </label>
-          <label>
-            <input
-              type='checkbox'
-              checked={filtros.pieHabilFiltro === 'Izquierdo'}
-              onChange={() => toggleFiltro('pieHabilFiltro', 'Izquierdo')}
-            />{' '}
-            Izquierdo
-          </label>
-        </div>
-
-        <div className='busquedaJugadorFiltroPosicion'>
-          <h4>Filtro por posición</h4>
-          <label>
-            <input
-              type='checkbox'
-              checked={filtros.posicionFiltro === 'Arquero'}
-              onChange={() => toggleFiltro('posicionFiltro', 'Arquero')}
-            />{' '}
-            Arquero
-          </label>
-          <label>
-            <input
-              type='checkbox'
-              checked={filtros.posicionFiltro === 'Defensor'}
-              onChange={() => toggleFiltro('posicionFiltro', 'Defensor')}
-            />{' '}
-            Defensor
-          </label>
-          <label>
-            <input
-              type='checkbox'
-              checked={filtros.posicionFiltro === 'Mediocampista'}
-              onChange={() => toggleFiltro('posicionFiltro', 'Mediocampista')}
-            />{' '}
-            Mediocampista
-          </label>
-          <label>
-            <input
-              type='checkbox'
-              checked={filtros.posicionFiltro === 'Delantero'}
-              onChange={() => toggleFiltro('posicionFiltro', 'Delantero')}
-            />{' '}
-            Delantero
-          </label>
-        </div>
-
-        <div className='busquedaJugadorFiltroNombre'>
-          <h4>Búsqueda por nombre</h4>
-          <input
-            type='text'
-            value={filtros.nombreBusqueda}
-            onChange={(e) => setFiltros({ ...filtros, nombreBusqueda: e.target.value })}
-          />
-        </div>
-
-        <button onClick={limpiarFiltros}>Eliminar Filtros</button>
+              <div className='busquedaJugadorFiltroPosicion'>
+                <label className='busquedaJugadorLabel'>
+                  <select value={filtroPosicion} onChange={(e) => handleFiltroPosicionChange(e.target.value)}>
+                    <option value="">Posición</option>
+                    <option value="arquero">Arquero</option>
+                    <option value="defensor">Defensor</option>
+                    <option value="mediocampista">Mediocampista</option>
+                    <option value="delantero">Delantero</option>
+                  </select>
+                </label>
+              </div>
+              <button color="primary" onClick={handleLimpiarFiltros}>Eliminar Filtros</button>
+            </div>
+          }
+        />
       </div>
       
-      <div>
-        {datosDeLaAPI.map((jugadorDevuelto) => (
-          <PlantillaJugador jugador={jugadorDevuelto} key={jugadorDevuelto.id} />
-        ))}
+
+      <div className='centradoDeTabla'>
+        <div className="tablaContainer">
+          <h3 className='tituloTabla'>Jugadores disponibles</h3>
+          <Table aria-label="si" removeWrapper>
+            <TableHeader className='rounded-none'>
+              {columns.map((column) => (
+                <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
+                  {column.label}
+                </TableColumn>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {jugadoresFiltrados.map((jugador) => (
+                <TableRow key={jugador.id_jug} className='py-0 px-0 contenidoTabla'>
+                  {columns.map((column) => (
+                    <TableCell key={`${jugador.id_jug}-${column.key}`} className='py-0 px-0'>
+                      {column.key === 'nombre_apellido' ? (
+                        `${jugador.nombre} ${jugador.apellido}`
+                      ) : column.key !== 'solicitud' ? (
+                        column.key === 'pie_habil' || column.key === 'posicion' ? (
+                          jugador[column.key] == null ? "Información privada" : jugador[column.key]
+                        ) : (
+                          jugador[column.key]
+                        )
+                      ) : (
+                        <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jug)}> Ver solicitud </Button>
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
+      <ModalSeleccionEquipo
+        equipos={equiposDelBack}
+        show={showSolicitudModal}
+        onHide={() => setShowSolicitudModal(false)}
+        idJugadorAInvitar={idJugadorAInvitar}
+        id_capitan = {id_capitan}
+        refrescarEquipos = {fetchEquipos}
+      />
+      
     </div>
   );
-};
+}
 
 export default BusquedaJugador;
+
+

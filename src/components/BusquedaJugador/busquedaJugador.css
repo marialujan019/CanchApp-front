@@ -1,9 +1,14 @@
 .busquedaJugadorContainer {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-}
-
-.busquedaJugadorFiltros {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+.busquedaJugadorFiltroNombre {
+    margin: 50px 0 25px 0;
+    width: 80vw;
+}
+.busquedaJugadorFiltros {
+    display: flex;
+    gap: 10px;
+    white-space: nowrap;
 }

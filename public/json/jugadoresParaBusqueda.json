@@ -1,23 +1,36 @@
 [
   {
-  "id_jugador":4,
-  "nombre": "juanpe",
-  "apellido": "si",
-  "edad": 23,
-  "pie_habil": "Derecho",
-  "sexo": "M",
-  "telefono": 21,
-  "posicion": "Arquero"
+    "id_jug":7,
+    "nombre": "Pan",
+    "apellido": "No",
+    "imagen":"https://picsum.photos/200/300",
+    "edad": 44,
+    "pie_habil": "Izquierdo",
+    "sexo": "Femenino",
+    "telefono": 21,
+    "posicion": "Arquero"
   },
 
   {
-    "id_jugador":7,
-    "nombre": "Pan",
+    "id_jug":17,
+    "nombre": "Josefe",
     "apellido": "No",
-    "edad": 44,
+    "imagen": "url",
+    "edad": 21,
     "pie_habil": "Izquierdo",
-    "sexo": "F",
+    "sexo": "Femenino",
     "telefono": 21,
     "posicion": "Mediocampista"
-    }
+  },
+  {
+    "id_jug":5,
+    "nombre": "No se",
+    "apellido": "Capaz",
+    "imagen": "url",
+    "edad": 14,
+    "pie_habil": "Izquierdo",
+    "sexo": "Femenino",
+    "telefono": 21,
+    "posicion": "Mediocampista"
+  }
 ]
