@@ -23,7 +23,7 @@ const JugadoresModal = ({ jugadores, show, onHide, invitarJugadores }) => {
       case "nombre":
         return (
           <User
-            avatarProps={{ radius: "lg", src: jugador.imagen }}
+            avatarProps={{ src: jugador.imagen }}
             description={`Edad: ${jugador.edad}`}
             name={`${jugador.nombre} ${jugador.apellido}`}
           >
@@ -47,37 +47,37 @@ const JugadoresModal = ({ jugadores, show, onHide, invitarJugadores }) => {
     navigate('/buscarjugador')
   }
   return (
-    <Modal show={show} onHide={onHide} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Jugadores</Modal.Title>
-      </Modal.Header>
+    <Modal show={show} onHide={onHide} centered size='lg'>
       <Modal.Body>
-        <Table aria-label="Tabla de Jugadores">
-          <TableHeader columns={columns}>
-            {(column) => (
-              <TableColumn key={column.key} align="start">
-                {column.label}
-              </TableColumn>
-            )}
-          </TableHeader>
-          <TableBody items={jugadores}>
-            {(item) => (
-              <TableRow key={item.id_jug}>
-                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+        <div className='tablaContainer'>
+          <h3 className='tituloTabla3'>Jugadores</h3>
+            <Table aria-label="Tabla de Jugadores" removeWrapper>
+            <TableHeader columns={columns}>
+              {(column) => (
+                <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
+                  {column.label}
+                </TableColumn>
+              )}
+            </TableHeader>
+            <TableBody items={jugadores}>
+              {(item) => (
+                <TableRow key={item.id_jug} className='py-0 px-0 contenidoTabla'>
+                  {(columnKey) => <TableCell className='py-0 px-0'>{renderCell(item, columnKey)}</TableCell>}
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          Cerrar
-        </Button>
+
         {invitarJugadores && (
-          <Button variant="secondary" onClick={handleBuscarJugadores}>
+          <Button variant="primary" onClick={handleBuscarJugadores}>
             Invitar jugadores
           </Button>
         )}
+        <Button variant="danger" onClick={onHide}>Cerrar</Button>
       </Modal.Footer>
     </Modal>
   );

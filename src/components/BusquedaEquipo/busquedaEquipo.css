@@ -1,0 +1,36 @@
+.busquedaEquipoFiltroNombre {
+    width: 80vw;
+    padding-top: 20px;
+}
+
+.botonVerJugadores {
+    background-color: #333333;
+    color: white;
+    border-radius: 20px;
+    width: 70px;
+}
+.botonVerJugadores:hover {
+    background-color: white;
+    color: #333333;
+}
+.botonEnviarSolicitud{
+    background-color: #0952A5;
+    color: white;
+    border-radius: 20px;
+    width:130px
+}
+
+.botonEnviarSolicitud:hover {
+    background-color: white;
+    color: #0952A5;
+}
+.botonCancelarSolicitud {
+    background-color: red;
+    color: white;
+    border-radius: 20px;
+    width:130px
+}
+.botonCancelarSolicitud:hover {
+    background-color: white;
+    color: red;
+}

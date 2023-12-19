@@ -3,6 +3,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button
 import JugadoresModal from '../JugadoresModal/JugadoresModal';
 import { useUser } from '../UserContext';
 import axios from 'axios';
+import "./misSolicitudes.css"
 
 const MisSolicitudes = () => {
   const [solitudesRecibidasDeJugadores, setSolitudesRecibidasDeJugadores] = useState([]);
@@ -113,14 +114,14 @@ const MisSolicitudes = () => {
           </TableHeader>
           <TableBody>
             {solitudesRecibidasDeJugadores.map((item) => (
-              <TableRow key={item.id_solicitud} className='py-0 px-0 contenidoTabla'>
-                <TableCell className='py-0 px-0'>{item.nombre}</TableCell>
-                <TableCell className='py-0 px-0'>{item.apellido}</TableCell>
-                <TableCell className='py-0 px-0'>{item.edad}</TableCell>
-                <TableCell className='py-0 px-0'>{item.sexo}</TableCell>
-                <TableCell className='py-0 px-0'>{item.telefono}</TableCell>
-                <TableCell className='py-0 px-0'>{item.nombre_equipo}</TableCell>
-                <TableCell className='py-0 px-0'>
+              <TableRow key={item.id_solicitud} className='py-1 px-0 contenidoTabla'>
+                <TableCell className='py-1 px-0'>{item.nombre}</TableCell>
+                <TableCell className='py-1 px-0'>{item.apellido}</TableCell>
+                <TableCell className='py-1 px-0'>{item.edad}</TableCell>
+                <TableCell className='py-1 px-0'>{item.sexo}</TableCell>
+                <TableCell className='py-1 px-0'>{item.telefono}</TableCell>
+                <TableCell className='py-1 px-0'>{item.nombre_equipo}</TableCell>
+                <TableCell className='py-1 px-0'>
                   <Button onClick={() => handleAceptarSolicitud(item.id_solicitud)}>Aceptar</Button>
                   <Button onClick={() => handleRechazarSolicitud(item.id_solicitud)}>Rechazar</Button>
                 </TableCell>
@@ -147,14 +148,14 @@ const MisSolicitudes = () => {
           </TableHeader>
           <TableBody>
             {solitudesRecibidasDeEquipos.map((item) => (
-              <TableRow key={item.id_invitacion} className='py-0 px-0 contenidoTabla'>
-                <TableCell className='py-0 px-0'>{item.nombre_equipo}</TableCell>
-                <TableCell className='py-0 px-0'>
-                  <Button onClick={() => fetchJugadores(item.id_equipo)}>Ver Equipos</Button>
+              <TableRow key={item.id_invitacion} className='py-1 px-0 contenidoTabla'>
+                <TableCell className='py-1 px-0'>{item.nombre_equipo}</TableCell>
+                <TableCell className='py-1 px-0'>
+                  <button onClick={() => fetchJugadores(item.id_equipo)} className='botonVerJugadores2'>Ver jugadores</button>
                 </TableCell>
-                <TableCell className='py-0 px-0'>
-                  <Button onClick={() => handleAceptarInvitacion(item.id_invitacion)}>Aceptar</Button>
-                  <Button onClick={() => handleRechazarInvitacion(item.id_invitacion)}>Rechazar</Button>
+                <TableCell className='py-1 px-0 flex justify-center gap-3'>
+                  <button onClick={() => handleAceptarInvitacion(item.id_invitacion)} className="botonAceptarSolicitud">Aceptar</button>
+                  <button onClick={() => handleRechazarInvitacion(item.id_invitacion)} className='botonRechazarSolicitud'>Rechazar</button>
                 </TableCell>
               </TableRow>
             ))}
@@ -182,17 +183,17 @@ const MisSolicitudes = () => {
           </TableHeader>
           <TableBody>
             {solitudesEnviadasAJugadores.map((item) => (
-              <TableRow key={item.id_invitacion} className='py-0 px-0 contenidoTabla'>
-                <TableCell className='py-0 px-0'>{item.nombre}</TableCell>
-                <TableCell className='py-0 px-0'>{item.apellido}</TableCell>
-                <TableCell className='py-0 px-0'>{item.edad}</TableCell>
-                <TableCell className='py-0 px-0'>{item.sexo}</TableCell>
-                <TableCell className='py-0 px-0'>{item.telefono}</TableCell>
-                <TableCell className='py-0 px-0'>{item.nombre_equipo}</TableCell>
-                <TableCell className='py-0 px-0'>
+              <TableRow key={item.id_invitacion} className='py-1 px-0 contenidoTabla'>
+                <TableCell className='py-1 px-0'>{item.nombre}</TableCell>
+                <TableCell className='py-1 px-0'>{item.apellido}</TableCell>
+                <TableCell className='py-1 px-0'>{item.edad}</TableCell>
+                <TableCell className='py-1 px-0'>{item.sexo}</TableCell>
+                <TableCell className='py-1 px-0'>{item.telefono}</TableCell>
+                <TableCell className='py-1 px-0'>{item.nombre_equipo}</TableCell>
+                <TableCell className='py-1 px-0 flex gap-5 justify-center'>
                   {item.estado}
                   {item.estado === "Pendiente" && (
-                    <Button onClick={() => handleCancelarInvitacion(item.id_invitacion)}>Cancelar solicitud</Button>
+                    <button onClick={() => handleCancelarInvitacion(item.id_invitacion)} className='botonCancelarSolicitud'>Cancelar solicitud</button>
                   )}
                 </TableCell>
               </TableRow>
@@ -218,15 +219,15 @@ const MisSolicitudes = () => {
           </TableHeader>
           <TableBody>
             {solitudesEnviadasAEquipos.map((item) => (
-              <TableRow key={item.id_solicitud} className='py-0 px-0 contenidoTabla'>
-                <TableCell className='py-0 px-0'>{item.nombre_equipo}</TableCell>
-                <TableCell className='py-0 px-0'>
-                  <Button onClick={() => fetchJugadores(item.id_equipo)}>Ver Equipos</Button>
+              <TableRow key={item.id_solicitud} className='py-1 px-0 contenidoTabla'>
+                <TableCell className='py-1 px-0'>{item.nombre_equipo}</TableCell>
+                <TableCell className='py-1 px-0'>
+                  <button onClick={() => fetchJugadores(item.id_equipo)} className='botonVerJugadores2'>Ver jugadores</button>
                 </TableCell>
-                <TableCell className='py-0 px-0'>{item.estado}</TableCell>
-                <TableCell className='py-0 px-0'>
+                <TableCell className='py-1 px-0'>{item.estado}</TableCell>
+                <TableCell className='py-1 px-0'>
                   {item.estado === "Pendiente" && (
-                    <Button onClick={() => handleRechazarSolicitud(item.id_solicitud)}>Cancelar solicitud</Button>
+                    <button onClick={() => handleRechazarSolicitud(item.id_solicitud)}  className='botonCancelarSolicitud'>Cancelar solicitud</button>
                   )}
                 </TableCell>
               </TableRow>

@@ -12,3 +12,10 @@
     gap: 10px;
     white-space: nowrap;
 }
+
+.botonVerSolicitud {
+    background-color: #333333;
+    color: white;
+    border-radius: 20px;
+    width: 100px;
+}

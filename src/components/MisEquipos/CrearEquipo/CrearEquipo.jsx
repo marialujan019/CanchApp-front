@@ -102,58 +102,69 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
 
   return (
     <Modal show={show} onHide={onHide} centered size="lg">
-      <Modal.Body className='modalCEContainer'>
-        <div className='modalCEImgaenContainer'>
-          <img className='modalCEImgaen' src="/images/misEquipos/crearEquipo.jpg" alt="" />
+      <Modal.Body className='modalEDContainer'>
+        <div className=''>
+          <img className='imagenEditarEquipoModal' src="/images/misEquipos/crearEquipo.jpg" alt="" />
         </div>
         <div className='modalReservaTextoContainer'>
           <h2 className='modalReservaTitulo'>Crear Equipo</h2>
           <form onSubmit={handleSubmit} className='formularioCrearEquipoContainer'>
-            <label>
-              <strong>Nombre del Equipo: </strong>
-              <input
-                type="text"
-                name="nombreEquipo"
-                value={equipo.nombre_equipo}
-                onChange={handleNombreEquipoChange}
-                required
-                className='my-1'
-              />
-            </label>
-            <label>
-              <strong>Ubicación: </strong>
-              <input
-                type="text"
-                name="ubicacion"
-                value={equipo.ubicacion}
-                onChange={handleUbicacionEquipoChange}
-                required
-                className='my-1'
-              />
-            </label>
-            <label>
-              <select
-                name="cant_max"
-                value={tipoEquipo}
-                onChange={handleTipoEquipoChange}
-                required
-                className='elegirEquipoModalReserva my-1'
-              >
-                <option value="">Seleccionar tipo de equipo</option>
-                <option value="futbol5">Futbol 5</option>
-                <option value="futbol7">Futbol 7</option>
-                <option value="futbol11">Futbol 11</option>
-              </select>
-            </label>
-            <label>
+  
+            <div>
+              <label className='flex gap-2 my-2'>
+                <strong>Nombre del Equipo: </strong>
+                <input
+                  type="text"
+                  name="nombreEquipo"
+                  value={equipo.nombre_equipo}
+                  onChange={handleNombreEquipoChange}
+                  required
+                  className='inputMisEquipos'
+                />
+              </label>
+            </div>
+            
+            <div>
+              <label className='flex gap-2 my-2'>
+                <strong>Ubicación: </strong>
+                <input
+                  type="text"
+                  name="ubicacion"
+                  value={equipo.ubicacion}
+                  onChange={handleUbicacionEquipoChange}
+                  required
+                  className='inputMisEquipos'
+                />
+              </label>
+            </div>
+            
+            <div>
+              <label className='my-1'>
+                <select
+                  name="cant_max"
+                  value={tipoEquipo}
+                  onChange={handleTipoEquipoChange}
+                  required
+                  className='elegirEquipoModalReserva'
+                >
+                  <option value="">Seleccionar tipo de equipo</option>
+                  <option value="futbol5">Futbol 5</option>
+                  <option value="futbol7">Futbol 7</option>
+                  <option value="futbol11">Futbol 11</option>
+                </select>
+              </label>
+            </div>
+
+            <div>
+            <label className='my-1'>
+            <strong>Visibilidad del equipo: </strong>
               <select
                 name="publico"
                 value={equipo.publico ? 'publico' : 'privado'}
                 onChange={handleVisibilidadEquipoChange}
                 required
-                className='elegirEquipoModalReserva my-1'
+                className='elegirEquipoModalReserva'
               >
-                <option value="" >Seleccionar la visibilidad del equipo</option>
                 <option value="publico">Publico</option>
                 <option value="privado">Privado</option>
               </select>
@@ -164,7 +175,9 @@ const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {
               <p className='mensajeCrearEquipo'>Su equipo no será visible en la búsqueda de jugadores.</p>
             )}
             <br />
-
+            </div>
+            
+        
             <div className='flex gap-3'>
                 <Button type="submit" variant="primary" >Crear Equipo</Button>
                 <Button variant="danger" onClick={onHide}>Cancelar</Button>

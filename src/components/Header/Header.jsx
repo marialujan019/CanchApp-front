@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useUser } from '../UserContext';
 import Banner from '../Banner/Banner';
-
+import { Button } from '@nextui-org/react';
 
 
 const Header = () => {
@@ -42,7 +42,7 @@ const Header = () => {
       case `/misReservas/${user.id}`:
         return 'Mis reservas';
       default:
-        return 'Nombre de la Página Desconocida';
+        return 'Detalles del Complejo';
     }
   };
   useEffect(() => {
@@ -89,61 +89,13 @@ const Header = () => {
             <i className="bi bi-list" />
           </button>
           <section className={`nav ${menuOpen ? 'open' : ''}`}>
-          <Link
-              to="/home"
-              className="nav-link p-0"
-            >
-              Inicio
-          </Link>
-          <Link to="/mapa" className="nav-link p-0">
-            Buscar complejo
-          </Link>
-          <button className="botonSalir" onClick={handleLogout}>
+          <Button color='primary'>
+          <Link to={"/home"} className="nav-link p-0">Inicio</Link>
+          </Button>
+          <Button color="danger" onClick={handleLogout}>
               Salir
-          </button>
-          <Link
-              to={`/perfil/${user.tipo}/${user.id}`}
-              className="nav-link p-0"
-            >
-              Mi perfil
-            </Link>
-            <Link
-              to="/misEquipos"
-              className="nav-link p-0"
-            >
-              Mis equipos
-            </Link>
-            <Link
-              to={`buscarequipo/${user.id}`}
-              className="nav-link p-0"
-            >
-              Buscar equipo
-            </Link>
-            <Link
-              to="/buscarjugador"
-              className="nav-link p-0"
-            >
-              Buscar jugadores
-            </Link>
-            <Link
-              to="/historial"
-              className="nav-link p-0"
-            >
-              Mi historial
-            </Link>
-            <Link
-              to="/misSolicitudes"
-              className="nav-link p-0"
-
-            >
-              Mis solicitudes
-            </Link>
-            <Link
-              to={`misReservas/${user.id}`}
-              className="nav-link p-0"
-            >
-              Mis reservas
-            </Link>
+          </Button>
+ 
           </section>
         </nav>
         <Banner pageName={pageName}/>

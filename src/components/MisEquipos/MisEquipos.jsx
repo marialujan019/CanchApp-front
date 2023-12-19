@@ -173,19 +173,10 @@ const MisEquipos = () => {
 
   return (
     <div className='fondo'>
-        <Button onClick={handleCrearEquipo}>Crear equipo</Button>
-        <Button onClick={()=>{navigate(`/buscarequipo/${id_capitan}`)}}>Buscar equipo</Button>
-
 
       <div className='centradoDeTabla'>
-        {((misEquipos.length === 0) || misEquipos === null )? (
-          <div>
-            <p>No tienes equipos creados</p>
-            <Button onClick={handleCrearEquipo}>Crear equipo</Button>
-          </div>
-        ) : (
-          <div className='tablaContainer'>
-            <h3 className='tituloTabla'>Equipos creados</h3>
+      <div className='tablaContainer agregadoDebotonATabla'>
+            <h3 className='tituloTabla'>Mis equipos creados</h3>
             <Table isStriped removeWrapper aria-label="Tabla de equipos creados">
               <TableHeader className='rounded-none'>
                 {columns.map((column) => (
@@ -206,46 +197,42 @@ const MisEquipos = () => {
                 ))}
               </TableBody>
             </Table>
+            <Tooltip content="Crear equipo">
+            <button className='botonCrearEquipo' onClick={handleCrearEquipo}><i class="bi bi-plus-circle-fill"></i></button>
+            </Tooltip>
           </div>
-        )}
-      <div>
-      
       <div>
 
+    
+      <div className="tablaContainer agregadoDebotonATabla">
+        <h3 className='tituloTabla'>Equipos</h3>
+        <Table aria-label="Tabla de Equipos" removeWrapper isStriped >
+          <TableHeader className='rounded-none'>
+            {columnsEquiposDeFuera.map((column) => (
+              <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
+                {column.label}
+              </TableColumn>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {equiposDeFuera.map((equipo) => (
+              <TableRow key={equipo.id_equipo} className='py-0 px-0 contenidoTabla'>
+                {columnsEquiposDeFuera.map((column) => (
+                  <TableCell key={`${equipo.id_equipo}-${column.key}`} className='py-0 px-0'>
+                    {renderCellEquiposDeFuera(equipo, column.key)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <Tooltip content="Buscar equipo">
+            <button className='botonCrearEquipo' onClick={()=>{navigate(`/buscarequipo/${id_capitan}`)}}><i class="bi bi-plus-circle-fill"></i></button>
+        </Tooltip>
       </div>
-          {((equiposDeFuera.length === 0) || equiposDeFuera === null) ? (
-            <div>
-              <p>No estás en ningún equipo </p>
-              <Button onClick={()=>{navigate(`/buscarequipo/${id_capitan}`)}}>Buscar equipo</Button>
-            </div>
+      </div>
 
-          ) : (
-            <div className="tablaContainer">
-              <h3 className='tituloTabla'>Equipos</h3>
-              <Table aria-label="Tabla de Equipos" removeWrapper isStriped >
-                <TableHeader className='rounded-none'>
-                  {columnsEquiposDeFuera.map((column) => (
-                    <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>
-                      {column.label}
-                    </TableColumn>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {equiposDeFuera.map((equipo) => (
-                    <TableRow key={equipo.id_equipo} className='py-0 px-0 contenidoTabla'>
-                      {columnsEquiposDeFuera.map((column) => (
-                        <TableCell key={`${equipo.id_equipo}-${column.key}`} className='py-0 px-0'>
-                          {renderCellEquiposDeFuera(equipo, column.key)}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
-        </div>
-        <div>
+      <div>
           <CrearEquipo
             show={showCrearEquipoModal}
             onHide={() => setShowCrearEquipoModal(false)}

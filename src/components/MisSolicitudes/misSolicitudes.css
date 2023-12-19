@@ -1,0 +1,32 @@
+.botonVerJugadores2 {
+    background-color: #333333;
+    color: white;
+    border-radius: 20px;
+    width: 120px;
+}
+.botonVerJugadores2:hover {
+    background-color: white;
+    color: #333333;
+}
+
+.botonAceptarSolicitud{
+    background-color: #0952A5;
+    color: white;
+    border-radius: 20px;
+    width:100px
+}
+
+.botonAceptarSolicitud:hover {
+    background-color: white;
+    color: #0952A5;
+}
+.botonRechazarSolicitud {
+    background-color: red;
+    color: white;
+    border-radius: 20px;
+    width:100px
+}
+.botonRechazarSolicitud:hover {
+    background-color: white;
+    color: red;
+}

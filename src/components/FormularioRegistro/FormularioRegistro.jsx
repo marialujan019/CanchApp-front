@@ -4,6 +4,7 @@ import ComponenteInput from "../input/ComponenteInput";
 import "./formularioRegistro.css"
 import axios from 'axios';
 import { LocationIQProvider } from 'leaflet-geosearch';
+import Swal from 'sweetalert2';
 
 const FormularioRegistro = () => {
     //Estados para controlar el valor de los input
@@ -192,15 +193,18 @@ const FormularioRegistro = () => {
         } else {
             axios.post('http://localhost:3001/registro', usuarioObjeto)
             .then(res => {
-                console.log(res)
-                if(res.data.message === "Created"){
-                    alert("Usuario registrado");
-                    navigate('/home')
+                console.log(res.data); 
+                if (res.data.message === "Created") {
+                    Swal.fire({
+                        text: "Usuario registrado correctamente",
+                        icon: "success",
+                    })
+                    navigate('/ingreso');
                 } else {
-                    alert(res.data.Message)
+                    alert(res.data.Message);
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
         }
         
     };
@@ -209,9 +213,10 @@ const FormularioRegistro = () => {
         <div className="formularioContainer">
                 <div className="switch-container">
                     <label className="formularioLabelCheckAdmin">
-                        Registrarse como Administrador
+                        <span>Registrarse como jugador</span>
                         <input type="checkbox" onChange={toggleAdminForm} className="formularioInputCheckAdmin"/>
                         <div className="switch"></div>
+                        <span>Registrarse como administrador</span>
                     </label>
                 </div>
 
@@ -414,7 +419,7 @@ const FormularioRegistro = () => {
                         </div>
                         <div className="formularioInputEspecial">
                             <label htmlFor="nacimiento">Nacimiento</label>
-                            <input type="date" name="nacimiento" id="nacimiento" />
+                            <input type="date" name="nacimiento" id="nacimiento" className="nacimeintoRegistro"/>
                         </div>
                         <ComponenteInput
                             tipo="email"

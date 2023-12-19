@@ -4,6 +4,7 @@ import JugadoresModal from '../JugadoresModal/JugadoresModal';
 import axios from 'axios';
 import {  useParams } from 'react-router-dom';
 import {Input} from "@nextui-org/react";
+import "./busquedaEquipo.css"
 
 const columns = [
   { key: "nombre_equipo", label: "Nombre del Equipo" },
@@ -87,19 +88,19 @@ const BusquedaEquipo = () => {
   };
   
   const renderButton = (equipo) => {
-    if (equipo.estado === 'Aceptado') {
-      return <Button disabled color='success'>Aceptado</Button>;
+    if (equipo.estado === 'Ya perteneces a este equipo') {
+      return <p className='m-0'>Ya perteneces a este equipo</p>;
     } else if (equipo.estado === 'Pendiente') {
       return (
-        <Button onClick={() => toggleSolicitudRechazar(equipo)} color='danger'>
+        <button className='botonCancelarSolicitud' onClick={() => toggleSolicitudRechazar(equipo)} color='danger'>
           Cancelar solicitud
-        </Button>
+        </button>
       );
     } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
       return (
-        <Button onClick={() => toggleSolicitudEnviar(equipo)} color='primary'>
+        <button className="botonEnviarSolicitud" onClick={() => toggleSolicitudEnviar(equipo)} color='primary'>
           Enviar solicitud
-        </Button>
+        </button>
       );
     } else if (equipo.estado) {
       return <Button disabled color='success'> {equipo.estado} </Button>;
@@ -145,19 +146,18 @@ const BusquedaEquipo = () => {
           </TableHeader>
           <TableBody>
             {equiposFiltrados.map((equipo) => (
-              <TableRow key={equipo.id_equipo} className='py-0 px-0 contenidoTabla'>
+              <TableRow key={equipo.id_equipo} className='py-1 px-0 contenidoTabla'>
                 {columns.map((column) => (
-                  <TableCell key={`${equipo.id_equipo}-${column.key}`} className='py-0 px-0'>
+                  <TableCell key={`${equipo.id_equipo}-${column.key}`} className='py-1 px-0'>
                     {column.key === 'cant_jugadores' ? (
                       <>
-                        <Button onClick={() => fetchJugadores(equipo.id_equipo)}>
-                          <i className="bi bi-eye"></i> {equipo[column.key]}/{equipo.cant_max}
-                        </Button>
+                        <button className='botonVerJugadores' onClick={() => fetchJugadores(equipo.id_equipo)}>
+                          <i className="bi bi-eye "></i> {equipo[column.key]}/{equipo.cant_max}
+                        </button>
                       </>
                     ) : column.key === 'solicitud' ? (
                       renderButton(equipo)
                     ) : (
-                      // Modificación aquí
                       column.key === 'proximo_partido' && equipo[column.key] === null ? (
                         "Este equipo no tiene próximos partidos"
                       ) : (

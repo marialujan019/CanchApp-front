@@ -10,10 +10,16 @@
     background-repeat: no-repeat;
     min-height: 84.2vh;
 }
+.formularioIngresoTitulo {
+    font-family: "bebas";
+    letter-spacing: 3px;
+}
 
 .formularioIngresoContainer2{
     padding: 30px;
     background-color: rgba(129, 129, 129, 0.699);
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
 }
 
 .formularioIngreso {
@@ -25,7 +31,7 @@
     padding: 10px;
     min-height: 40px;
     cursor: pointer;
-    text-align: center;
+    text-align: start;
 }
 
 .formularioIngresoInput {
@@ -38,16 +44,17 @@
     transition: .3s ease all;
     border: solid transparent;
     color: black;
+    border-radius: 20px;
 }
 
 .formularioIngresoInput:focus {
-    border: 3px solid rgb(255, 196, 33);
+    border: 3px solid #006FEE;
     outline: none;
     box-shadow: 3px 0px 30px rgba(163,163,163, 0.4);
 }
 
 .formularioIngresoBoton{
-    background-color: #FFA500; /* Naranja */
+    background-color: #006400; /* Naranja */
     color: #FFFFFF; /* Blanco */
     padding: 10px 20px;
     border: none;
@@ -58,13 +65,13 @@
 
 /* Efecto hover */
 .formularioIngresoBoton:hover {
-    background-color: #FFD700; /* Naranja claro */
+    background-color: rgb(88, 243, 50); /* Naranja claro */
     transform: scale(1.05); /* Escala el botón al 105% de su tamaño original */
 }
 
 /* Efecto de clic */
 .formularioIngresoBoton:active {
-    background-color: #FF8C00; /* Naranja oscuro */
+    background-color: #006FEE; /* Naranja oscuro */
     transform: scale(0.95); /* Escala el botón al 95% de su tamaño original cuando se hace clic */
 }
 
@@ -81,5 +88,11 @@
     color: white;
 }
 .ingresoRuta:hover {
-    color: orange
+    color:rgb(88, 243, 50);
+}
+
+.mensajeErrorIngreso {
+    padding-top: 25px;
+    color: black; 
+    font-size: 1.2rem;
 }

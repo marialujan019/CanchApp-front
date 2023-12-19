@@ -40,7 +40,6 @@ body {
 .main {
   min-height: 80vh;
 }
-
 /* TABLAS */
 .centradoDeTabla {
   display: flex;
@@ -79,9 +78,6 @@ body {
 }
 tr {
   margin: 0 !important; 
-}
-.contenidoTabla {
-
 }
 .contenidoTabla:hover {
   background-color: #c9c9c9;

@@ -1,0 +1,14 @@
+.agregadoDebotonATabla {
+    position: relative;
+}
+.botonCrearEquipo {
+    position: absolute;
+    top: -3px;
+    right: 20px;
+    font-size: 40px;
+    color: white;
+}
+.botonCrearEquipo:hover {
+    color: rgb(88, 243, 50); 
+    transform: scale(1.05);
+}

@@ -34,7 +34,7 @@ const ComponenteInput = ({ tipo, label, placeholder, idHTMLName, expresionRegula
             <label htmlFor={idHTMLName} className="formularioLabel">
                 {label}
             </label>
-            <div className="formularioGrupoInput">
+            <div className="formularioGrupoInput flex justify-start">
                 <input
                     type={tipo}
                     placeholder={placeholder}

@@ -18,6 +18,8 @@
     padding: 10px;
     background-color: rgba(129, 129, 129, 0.699);
     color: white;
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
 }
 
 /* Estructura grid del formulario */
@@ -37,11 +39,11 @@
 
 /* Titulo e input general para cada input */
 .formularioLabel {
-    display: block;
     padding: 10px;
     min-height: 40px;
     cursor: pointer;
-    text-align: center;
+    display: flex;
+    justify-content: start;
 }
 
 .formularioGrupoInput {
@@ -60,6 +62,7 @@
     transition: .3s ease all;
     border: solid transparent;
     color: black;
+    border-radius: 20px;
 }
 .formularioInput:focus {
     border: 3px solid rgb(0, 255, 0);
@@ -128,7 +131,7 @@ input[value]:not([value=""]) + .formularioIconoInput {
 }
 
 .formularioIngresoBotonRegistro {
-        background-color: #FFA500; /* Naranja */
+        background-color: #006400; /* Naranja */
         color: #FFFFFF; /* Blanco */
         padding: 10px 20px;
         border: none;
@@ -139,7 +142,7 @@ input[value]:not([value=""]) + .formularioIconoInput {
 
 /* Efecto hover */
 .formularioIngresoBotonRegistro:hover {
-    background-color: #FFD700; /* Naranja claro */
+    background-color: rgb(88, 243, 50); /* Naranja claro */
     transform: scale(1.05); /* Escala el botón al 105% de su tamaño original */
 }
 
@@ -183,7 +186,9 @@ input[value]:not([value=""]) + .formularioIconoInput {
   .formularioInputCheckAdmin:checked + .switch {
     background-color: #ffc423; /* Color del fondo cuando está marcado */
   }
-  
+ .formularioInputCheckAdmin:not(:checked) + .switch  {
+    background-color: aqua;
+  }
   .switch::before {
     content: '';
     width: 16px;
@@ -205,4 +210,13 @@ input[value]:not([value=""]) + .formularioIconoInput {
 /* Titulos de los formularios  */
 .formularioTituloRegistro {
     margin-top: 40px;
+    font-family: "bebas";
+    font-size: 3rem;
+    letter-spacing: 3px;
+}
+
+
+
+.nacimeintoRegistro {
+    background-color: #006400;
 }

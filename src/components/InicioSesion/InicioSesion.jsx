@@ -1,7 +1,8 @@
 import React from 'react';
-import Card from './Cards';
+import CardInicio from '../Inicio/cardInicio/CardInicio';
 //import imagenMisEquipos from '../../imagen/formarEquipos.png'
 import { Link } from 'react-router-dom';
+import "./inicioSesion.css"
 
 const InicioSesion = ({nombre_usuario, id }) => {
     const cardData = [
@@ -9,62 +10,64 @@ const InicioSesion = ({nombre_usuario, id }) => {
             id: 4,
             title: 'Buscar complejos',
             description: 'Busca un complejo acorde a las necesidades de tu equipo',
-            image: '',
+            image: '/images/inicioSesion/buscarCancha.jpg',
             wide: true, 
             link: "/mapa"
           },
           {
           title: 'Mis equipos',
           description: 'Acá podrás ver y editar tus equipos.',
-          image: '',
+          image: '/images/inicioSesion/misEquipos.jpg',
           link: "/misEquipos"
         },
         {
           title: 'Buscar equipo',
           description: 'Encontra el equipo ideal para unirte y jugar tus próximos partidos',
-          image: '',
+          image: '/images/inicioSesion/buscarEquipo.jpg',
           link: `/buscarequipo/${id}`
         },
         {
             title: 'Buscar jugadores',
             description: 'Encontra el jugador que te falta',
-            image: '',
+            image: '/images/inicioSesion/buscarJugador.jpg',
             link: "/buscarjugador"
           },
           {
             title: 'Mis solicitudes',
             description: 'Revisa el estado de las invitaciones que tienes',
-            image: '',
+            image: '/images/inicioSesion/misSolicitudes.jpg',
             link: "/misSolicitudes"
           },
           {
             title: 'Mis reservas',
             description: 'Revisa el estado de tus reservas para ver cuando es tu próximo partido',
-            image: '',
+            image: '/images/inicioSesion/misReservas.jpg',
             link: `/misReservas/${id}`
           },
           {
             title: 'Mi historial',
             description: 'Mirá los partidos que jugaste.',
-            image: '',
+            image: '/images/inicioSesion/miHistorial.jpg',
             link: "/historial"
           }
     ];
     
       return (
-        <div> <h1>Bienvenido, {nombre_usuario}</h1>
-        <div className="app">
-          {cardData.map((card, index) => (
-            <nav>
-            <Link to={`${card.link}`}>
-            <Card
-              key={index}
-              title={card.title}
-              description={card.description}
-              image={card.image}
-              alt={card.alt}
-              clickable
-              className={card.wide ? 'card-wide' : 'card'}
+        <div className='inicioSesionContainer'> 
+          <div className='inicioSeccionBienvenida'>
+          <h1 className='inicioSesionTitulo'>¡Bienvenido a canchapp, {nombre_usuario}!</h1>
+            <strong><p className='inicioSesionTextoBienvenida'>¿Qué quieres hacer hoy?</p></strong>
+          </div>
+          
+        <div className="cardInicioSesionContainer">
+          {cardData.map((card) => (
+            <nav className='navCardInicioSesion'>
+            <Link className='linkCardInicioSesion' to={`${card.link}`}>
+            <CardInicio
+              imagenSrc={card.image}
+              titulo={card.title}
+              descripcion={card.description}
+              className="cardInicioSesion"
             /></Link></nav>
           ))}
         </div></div>

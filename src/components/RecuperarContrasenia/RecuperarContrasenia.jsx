@@ -4,11 +4,11 @@ import Button from 'react-bootstrap/Button';
 const RecuperarContrasenia = () => {
     return (
           <div className='formularioIngresoContainer'>
-            <form>
+            <form className='formularioIngresoContainer2'>
               <h3>Recuperar contraseña</h3>
               
               <div className="formularioIngreso">
-                <label htmlFor="email" className='formularioLabel'>Ingrese su correo electrónico</label>
+                <label htmlFor="email" className='formularioIngresoLabel'>Ingrese su correo electrónico</label>
                 <input
                   type="email"
                   placeholder='example@gmail.com'

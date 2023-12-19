@@ -207,9 +207,9 @@ const handleFiltroPosicionChange = (value) => {
             </TableHeader>
             <TableBody>
               {jugadoresFiltrados.map((jugador) => (
-                <TableRow key={jugador.id_jug} className='py-0 px-0 contenidoTabla'>
+                <TableRow key={jugador.id_jug}  className='py-1 px-0 contenidoTabla'>
                   {columns.map((column) => (
-                    <TableCell key={`${jugador.id_jug}-${column.key}`} className='py-0 px-0'>
+                    <TableCell key={`${jugador.id_jug}-${column.key}`} style={{ textAlign: 'center' }} className='py-1 px-0'>
                       {column.key === 'nombre_apellido' ? (
                         `${jugador.nombre} ${jugador.apellido}`
                       ) : column.key !== 'solicitud' ? (
@@ -219,7 +219,7 @@ const handleFiltroPosicionChange = (value) => {
                           jugador[column.key]
                         )
                       ) : (
-                        <Button color="primary" onClick={() => fetchEquipos(id_capitan, jugador.id_jug)}> Ver solicitud </Button>
+                        <button  className='botonVerSolicitud' onClick={() => fetchEquipos(id_capitan, jugador.id_jug)}> Ver solicitud </button>
                       )}
                     </TableCell>
                   ))}

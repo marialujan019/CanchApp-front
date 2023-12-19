@@ -4,6 +4,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Toolti
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import "./editarEquipo.css"
 
 const columns = [
   { key: "nombre", label: "Nombre" },
@@ -11,7 +12,6 @@ const columns = [
   { key: "edad", label: "Edad" },
   { key: "actions", label: "Acciones" },
 ];
-
 
 const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_equipo, id_capitan, updateMisEquipos }) => {
     const [equipoNombre, setEquipoNombre] = useState(nombre_equipo);
@@ -119,7 +119,7 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
                     className="text-lg text-default-400 cursor-pointer active:opacity-50"
                     onClick={() => askNuevoCapitan(jugador.nombre, nombre_equipo, jugador.id_jug)}
                   >
-                    Ascender jugador
+                    <i class="bi bi-person-fill-up"></i>
                   </button>
                 </Tooltip>
                 <Tooltip content="Eliminar jugador">
@@ -127,7 +127,7 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
                     className="text-lg text-danger cursor-pointer active:opacity-50"
                     onClick={() => updateJugadoresEquipo(jugador.id_jug)}
                   >
-                    Eliminar jugador
+                    <i class="bi bi-trash"></i>
                   </button>
                 </Tooltip>
               </div>
@@ -143,45 +143,55 @@ const EditarEquipo = ({ jugadores, show, onHide, id_equipo, visibilidad, nombre_
     
 
     return (
-        <Modal show={show} onHide={onHide} centered>
-            <Modal.Header closeButton>
-                <Modal.Title>Editar equipo</Modal.Title>
-            </Modal.Header>
+        <Modal show={show} onHide={onHide} centered size='lg'>
+
             
-            <Modal.Body>
-
+          <Modal.Body className='modalEDContainer'>
             <div>
-                <h5>Cambiar Nombre</h5>
-                <input type="text" value={equipoNombre} onChange={handleNombreChange}/> 
+                <img className="imagenEditarEquipoModal" src="/images/misEquipos/editarEquipo.jpg" alt="" />
+            </div>
+
+            <div className='modalReservaTextoContainer'>
+              <h3 className='modalReservaTitulo'>Editar equipo</h3>
+              <div className='flex gap-2'>
+                  <strong><p>Cambiar nombre:</p></strong>
+                  <input type="text" className="inputMisEquipos" value={equipoNombre} onChange={handleNombreChange}/> 
+              </div>
+              
+              <div className='flex gap-2'>
+                <strong><p>Cambiar visibilidad</p></strong>
+                <label className="switchED">
+                  <input type="checkbox" checked={equipoVisibilidad} onChange={handleVisibilidadChange} />
+                  <span className="sliderED"></span>
+                </label>
+                {equipoVisibilidad ? 'Publico' : 'Privado'}
+              </div>
+
+
+              <div className='tablaContainer'>
+                <h3 className='tituloTabla2'>Jugadores</h3>
+                  <Table aria-label="Tabla de Jugadores" removeWrapper>
+                      <TableHeader columns={columns} >
+                          {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>{column.label}</TableColumn>}
+                      </TableHeader>
+                      <TableBody items={jugadores} style={{ textAlign: 'center' }} >
+                          {(jugador) => (
+                              <TableRow key={jugador.id_jug} className='py-0 px-0 contenidoTabla text'>
+                                  {(columnKey) => <TableCell className='py-0 px-0'>{renderCell(jugador, columnKey)}</TableCell>}
+                              </TableRow>
+                          )}
+                      </TableBody>
+
+                  </Table>
+              </div>
+              <div className='py-3 flex gap-3 justify-end'>
+                <Button variant="primary" onClick={handleConfirmar}> Confirmar</Button>
+                <Button variant="danger" onClick={onHide}>Cerrar</Button>  
+              </div>
             </div>
             
-            <div>
-                <h5>Cambiar visibilidad</h5>
-                <input type="checkbox" checked={equipoVisibilidad} onChange={handleVisibilidadChange}/> {equipoVisibilidad ? 'Publico' : 'Privado'}
-            </div>
+          </Modal.Body>
 
-            <div>
-                <h5>Editar jugadores</h5>
-                <Table aria-label="Tabla de Jugadores">
-                    <TableHeader columns={columns} >
-                        {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
-                    </TableHeader>
-                    <TableBody items={jugadores}>
-                        {(jugador) => (
-                            <TableRow key={jugador.id_jug}>
-                                {(columnKey) => <TableCell>{renderCell(jugador, columnKey)}</TableCell>}
-                            </TableRow>
-                        )}
-                    </TableBody>
-
-                </Table>
-            </div>
-        
-        </Modal.Body>
-        <Modal.Footer>
-            <Button variant="secondary" onClick={onHide}>Cerrar</Button>  
-            <Button variant="primary" onClick={handleConfirmar}> Confirmar</Button>
-        </Modal.Footer>
       </Modal>
     );
 };

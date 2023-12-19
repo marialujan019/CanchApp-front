@@ -38,15 +38,15 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
           return <Button disabled color='success'>Ya formas parte de este equipo</Button>;
         } else if (equipo.estado === 'Pendiente') {
           return (
-            <Button onClick={() => toggleCancelarSolicitud(equipo)} color='danger'>
+            <button onClick={() => toggleCancelarSolicitud(equipo)} className="botonCancelarSolicitud">
               Cancelar invitacion
-            </Button>
+            </button>
           );
         } else if (equipo.estado === "Rechazado" || equipo.estado === "No enviado" || equipo.estado === 'Rechazado') {
           return (
-            <Button onClick={() => toggleEnviarSolicitud(equipo)} color='primary'>
+            <button onClick={() => toggleEnviarSolicitud(equipo)} className="botonEnviarSolicitud">
               Enviar invitacion
-            </Button>
+            </button>
           );
         }
       case 'estado':
@@ -57,24 +57,22 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
   };
 
   return (
-    <Modal show={show} key={modalKey} onHide={onHide} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Equipos Disponibles</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+    <Modal show={show} key={modalKey} onHide={onHide} centered size='lg'>
+      <Modal.Body closeButton>
         {equipos.length === 0 || equipos === null ? (
           <p>No tienes equipos</p>
         ) : (
-          <div>
-            <Table aria-label="Equipos">
+          <div className='tablaContainer'>
+            <h3 className='tituloTabla3'>Equipos disponibles</h3>
+            <Table aria-label="Equipos" removeWrapper>
               <TableHeader columns={columns}>
-                {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }}>{column.label}</TableColumn>}
+                {(column) => <TableColumn key={column.key} style={{ textAlign: 'center' }} className='headerTabla py-0 px-0'>{column.label}</TableColumn>}
               </TableHeader>
-              <TableBody>
+              <TableBody style={{ textAlign: 'center' }}>
                 {equipos.map((equipo) => (
-                  <TableRow key={equipo.id_equipo}>
+                  <TableRow key={equipo.id_equipo} className='py-1 px-0 contenidoTabla'>
                     {columns.map((column) => (
-                      <TableCell key={column.key}>
+                      <TableCell key={column.key} className='py-1 px-0'>
                         {renderCell(equipo, column)}
                       </TableCell>
                     ))}

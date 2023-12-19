@@ -1,13 +1,13 @@
 .formularioCrearEquipoContainer {
     display: flex;
     flex-direction: column;
-    padding: 40px 0;
 }
 
 .modalCEImgaenContainer{
+    width: 20vw;
 }
 .modalCEImgaen{
-    height: 100%;
+    height:100%;
     border-radius: 20px 0 0 20px;
 }
 
