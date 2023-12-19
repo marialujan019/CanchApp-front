@@ -89,13 +89,24 @@ const Header = () => {
             <i className="bi bi-list" />
           </button>
           <section className={`nav ${menuOpen ? 'open' : ''}`}>
-          <Button color='primary'>
-          <Link to={"/home"} className="nav-link p-0">Inicio</Link>
+          <Button color='primary'><Link
+              to="/home"
+              className="nav-link p-0 m-0"
+            >
+              Inicio
+          </Link>
           </Button>
+          <Button color='secondary'>
+          <Link 
+              to={`/perfil/${user.tipo}/${user.id}`}
+              className="nav-link p-0 m-0"
+            >Mi perfil
+            </Link>
+          </Button>
+          
           <Button color="danger" onClick={handleLogout}>
               Salir
           </Button>
- 
           </section>
         </nav>
         <Banner pageName={pageName}/>

@@ -24,14 +24,18 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
     if (selectedEquipo) {
       const { id_jugador, fecha, hora } = nuevaReserva;
       eliminarReserva(parseInt(id_jugador), fecha, hora);
+      Swal.fire({
+        text: "Tu reserva fue creada exitosamente",
+        icon: "success",
+      });
   
-      alert(
-        `ID Jugador: ${id_jugador}\nID Complejo: ${nuevaReserva.id_complejo}\nID Cancha: ${nuevaReserva.id_cancha}\nFecha: ${nuevaReserva.fecha}\nHora: ${nuevaReserva.hora}\nID Equipo seleccionado: ${selectedEquipo} \nID Agenda ${nuevaReserva.id_agenda}`
-      );
       setReservas();
-      navigate("/misEquipos");
+      navigate("/home");
     } else {
-      alert('Selecciona un equipo antes de reservar.');
+      Swal.fire({
+        text: "Selecciona un equipo",
+        icon: "warning",
+      });
     }
   };
   
@@ -81,15 +85,12 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
         }
       });
     } else if (origen === "reservas") {
-      navigate("/misEquipos");
+      navigate("/home");
     }
   };
 
 
-  //Función para traer las reservas ya hechas por el usuario
-  const renderEquiposSection = () => {
-    
-  };
+ 
 
   return (
     <Modal show={show} onHide={onHide} centered size="lg">
@@ -100,7 +101,7 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
           <img className='modalReservaImgaen' src="/images/reserva/reserva.jpg" alt="" />
         </div>
         <div>
-          <div className='modalReservaTextoContainer'>
+          <div className='modalReservaTextoContainer flex align-middle'>
             <h3 className='modalReservaTitulo'>Finalizá tu reserva</h3>
             <div>
               <p className='px-1 m-0'><strong>Nombre del Complejo:</strong> {nuevaReserva.nombre_complejo}</p>

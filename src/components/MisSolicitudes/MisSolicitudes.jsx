@@ -61,7 +61,7 @@ const MisSolicitudes = () => {
     axios.post('http://localhost:3001/solicitudes/update', {
       id_solicitud: idSolicitud,
       estado: 'Rechazado'
-    }).then(() => setShouldReload(prev => !prev)).then(alert("Rechazado"))
+    }).then(() => setShouldReload(prev => !prev))
     
   };
   const handleAceptarInvitacion = (idInvitacion) => {
@@ -74,14 +74,14 @@ const MisSolicitudes = () => {
     axios.post('http://localhost:3001/invitaciones/update', {
       id_invitacion: idInvitacion,
       estado: 'Rechazado'
-    }).then(() => setShouldReload(prev => !prev)).then(alert("Rechazado"))
+    }).then(() => setShouldReload(prev => !prev))
   };
 
   const handleCancelarInvitacion = (idInvitacion) => {
     axios.post('http://localhost:3001/invitaciones/update', {
       id_invitacion: idInvitacion,
       estado: 'No enviado'
-    }).then(() => setShouldReload(prev => !prev)).then(alert("Solicitud cancelada"))
+    }).then(() => setShouldReload(prev => !prev))
   };
 
   //Funcion para ver los jugadores de un equipo
