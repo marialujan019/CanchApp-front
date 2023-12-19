@@ -1,34 +1,30 @@
+/* header.css */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: #333;
+  background-color: #333333;
   color: white;
-  height: 10vh;
+  padding: 10px 20px;
+  letter-spacing: 0px;
 }
 
-img, video {
-  max-width: 15vh;
-  height: auto;
-}
-
-.logoinicio {
-  width:150px;
+.logo {
+  width: 70px;
 }
 
 .menu-button {
-  display: none;
   font-size: 24px;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
+  display: none;
 }
 
 .nav {
   display: flex;
-  gap: 20px;
+  gap: 10px;
 }
 
 .nav-link {
@@ -54,4 +50,9 @@ img, video {
   .nav.open {
     display: flex;
   }
+}
+
+.botonSalir {
+  background-color: red;
+  border-radius: 20px;
 }

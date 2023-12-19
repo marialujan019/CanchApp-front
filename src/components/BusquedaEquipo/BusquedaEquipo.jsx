@@ -18,6 +18,7 @@ const BusquedaEquipo = () => {
   //Estados para renderizar los equipos
   const [equiposParaLaBusqueda, setEquiposParaLaBusqueda] = useState([]);
   const { id_jugador } = useParams();
+  const [forceUpdate, setForceUpdate] = useState(false);
 
   //Estados para renderizar la selección de equipos
   const [jugadoresDeVerJugadores, setJugadoresDeVerJugadores] = useState([]);
@@ -35,7 +36,8 @@ const BusquedaEquipo = () => {
     };
   
     fetchEquipos();
-  }, []);
+  }, [forceUpdate]);
+  
 
   //Esta función recibe el id_equipo el cual hay que mandarlo al back para recibir los datos
   //Los datos van a ser un arreglo de jugadores con el mismo id_equipo. Es decir, el arreglo de jugadores del equipo
@@ -45,44 +47,62 @@ const BusquedaEquipo = () => {
     setShowJugadoresModal(true);
   };
 
+  const forceComponentUpdate = async () => {
+    setForceUpdate((prev) => !prev);
+  };
 
   //Manejo de solicitudes
   //Lo que hago es enviarte el id del equipo al que le quiero enviar solicitud y mi id
   //Con esto, vos los agregar a la base de datos y deberias cambiar el estado del equipo
-  const toggleSolicitudes = async (equipo) => {
+  const toggleSolicitudEnviar = async (equipo) => {
     try {
-      if (equipo.estado === 'Pendiente') {
-        await axios.delete(`http://localhost:3001/solicitudes/borrar/${id_jugador}/${equipo.id_equipo}`);
-      } else if (equipo.estado == 'No enviado' || equipo.estado == 'Rechazado') {
-        await axios.post('http://localhost:3001/solicitudes', {
-          id_jugador: id_jugador,
-          id_equipo: equipo.id_equipo
-        }).then(console.log(equipo.id_equipo, id_jugador))
-      }
+      await axios.post('http://localhost:3001/solicitudes', {
+        id_jugador: id_jugador,
+        id_equipo: equipo.id_equipo
+      });
+      setEquiposParaLaBusqueda((equipos) => {
+        const updatedEquipos = equipos.map((e) =>
+          e.id_equipo === equipo.id_equipo ? { ...e, estado: 'Pendiente' } : e
+        );
+        return updatedEquipos;
+      });
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+  };
+
+  const toggleSolicitudRechazar = async (equipo) => {
+    try {
+      await axios.delete(`http://localhost:3001/solicitudes/borrar/${id_jugador}/${equipo.id_equipo}`).then(
+        setEquiposParaLaBusqueda((equipos) => {
+          
+          return equipos.map((e) =>
+            e.id_equipo === equipo.id_equipo ? { ...e, estado: 'No enviado' } : e
+          )
+        })
+      )
     } catch (error) {
       console.error('Error en la solicitud:', error);
     }
   };
   
-
   const renderButton = (equipo) => {
     if (equipo.estado === 'Aceptado') {
       return <Button disabled color='success'>Aceptado</Button>;
     } else if (equipo.estado === 'Pendiente') {
       return (
-        <Button onClick={() => toggleSolicitudes(equipo)} color='danger'>
+        <Button onClick={() => toggleSolicitudRechazar(equipo)} color='danger'>
           Cancelar solicitud
         </Button>
       );
-    } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado' || equipo.estado === null) {
+    } else if (equipo.estado === 'No enviado' || equipo.estado === 'Rechazado') {
       return (
-        <Button onClick={() => toggleSolicitudes(equipo)} color='primary'>
+        <Button onClick={() => toggleSolicitudEnviar(equipo)} color='primary'>
           Enviar solicitud
         </Button>
       );
-    } else if(equipo.estado) {
+    } else if (equipo.estado) {
       return <Button disabled color='success'> {equipo.estado} </Button>;
-
     }
   };
 
@@ -94,9 +114,7 @@ const BusquedaEquipo = () => {
 
   // Filtrar equipos por nombre
   const equiposFiltrados = equiposParaLaBusqueda.filter(equipo => equipo.nombre_equipo.toLowerCase().startsWith(filtroNombre.toLowerCase()));
-  const jsonString = JSON.stringify(equiposFiltrados);
 
-  console.log("Equipos filtrados: " + jsonString)
 
   return (
     <div className='centradoDeTabla busquedaJugadorContainer'>

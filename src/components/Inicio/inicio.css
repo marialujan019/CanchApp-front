@@ -10,6 +10,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    position: relative;
 }
 
 .inicioSeccion1 h1 {
@@ -33,6 +34,22 @@
     width: 80%;
 }
 
+/* Banner inicio seccion 1 */
+.inicioSeccion1Banner {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.445);
+    backdrop-filter: blur(10px);
+    padding: 10px 0;
+    color: #f3f3f3;
+}
+.inicioSeccion1BannerCardIncono {
+    font-size: 30px;
+}
 /* Seccion 2  */
 .inicioSeccion2 {
     margin-top: 100px;

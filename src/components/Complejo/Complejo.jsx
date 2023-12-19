@@ -185,7 +185,7 @@ const Complejo = () => {
                   <img
                     className="d-block w-100 imageGallery"
                     src={image}
-                    alt={"si"}
+                    alt={""}
                     onClick={() => handleImageClick(index)}
                   />
                 </Carousel.Item>
@@ -227,7 +227,7 @@ const Complejo = () => {
         <div className='complejoElegirFecha'>
           <div>
            <strong><label htmlFor="fecha" className='complejoLabel'>Seleccione una fecha:</label></strong>
-            <input type="date" id="fecha" onChange={(e) => handleFechaSeleccionada(e.target.value)} />
+            <input type="date" id="fecha" className="complejoCalendario" onChange={(e) => handleFechaSeleccionada(e.target.value)} />
           </div>
         </div>
     
@@ -265,7 +265,7 @@ const Complejo = () => {
           show={showModal}
           onHide={() => setShowModal(false)}
           nuevaReserva={nuevaReserva}
-          equipos={[]}
+          equipos={equipos}
           origen={"complejo"}
         />
     </div>

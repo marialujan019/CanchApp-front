@@ -39,6 +39,24 @@ const Inicio = () => {
                     <p className="inicioSeccion1Texto">El fútbol a un click de distancia.</p>
                 </div>
             </section>
+            <div className="inicioSeccion1Banner">
+                <div className="inicioSeccion1BannerCard">
+                    <i className="bi bi-person-vcard-fill inicioSeccion1BannerCardIncono"></i>
+                    <p className="m-0 inicioSeccion1BannerCardTexto">123 Jugadores registrados</p>
+                </div>
+                <div className="inicioSeccion1BannerCard"> 
+                    <i className="bi bi-calendar-fill inicioSeccion1BannerCardIncono"></i>
+                    <p className="m-0 inicioSeccion1BannerCardTexto">32 Partidos jugados</p>
+                </div>
+                <div className="inicioSeccion1BannerCard">
+                    <i className="bi bi-geo-alt-fill inicioSeccion1BannerCardIncono"></i>
+                    <p className="m-0 inicioSeccion1BannerCardTexto">15 Canchas disponibles</p>
+                </div>
+                <div className="inicioSeccion1BannerCard">
+                    <i className="bi bi-people-fill inicioSeccion1BannerCardIncono"></i>
+                    <p className="m-0 inicioSeccion1BannerCardTexto">45 Equipos formados</p>
+                </div>
+            </div>
 
             <section className='inicioSeccion2'>
                 <div className="inicioSeccion2ConocenosCentrado">

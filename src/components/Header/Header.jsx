@@ -53,63 +53,65 @@ const Header = () => {
     auth ? (
       <>
         <nav className="header">
-          <div className="logo">Logo</div>
+          <div className="logo">
+            <img src="/images/header/logo.jpg" alt="" />
+          </div>
           <button className="menu-button" onClick={toggleMenu}>
             <i className="bi bi-list" />
           </button>
           <section className={`nav ${menuOpen ? 'open' : ''}`}>
           <Link
               to="/home"
-              className="nav-link"
+              className="nav-link p-0"
             >
               Inicio
           </Link>
-          <Link to="/mapa" className="nav-link">
+          <Link to="/mapa" className="nav-link p-0">
             Buscar complejo
           </Link>
-          <button className="btn btn-danger" onClick={handleLogout}>
+          <button className="botonSalir" onClick={handleLogout}>
               Salir
           </button>
           <Link
               to={`/perfil/${user.tipo}/${user.id}`}
-              className="nav-link"
+              className="nav-link p-0"
             >
               Mi perfil
             </Link>
             <Link
               to="/misEquipos"
-              className="nav-link"
+              className="nav-link p-0"
             >
               Mis equipos
             </Link>
             <Link
               to={`buscarequipo/${user.id}`}
-              className="nav-link"
+              className="nav-link p-0"
             >
               Buscar equipo
             </Link>
             <Link
               to="/buscarjugador"
-              className="nav-link"
+              className="nav-link p-0"
             >
               Buscar jugadores
             </Link>
             <Link
               to="/historial"
-              className="nav-link"
+              className="nav-link p-0"
             >
               Mi historial
             </Link>
             <Link
               to="/misSolicitudes"
-              className="nav-link"
+              className="nav-link p-0"
 
             >
               Mis solicitudes
             </Link>
             <Link
               to={`misReservas/${user.id}`}
-              className="nav-link"
+              className="nav-link p-0"
             >
               Mis reservas
             </Link>
@@ -120,15 +122,17 @@ const Header = () => {
       </>
     ) : (
       <header className="header">
-        <div className="logo"> logo </div>
+          <div className="logo">
+            <img src="/images/header/logo.jpg" alt="" />
+          </div>
         <button className="menu-button" onClick={toggleMenu}>
           <i className="bi bi-list" />
         </button>
         <nav className={`nav ${menuOpen ? 'open' : ''}`}>
-          <Link to="/home" className="nav-link">
+          <Link to="/home" className="nav-link p-0">
             Inicio
           </Link>
-          <Link to="/ingreso" className="nav-link">
+          <Link to="/ingreso" className="nav-link p-0">
 
             Ingresar
           </Link>

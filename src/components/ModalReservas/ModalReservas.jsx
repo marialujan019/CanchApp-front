@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { useReservasContext } from '../reservasContext';
 import axios from 'axios';
 import { useUser } from '../UserContext';
+import "./modalReservas.css"
 
 
 const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
@@ -87,61 +88,66 @@ const ModalReservas = ({ show, onHide, nuevaReserva, equipos, origen }) => {
 
   //Función para traer las reservas ya hechas por el usuario
   const renderEquiposSection = () => {
-    if (equipos.length > 0) {
-      return (
-        <div>
-          <p>Selecciona un equipo:</p>
-          <select onChange={(e) => setSelectedEquipo(e.target.value)}>
-            <option value="" defaultValue>
-              Seleccione un equipo
-            </option>
-            {equipos.map((equipo) => (
-              <option key={equipo.id_equipo} value={equipo.id_equipo}>
-                {equipo.nombre_equipo}
-              </option>
-            ))}
-          </select>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <p>No tienes equipos creados.</p>
-          <Button variant="primary" onClick={handleMisEquiposClick}>
-            Crea un equipo
-          </Button>
-        </div>
-      );
-    }
+    
   };
 
   return (
-    <Modal show={show} onHide={onHide} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Detalles de la Reserva</Modal.Title>
-      </Modal.Header>
+    <Modal show={show} onHide={onHide} centered size="lg">
 
-      <Modal.Body>
-        <p>Nombre del Complejo: {nuevaReserva.nombre_complejo}</p>
-        <p>Dirección del Complejo: {nuevaReserva.direccion_complejo}</p>
-        <p>Teléfono del Complejo: {nuevaReserva.telefono_complejo}</p>
-        <p>Nombre de la Cancha: {nuevaReserva.nombre_cancha}</p>
-        <p>Fecha de la Reserva: {nuevaReserva.fecha}</p>
-        <p>Hora de la Reserva: {nuevaReserva.hora}</p>
 
-        {renderEquiposSection(id_jugador)}
+      <Modal.Body className='modalReservaContainer'>
+        <div className='modalReservaImgaenContainer'>
+          <img className='modalReservaImgaen' src="/images/reserva/reserva.jpg" alt="" />
+        </div>
+        <div className='modalReservaTextoContainer'>
+          <h3 className='modalReservaTitulo'>Finalizá tu reserva</h3>
+          <div>
+            <p className='px-1 m-0'><strong>Nombre del Complejo:</strong> {nuevaReserva.nombre_complejo}</p>
+            <p className='px-1 m-0'><strong>Dirección del Complejo:</strong> {nuevaReserva.direccion_complejo}</p>
+            <p className='px-1 m-0'><strong>Teléfono del Complejo:</strong> {nuevaReserva.telefono_complejo}</p>
+            <p className='px-1 m-0'><strong>Nombre de la Cancha:</strong> {nuevaReserva.nombre_cancha}</p>
+            <p className='px-1 m-0'><strong>Fecha de la Reserva:</strong> {nuevaReserva.fecha}</p>
+            <p className='px-1 m-0'><strong>Hora de la Reserva:</strong> {nuevaReserva.hora}</p>
+          </div>
+
+          
+          {equipos.length > 0 ? (
+            <div className='noTienesEquipos'>
+              <select className="elegirEquipoModalReserva" onChange={(e) => setSelectedEquipo(e.target.value)}>
+                <option value="" defaultValue>Seleccione un equipo</option>
+                {equipos.map((equipo) => (
+                  <option key={equipo.id_equipo} value={equipo.id_equipo}>
+                    {equipo.nombre_equipo}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : (
+            <div>
+              <p className='noTienesEquipos'>No tienes equipos creados. ¿Deseas <button className='modalReservaBotonCrearEquipo' onClick={handleMisEquiposClick}>
+              <u><strong>crear un equipo</strong></u>
+              </button>?</p>
+              
+            </div>
+          )}
+
+          <div className='py-3 flex gap-3'>
+            
+            {equipos.length > 0 && (
+              <Button variant="success" onClick={handleReservarClick}>
+                Reservar
+              </Button>
+            )}
+            <Button variant="danger" onClick={onHide}>
+              Cancelar reserva
+            </Button>
+          </div>
+        </div>
+
+        
       </Modal.Body>
 
-      <Modal.Footer>
-        <Button variant="danger" onClick={onHide}>
-          Cancelar reserva
-        </Button>
-        {equipos.length > 0 && (
-          <Button variant="primary" onClick={handleReservarClick}>
-            Reservar
-          </Button>
-        )}
-      </Modal.Footer>
+
     </Modal>
   );
 };

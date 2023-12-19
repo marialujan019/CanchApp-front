@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
-import { consultarBaseDeDatos } from '../utils/Funciones';
 import JugadoresModal from '../JugadoresModal/JugadoresModal';
 import { useUser } from '../UserContext';
 import axios from 'axios';
@@ -12,13 +11,12 @@ const MisSolicitudes = () => {
   const [solitudesEnviadasAEquipos, setSolitudesEnviadasAEquipos] = useState([]);
   const [showVerJugadoresModal, setShowVerJugadoresModal] = useState(false);
   const [jugadoresDelBack, setJugadoresDelBack] = useState([]);
-  const [refreshPage, setRefreshPage] = useState(false);
   const { user } = useUser();
-
   const id_jugador = user.id;
+  const [shouldReload, setShouldReload] = useState(false);
+
   
   useEffect(() => {
-
     //Voy a necesitar todos estos json con el id jugador, cada uno representa un tipo de solicitud
     async function fetchSolitudesRecibidasDeJugadores() {
       //endpoin solicitudes./solicitudes/recibidas/
@@ -49,28 +47,40 @@ const MisSolicitudes = () => {
     fetchSolitudesRecibidasDeEquipos();
     fetchSolitudesEnviadasAJugadores();
     fetchSolitudesEnviadasAEquipos();
-  }, [refreshPage]);
+  }, [shouldReload]);
 
   //Funcion que envia rechazar o aceptar al back y el id_solicitud
-  const handleAceptarRechazarSolicitud = (idSolicitud, estado) => {
-    //falta endpoint
+  const handleAceptarSolicitud = (idSolicitud) => {
     axios.post('http://localhost:3001/solicitudes/update', {
       id_solicitud: idSolicitud,
-      estado: estado
-    })
-    console.log(`ID Solicitud: ${idSolicitud}, Estado: ${estado}`);
-    setRefreshPage((prev) => !prev)
+      estado: 'Aceptado'
+    }).then(() => setShouldReload(prev => !prev));
   };
-
-   //Funcion que envia rechazar o aceptar al back y el id_solicitud
-   const handleAceptarRechazarInvitacion = (idInvitacion, estado) => {
-    //falta endpoint
+  const handleRechazarSolicitud = (idSolicitud) => {
+    axios.post('http://localhost:3001/solicitudes/update', {
+      id_solicitud: idSolicitud,
+      estado: 'Rechazado'
+    }).then(() => setShouldReload(prev => !prev)).then(alert("Rechazado"))
+    
+  };
+  const handleAceptarInvitacion = (idInvitacion) => {
     axios.post('http://localhost:3001/invitaciones/update', {
       id_invitacion: idInvitacion,
-      estado: estado
-    })
-    console.log(`ID Solicitud: ${idInvitacion}, Estado: ${estado}`);
-    setRefreshPage((prev) => !prev)
+      estado: 'Aceptado'
+    }).then(() => setShouldReload(prev => !prev));
+  };
+  const handleRechazarInvitacion = (idInvitacion) => {
+    axios.post('http://localhost:3001/invitaciones/update', {
+      id_invitacion: idInvitacion,
+      estado: 'Rechazado'
+    }).then(() => setShouldReload(prev => !prev)).then(alert("Rechazado"))
+  };
+
+  const handleCancelarInvitacion = (idInvitacion) => {
+    axios.post('http://localhost:3001/invitaciones/update', {
+      id_invitacion: idInvitacion,
+      estado: 'No enviado'
+    }).then(() => setShouldReload(prev => !prev)).then(alert("Solicitud cancelada"))
   };
 
   //Funcion para ver los jugadores de un equipo
@@ -111,8 +121,8 @@ const MisSolicitudes = () => {
                 <TableCell className='py-0 px-0'>{item.telefono}</TableCell>
                 <TableCell className='py-0 px-0'>{item.nombre_equipo}</TableCell>
                 <TableCell className='py-0 px-0'>
-                  <Button onClick={() => handleAceptarRechazarSolicitud(item.id_solicitud, 'Aceptado')}>Aceptar</Button>
-                  <Button onClick={() => handleAceptarRechazarSolicitud(item.id_solicitud, 'Rechazado')}>Rechazar</Button>
+                  <Button onClick={() => handleAceptarSolicitud(item.id_solicitud)}>Aceptar</Button>
+                  <Button onClick={() => handleRechazarSolicitud(item.id_solicitud)}>Rechazar</Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -143,8 +153,8 @@ const MisSolicitudes = () => {
                   <Button onClick={() => fetchJugadores(item.id_equipo)}>Ver Equipos</Button>
                 </TableCell>
                 <TableCell className='py-0 px-0'>
-                  <Button onClick={() => handleAceptarRechazarInvitacion(item.id_invitacion, 'Aceptado')}>Aceptar</Button>
-                  <Button onClick={() => handleAceptarRechazarInvitacion(item.id_invitacion, 'Rechazado')}>Rechazar</Button>
+                  <Button onClick={() => handleAceptarInvitacion(item.id_invitacion)}>Aceptar</Button>
+                  <Button onClick={() => handleRechazarInvitacion(item.id_invitacion)}>Rechazar</Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -182,7 +192,7 @@ const MisSolicitudes = () => {
                 <TableCell className='py-0 px-0'>
                   {item.estado}
                   {item.estado === "Pendiente" && (
-                    <Button onClick={() => handleAceptarRechazarInvitacion(item.id_invitacion, "Rechazado")}>Cancelar Solicitud</Button>
+                    <Button onClick={() => handleCancelarInvitacion(item.id_invitacion)}>Cancelar solicitud</Button>
                   )}
                 </TableCell>
               </TableRow>
@@ -216,7 +226,7 @@ const MisSolicitudes = () => {
                 <TableCell className='py-0 px-0'>{item.estado}</TableCell>
                 <TableCell className='py-0 px-0'>
                   {item.estado === "Pendiente" && (
-                    <Button onClick={() => handleAceptarRechazarSolicitud(item.id_solicitud, "Rechazado")}>Cancelar Solicitud</Button>
+                    <Button onClick={() => handleRechazarSolicitud(item.id_solicitud)}>Cancelar solicitud</Button>
                   )}
                 </TableCell>
               </TableRow>

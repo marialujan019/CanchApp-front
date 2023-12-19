@@ -155,7 +155,7 @@ const MisReservas = () => {
         show={showModal} 
         onHide={() => setShowModal(false)} 
         nuevaReserva={continuarReserva} 
-        equipos={equipos} 
+        equipos={[]} 
         origen={"reservas"} 
       />
     </div>

@@ -1,7 +1,7 @@
 .perfilContainer {
     display: flex;
-    align-items: center;
     justify-content: center;
+    min-height: 50vh;
 }
  .wrapper{
  
@@ -10,8 +10,7 @@
  }
  
  .wrapper .left{
-
-   background: linear-gradient(to top,#ffcc99,#ff6600);
+   background: linear-gradient(to top,#fafafa,#006400);
    padding: 30px 25px;
    border-top-left-radius: 5px;
    border-bottom-left-radius: 5px;
