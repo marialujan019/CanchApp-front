@@ -21,9 +21,8 @@ import FormularioRegistro from './components/FormularioRegistro/FormularioRegist
 import Ingreso from './components/ingresar/Ingreso';
 import Registro from './components/registrarse/Registro';
 import RecuperarContrasenia from './components/RecuperarContrasenia/RecuperarContrasenia';
-import FormCancha from './components/Cancha/FormCancha'
-import MisCanchas from './components/Cancha/MisCanchas'
-import Cancha from './components/Cancha/Cancha'
+
+
 //Home page - en construccion
 import Home from './components/Home/Home'
 import Perfil from './components/Perfil/Perfil';
@@ -32,27 +31,29 @@ import { UserProvider } from './components/UserContext';
 
 
 //Buscadores
-import BusquedaJugador from './components/BusquedaJugador/BusquedaJugador';
-import BusquedaEquipo from './components/BusquedaEquipo/BusquedaEquipo';
+import BusquedaJugador from './components/ComponentesJugador/BusquedaJugador/BusquedaJugador';
+import BusquedaEquipo from './components/ComponentesJugador/BusquedaEquipo/BusquedaEquipo';
 
 //Complejo
-import Mapa from './components/Mapa/Mapa';
-import Complejo from './components/Complejo/Complejo';
+import Mapa from './components/ComponentesJugador/Mapa/Mapa';
+import Complejo from './components/ComponentesJugador/Complejo/Complejo';
 
 //Mis reservas
-import MisReservas from './components/MisReservas/MisReservas';
+import MisReservas from './components/ComponentesJugador/MisReservas/MisReservas';
 import { ReservasProvider } from './components/reservasContext';
 
 //Mis equipos
-import MisEquipos from './components/MisEquipos/MisEquipos';
+import MisEquipos from './components/ComponentesJugador/MisEquipos/MisEquipos';
 
 //Historial
-import Historial from './components/Historial/Historial';
-
+import Historial from './components/ComponentesJugador/Historial/Historial';
 
 //Mis solicitudes
-import MisSolicitudes from './components/MisSolicitudes/MisSolicitudes';
+import MisSolicitudes from './components/ComponentesJugador/MisSolicitudes/MisSolicitudes';
 
+//Administrador
+import MiComplejo from './components/ComponentesAdministrador/MiComplejo/MiComplejo';
+import MisCanchas from './components/ComponentesAdministrador/MisCanchas/MisCanchas';
 
 const equipos = [
   {
@@ -116,6 +117,7 @@ class App extends Component {
           <div className="App">
             <BrowserRouter>
               <Header/>
+
               <Routes>
                 <Route path='/' element={<Inicio/>}/>
                 <Route path='/ingreso' element={
@@ -126,10 +128,7 @@ class App extends Component {
                 <Route path='/ingreso/registro' element={<FormularioRegistro/>}/>
                 <Route path='/ingreso/recuperar' element={<RecuperarContrasenia/>}/>
                 <Route path= '/home' element={<Home />}/>
-                <Route path= '/crearcancha/:id_complejo' element={<FormCancha />}/>
-                <Route path= '/miscanchas/:idAdmin' element={<MisCanchas />}/>
                 <Route path= '/perfil/:tipo/:id' element={<Perfil />}/>
-                <Route path= '/cancha/:id' element={<Cancha />}/>
 
                 {/* Busqueda */}
                 <Route path='/buscarjugador' element={<BusquedaJugador/>} />
@@ -151,8 +150,11 @@ class App extends Component {
 
               {/* Solicitudes */}
               <Route path="/misSolicitudes" element={<MisSolicitudes />} />
-              
 
+              {/* Mi complejo */}
+              <Route path="/MiComplejo" element={<MiComplejo/>} />
+              {/* Mis canchas */}
+              <Route path="/MisCanchas" element={<MisCanchas/>} />
               </Routes>
               <Footer/>
             </BrowserRouter>

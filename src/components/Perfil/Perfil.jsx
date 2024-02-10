@@ -1,8 +1,7 @@
 
-import PerfilAdmin from './PerfilAdmin';
-import PerfilJugador from './PerfilJugador';
+import PerfilAdministrador from '../ComponentesAdministrador/PerfilAdministrador/PerfilAdministrador';
+import PerfilJugador from '../ComponentesJugador/PerfilJugador/PerfilJugador';
 import React, {useState, useEffect}  from 'react';
-import { useParams } from 'react-router-dom';
 import { useUser } from '../UserContext';
 import axios from 'axios';
 
@@ -16,7 +15,6 @@ function Perfil() {
   const [posicion, setPosicion] = useState('');
   const [sexo, setSexo] = useState('');
   const [mail, setMail] = useState('');
-
 
 
   useEffect(() => {
@@ -44,7 +42,7 @@ function Perfil() {
           setMail(res.data.mail);
           setSexo(res.data.sexo)
         }
-
+  
       } else {
         alert(res.data.Message);
       }
@@ -52,14 +50,15 @@ function Perfil() {
     .catch(error => {
       console.error('Error al realizar la solicitud:', error);
     });
-  }, []); 
+  }, [user.id, user.tipo]); // Dependencias añadidas aquí
+  
 
   console.log("Perfil: " + user.tipo)
   return (
     <div>
       {user.tipo === "administrador" ? (
         // Renderizar el perfil del administrador
-        <PerfilAdmin nombre={nombre} direccion={direccion} telefono={telefono} contrasena={contrasena}/>
+        <PerfilAdministrador nombre={nombre} direccion={direccion} telefono={telefono} contrasena={contrasena}/>
       ) : (
         // Renderizar el perfil del jugador
         <PerfilJugador id={user.id} nombre2={nombre} telefono2={telefono} piernaHabil={piernaHabil} posicion={posicion} sexo2={sexo} mail2={mail}/>

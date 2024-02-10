@@ -70,10 +70,17 @@
     border-radius: 50%;
 }
 /* CARDS */
+.inicioSeccionCardsContainer {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 25px;
+    gap: 30px;
+}
 .cardInicio {
     width: 300px;
-    height: 100%;
     border-radius: 30px;
+    height: 420px;
 }
 .inicioCardBody {
     padding: 10px;
@@ -83,9 +90,10 @@
     font-family: "bebas";
     letter-spacing: 1px;
     font-size: 1.2rem;
-    padding-bottom: 10px !important;
 }
-
+.cardInicioImagen {
+    height: 250px;
+}
 /* Banner registro */
 .inicioSeccionBanner {
     background-image: url(/public/images/inicio/banner.png);
@@ -104,8 +112,4 @@
     font-size: 2.5rem;
     font-family: "bebas";
 }
-.inicioSeccionCardsContainer {
-    margin-top: 25px;
-    min-height: 350px;
-    gap: 30px;
-}
+

@@ -3,7 +3,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from 
 import { useParams } from 'react-router-dom';
 import ModalReservas from '../ModalReservas/ModalReservas';
 import axios from 'axios';
-import { useUser } from '../UserContext';
+import { useUser } from '../../UserContext';
 import "./complejo.css"
 import Carousel from 'react-bootstrap/Carousel';
 
@@ -172,8 +172,8 @@ const Complejo = () => {
     <div className='ComplejoContainer main'>
 
       <div className='complejoHeader'>
-        <h2 className='tituloComplejo text-left m-0'>{complejo.nombre_complejo}</h2>
-        <p className='text-left complejoDireccion m-0'><i class="bi bi-geo-alt"></i>{complejo.direccion}</p>
+        <h2 className='tituloComplejo text-left'>{complejo.nombre_complejo}</h2>
+        <p className='text-left complejoDireccion'><i class="bi bi-geo-alt"></i>{complejo.direccion}</p>
       </div>
 
       <div className='complejoDatosContainer'>

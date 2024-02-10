@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
-import JugadoresModal from '../JugadoresModal/JugadoresModal';
+import ModalJugadores from '../ModalJugadores/ModalJugadores';
 import axios from 'axios';
 import {  useParams } from 'react-router-dom';
 import {Input} from "@nextui-org/react";
@@ -23,7 +23,7 @@ const BusquedaEquipo = () => {
 
   //Estados para renderizar la selección de equipos
   const [jugadoresDeVerJugadores, setJugadoresDeVerJugadores] = useState([]);
-  const [showJugadoresModal, setShowJugadoresModal] = useState(false);
+  const [showModalJugadores, setShowModalJugadores] = useState(false);
 
   //Estados para el filtro
   const [filtroNombre, setFiltroNombre] = useState('');
@@ -45,7 +45,7 @@ const BusquedaEquipo = () => {
   const fetchJugadores = async (idEquipo) => {
     const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
     setJugadoresDeVerJugadores(datos.data);
-    setShowJugadoresModal(true);
+    setShowModalJugadores(true);
   };
 
   const forceComponentUpdate = async () => {
@@ -171,10 +171,10 @@ const BusquedaEquipo = () => {
           </TableBody>
         </Table>
       </div>
-      <JugadoresModal
+      <ModalJugadores
         jugadores={jugadoresDeVerJugadores}
-        show={showJugadoresModal}
-        onHide={() => setShowJugadoresModal(false)}
+        show={showModalJugadores}
+        onHide={() => setShowModalJugadores(false)}
       />
     </div>
   );

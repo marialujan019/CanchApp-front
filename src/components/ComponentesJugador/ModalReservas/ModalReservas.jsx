@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useReservasContext } from '../reservasContext';
+import { useReservasContext } from '../../reservasContext';
 import axios from 'axios';
-import { useUser } from '../UserContext';
+import { useUser } from '../../UserContext';
 import "./modalReservas.css"
 
 

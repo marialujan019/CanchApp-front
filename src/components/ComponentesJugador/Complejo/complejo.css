@@ -12,6 +12,9 @@
     font-size: 1.2rem;
     color: black;
 }
+.bi-geo-alt {
+    margin-right: 5px;
+}
 .complejoElegirFecha {
     margin-bottom: 50px;
 }
@@ -84,29 +87,29 @@
 }
 
 .complejoLabel {
-font-size: 16px;
-margin-bottom: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 .complejoCalendario {
-width: 100%;
-padding: 10px;
-margin-bottom: 20px;
-box-sizing: border-box;
-border: 1px solid #ccc;
-border-radius: 20px;
-font-size: 16px;
-background-color: #00b300;
-color: white;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #00b300;
+    color: white;
 }
 
 input[type="date"]:focus {
-outline: none;
-border-color: #3498db;
+    outline: none;
+    border-color: #3498db;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-filter: invert(1);
+    filter: invert(1);
 }
 /* galerias */
 .centradoDeCarrouselContainer{
@@ -118,10 +121,19 @@ filter: invert(1);
 }
   
 .imageGallery {
-height: 50vh;
-width: 100%;
-object-fit: cover;
+   height: 50vh;
+   width: 100%;
+   object-fit: cover;
 }
+.carousel-image {
+    opacity: 0;
+    transition: opacity 0.5s ease; /* Configura la transición de opacidad */
+  }
+  
+  .carousel-image.active {
+    opacity: 1;
+  }
+  
 
 .modal-overlay {
 position: fixed;

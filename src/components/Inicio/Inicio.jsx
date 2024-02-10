@@ -80,7 +80,7 @@ const Inicio = () => {
             
             <section className='inicioSeccion3'>
                 <h2 className='inicioSeccionTitulo'>Administradores de canchas</h2>
-                <div className='flex justify-around items-stretch flex-wrap inicioSeccionCardsContainer'>
+                <div className='inicioSeccionCardsContainer'>
                     <div data-aos="fade-up" data-aos-delay="50">
                         <CardInicio
                         imagenSrc="/images/inicio/1.webp"

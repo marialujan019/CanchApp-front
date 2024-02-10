@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
-import JugadoresModal from '../JugadoresModal/JugadoresModal';
-import { useUser } from '../UserContext';
+import ModalJugadores from '../ModalJugadores/ModalJugadores';
+import { useUser } from '../../UserContext';
 import axios from 'axios';
 import "./misSolicitudes.css"
 
@@ -10,7 +10,7 @@ const MisSolicitudes = () => {
   const [solitudesRecibidasDeEquipos, setSolitudesRecibidasDeEquipos] = useState([]);
   const [solitudesEnviadasAJugadores, setSolitudesEnviadasAJugadores] = useState([]);
   const [solitudesEnviadasAEquipos, setSolitudesEnviadasAEquipos] = useState([]);
-  const [showVerJugadoresModal, setShowVerJugadoresModal] = useState(false);
+  const [showVerModalJugadores, setShowVerModalJugadores] = useState(false);
   const [jugadoresDelBack, setJugadoresDelBack] = useState([]);
   const { user } = useUser();
   const id_jugador = user.id;
@@ -89,7 +89,7 @@ const MisSolicitudes = () => {
     //endpoint jugadores/equipo
     const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
     setJugadoresDelBack(datos.data);
-    setShowVerJugadoresModal(true);
+    setShowVerModalJugadores(true);
   };
 
   return (
@@ -235,10 +235,10 @@ const MisSolicitudes = () => {
           </TableBody>
         </Table>
       </div>
-      <JugadoresModal
+      <ModalJugadores
         jugadores={jugadoresDelBack}
-        show={showVerJugadoresModal}
-        onHide={() => setShowVerJugadoresModal(false)}
+        show={showVerModalJugadores}
+        onHide={() => setShowVerModalJugadores(false)}
       />
     </div>
   );

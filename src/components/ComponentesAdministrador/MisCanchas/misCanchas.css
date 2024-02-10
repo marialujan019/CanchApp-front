@@ -1,0 +1,64 @@
+/* CARDS */
+.cardsContainerMisCanchas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.cardMisCanchas {
+    width: 300px;
+    border-radius: 30px;
+    height: 300px;
+    border: #0E690C 3px solid;
+}
+.MisCanchasCardBody {
+    padding: 0 10px;
+}
+.MisCanchasTituloCard {
+    color:black;
+    font-family: "bebas";
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+}
+.cardMisCanchasImagen {
+    height: 200px;
+}
+
+/* AGREGAR CANCHA */
+
+.cardAgregarCancha {
+    width: 300px;
+    border-radius: 30px;
+    height: 300px;
+    border: #0E690C 3px solid;
+}
+.cardAgregarCanchaImagenContainer {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cardAgregarCanchaImagen {
+    width: 150px;
+}
+.CardBodyAgregarCancha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cardAgregarCanchaTituloCard {
+    font-family: 'bebas';
+    font-size: 3rem;
+}
+
+.accionesCardMisCanchas {
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #0E690C;
+    color: #f3f3f3;
+    height: 35px;
+}

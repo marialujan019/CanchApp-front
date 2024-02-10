@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useReservasContext } from '../reservasContext';
+import { useReservasContext } from '../../reservasContext';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
 import ModalReservas from '../ModalReservas/ModalReservas';
-import { useUser } from '../UserContext';
+import { useUser } from '../../UserContext';
 import "./misReservas.css"
 import axios from 'axios';
 import {  useParams } from 'react-router-dom';

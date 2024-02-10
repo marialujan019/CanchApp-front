@@ -1,20 +1,20 @@
 [
     {
         "id_cancha":1,
-        "id_complejo": "1",
         "nombre_cancha": "cancha1",
-        "techo": true
+        "techo": true,
+        "imagen": "/images/inicio/1.webp"
     },
     {
-        "id_cancha":1,
-        "id_complejo": "1",
+        "id_cancha":2,
         "nombre_cancha": "cancha2",
-        "techo": false
+        "techo": false,
+        "imagen": null
     },
     {
-        "id_cancha":1,
-        "id_complejo": "1",
+        "id_cancha":3,
         "nombre_cancha": "cancha3",
-        "techo": false
+        "techo": false,
+        "imagen": "/images/inicio/1.webp"
     }
 ]

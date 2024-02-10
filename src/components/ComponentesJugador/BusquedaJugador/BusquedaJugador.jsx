@@ -3,7 +3,7 @@ import './busquedaJugador.css';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, Button } from "@nextui-org/react";
 import ModalSeleccionEquipo from './ModalSeleccionEquipo/ModalSeleccionEquipo';
 import axios from 'axios';
-import { useUser } from '../UserContext';
+import { useUser } from '../../UserContext';
 import {Input} from "@nextui-org/react";
 import { Select, SelectItem } from '@nextui-org/react';
 

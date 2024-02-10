@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Tooltip, Button } from "@nextui-org/react";
-import JugadoresModal from '../JugadoresModal/JugadoresModal';
+import ModalJugadores from '../ModalJugadores/ModalJugadores';
 import EditarEquipo from './EditarEquipo/EditarEquipo';
 import CrearEquipo from './CrearEquipo/CrearEquipo';
 import axios from 'axios';
-import { useUser } from '../UserContext';
+import { useUser } from '../../UserContext';
 import { useNavigate } from 'react-router';
 import "./misEquipos.css"
 
@@ -31,10 +31,10 @@ const MisEquipos = () => {
   //Variable para ver los jugadores del equipo de fuera
   const[jugadoresEquiposDeFuera, setJugadoresEquiposDeFuera] = useState([]);
   //Variable del ver jugadores
-  const [showVerJugadoresModal, setShowVerJugadoresModal] = useState(false);
-  const [showVerJugadoresModal2, setShowVerJugadoresModal2] = useState(false);
+  const [showVerModalJugadores, setShowVerModalJugadores] = useState(false);
+  const [showVerModalJugadores2, setShowVerModalJugadores2] = useState(false);
   //Variable del editar jugadores
-  const [showEditarJugadoresModal, setShowEditarJugadoresModal] = useState(false);
+  const [showEditarModalJugadores, setShowEditarModalJugadores] = useState(false);
   const [idEquipoAEnviar, setIdEquipoAEnviar] = useState (null)
   const [visibilidadEquipoAEnviar, setVisibilidadEquipoAEnviar] = useState (null)
   const [nombreEquipoAEnviar, setNombreEquipoAEnviar] = useState (null)
@@ -70,14 +70,14 @@ const MisEquipos = () => {
       const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
       console.log(datos.data)
       setJugadoresDelBack(datos.data);
-      setShowVerJugadoresModal(true);
+      setShowVerModalJugadores(true);
     } else if (accion === "editar") {
       const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
       setIdEquipoAEnviar(idEquipo)
       setVisibilidadEquipoAEnviar(visibilidad)
       setNombreEquipoAEnviar(nombre_equipo)
       setJugadoresDelBack(datos.data);
-      setShowEditarJugadoresModal(true);
+      setShowEditarModalJugadores(true);
     }
   };
 
@@ -145,7 +145,7 @@ const MisEquipos = () => {
     const datos = await axios.get(`http://localhost:3001/equipo/jugadores/${idEquipo}`);
     setJugadoresEquiposDeFuera(datos.data)
     console.log(jugadoresEquiposDeFuera)
-    setShowVerJugadoresModal2(true);
+    setShowVerModalJugadores2(true);
   };
 
   //Función para traer los equipos en los que está el usuario
@@ -242,23 +242,23 @@ const MisEquipos = () => {
         </div>
       </div>                     
 
-      <JugadoresModal
+      <ModalJugadores
         jugadores={jugadoresDelBack}
-        show={showVerJugadoresModal}
-        onHide={() => setShowVerJugadoresModal(false)}
+        show={showVerModalJugadores}
+        onHide={() => setShowVerModalJugadores(false)}
         invitarJugadores={true}
       />
 
-      <JugadoresModal
+      <ModalJugadores
         jugadores={jugadoresEquiposDeFuera}
-        show={showVerJugadoresModal2}
-        onHide={() => setShowVerJugadoresModal2(false)}
+        show={showVerModalJugadores2}
+        onHide={() => setShowVerModalJugadores2(false)}
       />
 
       <EditarEquipo
         jugadores={jugadoresDelBack}
-        show={showEditarJugadoresModal}
-        onHide={() => setShowEditarJugadoresModal(false)}
+        show={showEditarModalJugadores}
+        onHide={() => setShowEditarModalJugadores(false)}
         id_equipo={idEquipoAEnviar}
         visibilidad={visibilidadEquipoAEnviar}
         nombre_equipo={nombreEquipoAEnviar}

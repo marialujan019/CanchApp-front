@@ -1,5 +1,6 @@
-const PerfilAdmin = ({nombre, direccion, telefono}) => {
+import React from 'react';
 
+const PerfilAdministrador = ({nombre, direccion, telefono}) => {
     return (
         <div>
             <div className="card-content">
@@ -15,7 +16,7 @@ const PerfilAdmin = ({nombre, direccion, telefono}) => {
                 La direccion es {direccion}
             </div>
         </div>
-    ); 
+    );
 }
 
-export default PerfilAdmin;
+export default PerfilAdministrador;

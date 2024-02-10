@@ -6,9 +6,6 @@ import { useUser } from '../UserContext';
 
 const Titulo = () => {
     const { user } = useUser();
-
-
-   
     return(
         <div>
             Bienvenido a Canchapp {user.nombre}!

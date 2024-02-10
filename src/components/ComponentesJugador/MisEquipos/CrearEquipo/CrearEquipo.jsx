@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { useUser } from '../../UserContext';
+import { useUser } from '../../../UserContext';
 
 
 const CrearEquipo = ({ show, onHide, updateMisEquipos, equiposYaCreados }) => {

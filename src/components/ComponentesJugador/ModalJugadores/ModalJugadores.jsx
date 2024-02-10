@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User } from '@nextui-org/react';
-import "./jugadoresModal.css";
+import "./modalJugadores.css";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
 const columns = [
@@ -12,7 +12,7 @@ const columns = [
   { key: "telefono", label: "Teléfono" },
 ];
 
-const JugadoresModal = ({ jugadores, show, onHide, invitarJugadores }) => {
+const ModalJugadores = ({ jugadores, show, onHide, invitarJugadores }) => {
 
   const navigate = useNavigate()
 
@@ -83,4 +83,4 @@ const JugadoresModal = ({ jugadores, show, onHide, invitarJugadores }) => {
   );
 };
 
-export default JugadoresModal;
+export default ModalJugadores;

@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Carousel from './Carousel';
 
-
 const MisCanchas = () => {
     const { idAdmin } = useParams();
 
