@@ -1,10 +1,9 @@
 import React from 'react';
-import CardInicio from '../Inicio/cardInicio/CardInicio';
-//import imagenMisEquipos from '../../imagen/formarEquipos.png'
+import CardInicio from '../../Inicio/cardInicio/CardInicio';
 import { Link } from 'react-router-dom';
-import "./inicioSesion.css"
+import "./inicioSesionJugador.css"
 
-const InicioSesion = ({nombre_usuario, id }) => {
+const InicioSesionJugador = ({nombre_usuario, id }) => {
     const cardData = [
         {
             id: 4,
@@ -74,4 +73,4 @@ const InicioSesion = ({nombre_usuario, id }) => {
       );
     };
 
-export default InicioSesion;
+export default InicioSesionJugador;

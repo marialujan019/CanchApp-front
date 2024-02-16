@@ -12,13 +12,13 @@
     width: 300px;
     border-radius: 30px;
     height: 300px;
-    border: #0E690C 3px solid;
+    border: #0e690c 3px solid;
 }
 .MisCanchasCardBody {
     padding: 0 10px;
 }
 .MisCanchasTituloCard {
-    color:black;
+    color: black;
     font-family: "bebas";
     letter-spacing: 1px;
     font-size: 1.2rem;
@@ -33,7 +33,7 @@
     width: 300px;
     border-radius: 30px;
     height: 300px;
-    border: #0E690C 3px solid;
+    border: #0e690c 3px solid;
 }
 .cardAgregarCanchaImagenContainer {
     height: 200px;
@@ -50,7 +50,7 @@
     justify-content: center;
 }
 .cardAgregarCanchaTituloCard {
-    font-family: 'bebas';
+    font-family: "bebas";
     font-size: 3rem;
 }
 
@@ -58,7 +58,70 @@
     font-size: 1.2rem;
     display: flex;
     justify-content: space-evenly;
-    background-color: #0E690C;
+    background-color: #0e690c;
     color: #f3f3f3;
     height: 35px;
+}
+
+/* MODAL EDITAR CANCHAS */
+.switchEC {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switchEC input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.sliderEC {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.sliderEC:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .sliderEC {
+    background-color: #2196f3;
+}
+
+input:focus + .sliderEC {
+    box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .sliderEC:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.sliderEC.round {
+    border-radius: 34px;
+}
+
+.sliderEC.round:before {
+    border-radius: 50%;
 }

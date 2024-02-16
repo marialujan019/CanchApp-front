@@ -1,25 +1,69 @@
 [
-  {
-  "id_jug":4,
-  "nombre": "juanpe",
-  "apellido": "si",
-  "imagen": "url",
-  "edad": 23,
-  "pie_habil": "Derecho",
-  "sexo": "Masculino",
-  "telefono": 21,
-  "posicion": "Arquero"
-  },
+    {
+        "id_jug": 4,
+        "nombre": "juanpe",
+        "apellido": "si",
+        "imagen": "https://img.a.transfermarkt.technology/portrait/big/28003-1694590254.jpg?lm=1",
+        "edad": 23,
+        "pie_habil": "Derecho",
+        "sexo": "Masculino",
+        "telefono": 21,
+        "posicion": "Arquero"
+    },
 
-  {
-    "id_jug":7,
-    "nombre": "Pan",
-    "apellido": "No",
-    "imagen": "url",
-    "edad": 44,
-    "pie_habil": "Izquierdo",
-    "sexo": "Femenino",
-    "telefono": 21,
-    "posicion": "Mediocampista"
-  }
+    {
+        "id_jug": 7,
+        "nombre": "Pan",
+        "apellido": "No",
+        "imagen": "https://img.a.transfermarkt.technology/portrait/big/28003-1694590254.jpg?lm=1",
+        "edad": 44,
+        "pie_habil": "Izquierdo",
+        "sexo": "Femenino",
+        "telefono": 21,
+        "posicion": "Mediocampista"
+    },
+    {
+        "id_jug": 7,
+        "nombre": "Pan",
+        "apellido": "No",
+        "imagen": "https://img.a.transfermarkt.technology/portrait/big/28003-1694590254.jpg?lm=1",
+        "edad": 44,
+        "pie_habil": "Izquierdo",
+        "sexo": "Femenino",
+        "telefono": 21,
+        "posicion": "Mediocampista"
+    },
+    {
+        "id_jug": 7,
+        "nombre": "Pan",
+        "apellido": "No",
+        "imagen": "https://img.a.transfermarkt.technology/portrait/big/28003-1694590254.jpg?lm=1",
+        "edad": 44,
+        "pie_habil": "Izquierdo",
+        "sexo": "Femenino",
+        "telefono": 21,
+        "posicion": "Mediocampista"
+    },
+    {
+        "id_jug": 7,
+        "nombre": "Pan",
+        "apellido": "No",
+        "imagen": "https://img.a.transfermarkt.technology/portrait/big/28003-1694590254.jpg?lm=1",
+        "edad": 44,
+        "pie_habil": "Izquierdo",
+        "sexo": "Femenino",
+        "telefono": 21,
+        "posicion": "Mediocampista"
+    },
+    {
+        "id_jug": 7,
+        "nombre": "Pan",
+        "apellido": "No",
+        "imagen": "https://img.a.transfermarkt.technology/portrait/big/28003-1694590254.jpg?lm=1",
+        "edad": 44,
+        "pie_habil": "Izquierdo",
+        "sexo": "Femenino",
+        "telefono": 21,
+        "posicion": "Mediocampista"
+    }
 ]

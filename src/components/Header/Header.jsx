@@ -41,6 +41,12 @@ const Header = () => {
         return 'Mis solicitudes';
       case `/misReservas/${user.id}`:
         return 'Mis reservas';
+      case '/MiComplejo':
+        return 'Mi complejo';
+      case '/MisCanchas':
+        return 'Mis canchas';
+      case '/Calendario':
+        return 'Reservas';
       default:
         return 'Detalles del Complejo';
     }

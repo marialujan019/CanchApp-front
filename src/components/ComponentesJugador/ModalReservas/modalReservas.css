@@ -7,14 +7,15 @@
 .modal-content {
     border-radius: 20px;
 }
-.modalReservaImgaen{
+.modalReservaImgaen {
     width: 20vw;
     border-radius: 20px 0 0 20px;
 }
 .modalReservaTitulo {
     font-family: "bebas";
+    white-space: nowrap;
 }
-.modalReservaTextoContainer{
+.modalReservaTextoContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,7 +23,7 @@
 .noTienesEquipos {
     padding-top: 20px;
 }
- .modalReservaBotonCrearEquipo:hover {
+.modalReservaBotonCrearEquipo:hover {
     color: blue;
 }
 .elegirEquipoModalReserva {

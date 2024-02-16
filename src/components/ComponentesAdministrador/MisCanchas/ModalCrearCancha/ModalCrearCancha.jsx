@@ -1,48 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
 const defaultImage = "/images/miscanchas/noImagen.jpg";
 
-const ModalEditarCancha = ({ show, onHide, cancha }) => {
-    const [nuevoNombre, setNuevoNombre] = useState("");
-    const [nuevoTecho, setNuevoTecho] = useState(false);
-    const [nuevaImagen, setNuevaImagen] = useState(null);
+const ModalCrearCancha = ({ show, onHide }) => {
+    const [nombre, setNombre] = useState("");
+    const [techo, setTecho] = useState(false);
+    const [fechaInicio, setFechaInicio] = useState("");
+    const [fechaFin, setFechaFin] = useState("");
+    const [horaInicio, setHoraInicio] = useState("");
+    const [horaFin, setHoraFin] = useState("");
     const [draggedImage, setDraggedImage] = useState(null);
     const [mostrarSubirImagen, setMostrarSubirImagen] = useState(false);
     const [botonSubirImagenText, setBotonSubirImagenText] =
-        useState("Cambiar imagen");
-
-    useEffect(() => {
-        if (cancha && cancha.nombre_cancha) {
-            setNuevoNombre(cancha.nombre_cancha);
-        }
-        if (cancha && cancha.imagen) {
-            setNuevaImagen(cancha.imagen);
-        } else setNuevaImagen(defaultImage);
-    }, [cancha]);
+        useState("Agregar imagen");
 
     const handleNombreChange = (e) => {
-        setNuevoNombre(e.target.value);
+        setNombre(e.target.value);
     };
 
     const handleTechoChange = () => {
-        setNuevoTecho(!nuevoTecho);
+        setTecho(!techo);
     };
 
     const handleAceptar = () => {
-        if (!cancha) {
-            console.error(
-                "Error: No se pudo obtener la información de la cancha."
-            );
-            return;
-        }
-        const canchaEditada = {
-            id_cancha: cancha.id_cancha,
-            nombre_cancha: nuevoNombre || cancha.nombre_cancha,
-            techo: nuevoTecho || cancha.techo,
-            imagen: draggedImage || cancha.imagen,
+        const nuevaCancha = {
+            nombre_cancha: nombre,
+            techo: techo,
+            imagen: draggedImage || defaultImage,
+            fecha_inicio: fechaInicio,
+            fecha_fin: fechaFin,
+            hora_inicio: horaInicio,
+            hora_fin: horaFin,
         };
-        console.log("Nuevo objeto:", canchaEditada);
+        console.log("Nuevo objeto:", nuevaCancha);
         onHide();
     };
 
@@ -71,12 +62,12 @@ const ModalEditarCancha = ({ show, onHide, cancha }) => {
     };
 
     return (
-        <Modal show={show} onHide={onHide} centered size='lg'>
-            <Modal.Body className='modalEDContainer'>
+        <Modal show={show} onHide={onHide} centered size='xl'>
+            <Modal.Body className='modalEDContainer' style={{ height: "80vh" }}>
                 <div className='imagenEditarEquipoModalContainer'>
                     <img
                         className='imagenEditarEquipoModal'
-                        src={draggedImage ? draggedImage : nuevaImagen}
+                        src={draggedImage ? draggedImage : defaultImage}
                         alt=''
                         onDragOver={handleDragOver}
                         onDrop={handleDrop}
@@ -84,15 +75,14 @@ const ModalEditarCancha = ({ show, onHide, cancha }) => {
                 </div>
 
                 <div className='modaltextoContainer'>
-                    <h3 className='modalReservaTitulo'>Editar Cancha</h3>
+                    <h3 className='modalReservaTitulo'>Crear cancha</h3>
                     <div className='flex gap-2'>
                         <strong>
-                            <p>Cambiar nombre:</p>
+                            <p>Nombre de la cancha:</p>
                         </strong>
                         <input
                             type='text'
                             className='inputMisEquipos'
-                            value={nuevoNombre}
                             onChange={handleNombreChange}
                         />
                     </div>
@@ -104,14 +94,63 @@ const ModalEditarCancha = ({ show, onHide, cancha }) => {
                         <label className='switchEC'>
                             <input
                                 type='checkbox'
-                                checked={nuevoTecho}
                                 onChange={handleTechoChange}
                             />
                             <span className='sliderEC round'></span>
                         </label>
-                        {nuevoTecho ? "Si" : "No"}
+                        {techo ? "Si" : "No"}
                     </div>
 
+                    <p>Agrega los disponbles de la cancha (opcional)</p>
+
+                    <div className='flex gap-2'>
+                        <p>
+                            <strong>Fecha:</strong>
+                        </p>
+                        <strong>
+                            <p>Desde:</p>
+                        </strong>
+                        <input
+                            type='date'
+                            className='inputMisEquipos'
+                            onChange={(e) => setFechaInicio(e.target.value)}
+                        />
+                        <strong>
+                            <p>Hasta:</p>
+                        </strong>
+                        <input
+                            type='date'
+                            className='inputMisEquipos'
+                            onChange={(e) => setFechaFin(e.target.value)}
+                        />
+                    </div>
+
+                    <div className='flex gap-2'>
+                        <p>
+                            <strong>Hora:</strong>
+                        </p>
+                        <strong>
+                            <p>Desde:</p>
+                        </strong>
+                        <input
+                            type='time'
+                            className='inputMisEquipos'
+                            onChange={(e) => setHoraInicio(e.target.value)}
+                        />
+
+                        <strong>
+                            <p>Hasta:</p>
+                        </strong>
+                        <input
+                            type='time'
+                            className='inputMisEquipos'
+                            onChange={(e) => setHoraFin(e.target.value)}
+                        />
+                    </div>
+
+                    <div className='flex gap-2'></div>
+
+                    <p>Agregue una nueva imagen de la cancha (opcional)</p>
                     <Button
                         onClick={toggleSubirImagen}
                         variant={mostrarSubirImagen ? "danger" : "primary"}
@@ -125,11 +164,11 @@ const ModalEditarCancha = ({ show, onHide, cancha }) => {
                                 onDrop={handleDrop}
                                 className='drag-drop-container'
                                 style={{
-                                    width: "100%",
                                     maxHeight: "200px",
                                     border: "2px dashed #ccc",
-                                    textAlign: "center",
                                     lineHeight: "200px",
+                                    textAlign: "center",
+                                    overflow: "hidden", // Añadimos overflow: hidden aquí
                                 }}
                             >
                                 {!draggedImage &&
@@ -137,8 +176,8 @@ const ModalEditarCancha = ({ show, onHide, cancha }) => {
                                 {draggedImage && (
                                     <div
                                         style={{
-                                            maxHeight: "100%",
-                                            overflow: "hidden",
+                                            width: "100%",
+                                            height: "100%",
                                         }}
                                     >
                                         <img
@@ -147,6 +186,7 @@ const ModalEditarCancha = ({ show, onHide, cancha }) => {
                                             style={{
                                                 maxWidth: "100%",
                                                 maxHeight: "100%",
+                                                objectFit: "contain",
                                             }}
                                         />
                                     </div>
@@ -169,4 +209,4 @@ const ModalEditarCancha = ({ show, onHide, cancha }) => {
     );
 };
 
-export default ModalEditarCancha;
+export default ModalCrearCancha;

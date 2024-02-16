@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Tooltip, Button } from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Tooltip } from "@nextui-org/react";
 import ModalJugadores from '../ModalJugadores/ModalJugadores';
 import EditarEquipo from './EditarEquipo/EditarEquipo';
 import CrearEquipo from './CrearEquipo/CrearEquipo';

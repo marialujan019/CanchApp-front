@@ -3,8 +3,8 @@ import Inicio from '../Inicio/Inicio';
 import axios from 'axios';
 import { useUser } from '../UserContext';
 
-import Administrador from "../Perfil/Administrador";
-import InicioSesion from "../InicioSesion/InicioSesion";
+import InicioSesionJugador from "../ComponentesJugador/InicioSesionJugador/InicioSesionJugador";
+import InicioSesionAdministrador from "../ComponentesAdministrador/InicioSesionAdministrador/InicioSesionAdministrador";
 
 
 function Home() {
@@ -23,17 +23,20 @@ function Home() {
         }).catch(err => console.log(err))
     }
 
+    console.log(user)
+
+
     return(
         <div>{
             user.auth ?
                 (user?.tipo === "administrador" ?
                 <div>
-                    <Administrador idAdmin={user.id} />
+                    <InicioSesionAdministrador nombre_usuario={user.nombre} idAdmin={user.id} />
                 </div>
                 
                 :
                 <div>
-                    <InicioSesion nombre_usuario={user.nombre} id={user.id}/>
+                    <InicioSesionJugador nombre_usuario={user.nombre} id={user.id}/>
                 </div>)
                 :
                 <div>
