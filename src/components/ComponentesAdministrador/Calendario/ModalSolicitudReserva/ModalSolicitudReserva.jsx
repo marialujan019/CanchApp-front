@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { consultarBaseDeDatos } from "../../../utils/Funciones";
-import { User, Tooltip, Chip } from "@nextui-org/react";
-import "./modalSolicitudReserva.css";
+import { User, Chip } from "@nextui-org/react";
 const ModalSolicitudReserva = ({ show, onHide, reservaData, updateParent }) => {
     const [jugadores, setJugadores] = useState([]);
     const [showModalJugadores, setShowModalJugadores] = useState(false);
@@ -65,7 +64,7 @@ const ModalSolicitudReserva = ({ show, onHide, reservaData, updateParent }) => {
     };
 
     if (!reservaData) {
-        return <div>Cargando...</div>;
+        return <></>;
     }
 
     const [year, month, day] = reservaData.fechaSeleccionada.split("-");
@@ -74,16 +73,17 @@ const ModalSolicitudReserva = ({ show, onHide, reservaData, updateParent }) => {
     return (
         <div>
             <Modal show={show} onHide={onHide} centered size='lg'>
-                <Modal.Body className='modalEDContainer'>
-                    <div className='imagenEditarEquipoModalContainer'>
+                <Modal.Body className='modalSRContainer'>
+                    <div>
                         <img
-                            className='imagenEditarEquipoModal'
+                            className='imagenRSModal'
                             src='/images/misEquipos/crearEquipo.jpg'
                             alt=''
                         />
                     </div>
-                    <div className='modaltextoContainer'>
-                        <h2 className='modalReservaTitulo'>
+
+                    <div className='modalParteDerechaContainer'>
+                        <h2 className='modalRSTitulo'>
                             El equipo {reservaData.equipo.nombre_equipo} quiere
                             reservar
                         </h2>
@@ -99,9 +99,9 @@ const ModalSolicitudReserva = ({ show, onHide, reservaData, updateParent }) => {
                             <strong>Cancha:</strong>{" "}
                             {reservaData.cancha.nombre_cancha}
                         </p>
-                        <p>
+                        <div>
                             {" "}
-                            <strong>Jugadores:</strong>
+                            <strong>Jugadores: </strong>
                             <Chip
                                 className='ChipJugadores'
                                 variant='flat'
@@ -115,12 +115,12 @@ const ModalSolicitudReserva = ({ show, onHide, reservaData, updateParent }) => {
                                 {reservaData.equipo.cant_jug}/
                                 {reservaData.equipo.max_jug}{" "}
                                 {chipColor === "danger" ? (
-                                    <i class='bi bi-eye-slash'></i>
+                                    <i className='bi bi-eye-slash'></i>
                                 ) : (
-                                    <i class='bi bi-eye'></i>
+                                    <i className='bi bi-eye'></i>
                                 )}
                             </Chip>
-                        </p>
+                        </div>
 
                         {showModalJugadores && (
                             <div className='jugadoresDeUnEquipoPendienteContainer'>
@@ -138,7 +138,7 @@ const ModalSolicitudReserva = ({ show, onHide, reservaData, updateParent }) => {
                             </div>
                         )}
 
-                        <div className='flex gap-3'>
+                        <div className='botonesModalSolicitudReservaContainer'>
                             <Button
                                 variant='primary'
                                 onClick={handleAceptarReserva}

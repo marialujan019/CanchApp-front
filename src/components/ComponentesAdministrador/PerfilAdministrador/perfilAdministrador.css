@@ -1,0 +1,22 @@
+.perfil-container {
+    display: flex;
+    align-items: center;
+}
+
+.imagen-circulo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px; /* Espacio entre la imagen y los datos */
+}
+
+.imagen-circulo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Para que la imagen se ajuste al círculo */
+}
+
+.perfil-datos {
+    /* Puedes agregar estilos adicionales según sea necesario */
+}

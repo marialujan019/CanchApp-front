@@ -6,12 +6,16 @@ import {
     TableBody,
     TableRow,
     TableCell,
+    Button,
 } from "@nextui-org/react";
 import { consultarBaseDeDatos } from "../../utils/Funciones";
 import ModalSolicitudReserva from "./ModalSolicitudReserva/ModalSolicitudReserva";
+import "./calendario.css";
+import { useNavigate } from "react-router-dom";
 
 const Calendario = () => {
-    const [fechaSeleccionada, setFechaSeleccionada] = useState("2023-11-01");
+    const navigate = useNavigate();
+    const [fechaSeleccionada, setFechaSeleccionada] = useState("");
     const [canchas, setCanchas] = useState(null);
     const [fechas, setFechas] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -19,6 +23,7 @@ const Calendario = () => {
     const [key, setKey] = useState(0);
 
     useEffect(() => {
+        // Función para obtener las canchas de un complejo
         async function fetchCanchas() {
             const datosJson = await consultarBaseDeDatos(
                 "./json/canchasDeUnComplejo.json"
@@ -26,59 +31,32 @@ const Calendario = () => {
             setCanchas(datosJson);
         }
 
-        async function fetchFechas() {
-            const datosJson = await consultarBaseDeDatos("./json/fechas.json");
-            setFechas(datosJson);
+        // Función para obtener las fechas actuales al cargar la página
+        async function fetchFechaActual() {
+            const fechaActual = new Date().toISOString().split("T")[0];
+            setFechaSeleccionada(fechaActual);
+            await fetchFechas(fechaActual);
         }
 
         fetchCanchas();
-        fetchFechas();
+        fetchFechaActual(); // Llamada para obtener la fecha actual al cargar la página
     }, []);
 
-    const renderCell = (hora, cancha) => {
-        const horarioDisponibilidad = fechas.horario_disponibilidad || {};
-        const peticiones = horarioDisponibilidad[hora]?.peticiones || [];
-        const aceptados = horarioDisponibilidad[hora]?.aceptados || [];
-        const reservaPendiente = peticiones.find(
-            (peticion) => peticion.id_cancha === cancha.id_cancha
-        );
-        const reservaAceptada = aceptados.find(
-            (aceptado) => aceptado.id_cancha === cancha.id_cancha
-        );
-
-        if (reservaPendiente) {
-            return (
-                <button
-                    className='complejoBotonReservar'
-                    onClick={() =>
-                        handleReservaClick(
-                            hora,
-                            cancha,
-                            reservaPendiente.id_equipo,
-                            fechaSeleccionada
-                        )
-                    }
-                >
-                    Solicitud de reserva
-                </button>
-            );
-        } else if (reservaAceptada) {
-            return (
-                <div>
-                    <p>Aceptado</p>
-                    <button
-                        className='complejoBotonReservar'
-                        onClick={() =>
-                            console.log("ID Equipo:", reservaAceptada.id_equipo)
-                        }
-                    >
-                        Ver equipo
-                    </button>
-                </div>
-            );
-        } else {
-            return "No reservado";
+    // Función para obtener las fechas según la fecha obtenida en el input calendario
+    const fetchFechas = async (fecha) => {
+        const jsonDataFechas = await consultarBaseDeDatos("./json/fechas.json");
+        setFechas(jsonDataFechas);
+        const fechaSeleccionadaValida =
+            fecha === jsonDataFechas.fecha_seleccionada;
+        if (!fechaSeleccionadaValida) {
+            setFechas(null);
         }
+    };
+
+    // Función para obtener las fechas del input calendario
+    const handleFechaSeleccionada = async (fecha) => {
+        setFechaSeleccionada(fecha);
+        await fetchFechas(fecha);
     };
 
     const formatDate = (dateString) => {
@@ -86,10 +64,6 @@ const Calendario = () => {
         const selectedDate = new Date(dateString);
         selectedDate.setDate(selectedDate.getDate() + 1);
         return selectedDate.toLocaleDateString(undefined, options);
-    };
-
-    const handleFechaSeleccionada = async (fecha) => {
-        setFechaSeleccionada(fecha);
     };
 
     const handleReservaClick = async (
@@ -105,26 +79,89 @@ const Calendario = () => {
     };
 
     const updateParent = () => {
-        // Incrementar la clave para reiniciar el componente
         setKey(key + 1);
     };
 
+    const handleClick = () => {
+        navigate("/misCanchas");
+    };
+
     const tableContent = useMemo(() => {
-        if (!canchas || !fechas) return null;
-        return (
-            <Table removeWrapper aria-label='Tabla de fechas'>
-                <TableHeader isCompact className='rounded-none'>
-                    <TableColumn
-                        style={{ textAlign: "center" }}
-                        className='headerTabla py-0 px-0'
+        if (!canchas || !fechas || !fechas.horario_disponibilidad) {
+            return (
+                <div className='textoNoTablasContainer'>
+                    <p className='tituloTextoNoTablasContainer'>
+                        No tienes horarios disponibles para la fecha{" "}
+                        {formatDate(fechaSeleccionada)}
+                    </p>
+                    <Button
+                        className='botonTextoNoTablasContainer'
+                        color='primary'
+                        onClick={handleClick}
                     >
-                        Horarios
-                    </TableColumn>
+                        Agregar más horarios
+                    </Button>
+                </div>
+            );
+        }
+
+        const renderCell = (hora, cancha) => {
+            const horarioDisponibilidad = fechas.horario_disponibilidad || {};
+            const peticiones = horarioDisponibilidad[hora]?.peticiones || [];
+            const aceptados = horarioDisponibilidad[hora]?.aceptados || [];
+            const reservaPendiente = peticiones.find(
+                (peticion) => peticion.id_cancha === cancha.id_cancha
+            );
+            const reservaAceptada = aceptados.find(
+                (aceptado) => aceptado.id_cancha === cancha.id_cancha
+            );
+
+            if (reservaPendiente) {
+                return (
+                    <button
+                        className='complejoBotonReservar'
+                        onClick={() =>
+                            handleReservaClick(
+                                hora,
+                                cancha,
+                                reservaPendiente.id_equipo,
+                                fechaSeleccionada
+                            )
+                        }
+                    >
+                        Solicitud de reserva
+                    </button>
+                );
+            } else if (reservaAceptada) {
+                return (
+                    <div>
+                        <p>Aceptado</p>
+                        <button
+                            className='complejoBotonReservar'
+                            onClick={() =>
+                                console.log(
+                                    "ID Equipo:",
+                                    reservaAceptada.id_equipo
+                                )
+                            }
+                        >
+                            Ver equipo
+                        </button>
+                    </div>
+                );
+            } else {
+                return "No reservado";
+            }
+        };
+
+        return (
+            <Table removeWrapper aria-label='Tabla de fechas' isCompact>
+                <TableHeader isCompact className='rounded-none'>
+                    <TableColumn className='headerTabla'>Horarios</TableColumn>
                     {canchas.map((cancha) => (
                         <TableColumn
                             key={cancha.id_cancha}
-                            style={{ textAlign: "center" }}
-                            className='headerTabla py-0 px-0'
+                            className='headerTabla '
                         >
                             {cancha.nombre_cancha}
                         </TableColumn>
@@ -132,18 +169,10 @@ const Calendario = () => {
                 </TableHeader>
                 <TableBody>
                     {Object.keys(fechas.horario_disponibilidad).map((hora) => (
-                        <TableRow
-                            key={hora}
-                            className='py-0 px-0 contenidoTabla'
-                        >
-                            <TableCell className='py-1 px-0'>{`${
-                                hora + ":00"
-                            }`}</TableCell>
+                        <TableRow key={hora} className='contenidoTabla'>
+                            <TableCell className=''>{`${hora}`}</TableCell>
                             {canchas.map((cancha) => (
-                                <TableCell
-                                    className='py-1 px-0'
-                                    key={`${hora}-${cancha.id_cancha}`}
-                                >
+                                <TableCell key={`${hora}-${cancha.id_cancha}`}>
                                     {renderCell(hora, cancha)}
                                 </TableCell>
                             ))}
@@ -152,25 +181,29 @@ const Calendario = () => {
                 </TableBody>
             </Table>
         );
-    }, [canchas, fechas]);
+    }, [canchas, fechas, fechaSeleccionada]);
 
     return (
         <div>
             <div className='centradoDeTabla'>
-                <div className='complejoElegirFecha'>
+                <div className='complejoAdminElegirFecha'>
                     <div>
                         <strong>
-                            <label htmlFor='fecha' className='complejoLabel'>
+                            <label
+                                htmlFor='fecha'
+                                className='complejoAdminLabel'
+                            >
                                 Seleccione una fecha:
                             </label>
                         </strong>
                         <input
                             type='date'
                             id='fecha'
-                            className='complejoCalendario'
+                            className='complejoAdminCalendario'
                             onChange={(e) =>
                                 handleFechaSeleccionada(e.target.value)
                             }
+                            value={fechaSeleccionada}
                         />
                     </div>
                 </div>
