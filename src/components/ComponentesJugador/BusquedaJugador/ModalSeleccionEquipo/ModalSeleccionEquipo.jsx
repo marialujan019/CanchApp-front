@@ -34,6 +34,7 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
       case 'cant_jug':
         return `${equipo.cant_jugadores}/${equipo.cant_max}`;
       case 'solicitud':
+        console.log('solicitud' + equipo.estado)
         if (equipo.estado === 'Aceptado') {
           return <Button disabled color='success'>Ya formas parte de este equipo</Button>;
         } else if (equipo.estado === 'Pendiente') {
@@ -42,7 +43,7 @@ const ModalSeleccionEquipo = ({ equipos, idJugadorAInvitar, id_capitan, refresca
               Cancelar invitacion
             </button>
           );
-        } else if (equipo.estado === "Rechazado" || equipo.estado === "No enviado" || equipo.estado === 'Rechazado') {
+        } else if (equipo.estado === "Rechazado" || equipo.estado === "No enviado") {
           return (
             <button onClick={() => toggleEnviarSolicitud(equipo)} className="botonEnviarSolicitud">
               Enviar invitacion

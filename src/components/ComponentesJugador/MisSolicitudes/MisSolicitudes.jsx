@@ -70,11 +70,10 @@ const MisSolicitudes = () => {
       estado: 'Aceptado'
     }).then(() => setShouldReload(prev => !prev));
   };
-  const handleRechazarInvitacion = (idInvitacion) => {
-    axios.post('http://localhost:3001/invitaciones/update', {
-      id_invitacion: idInvitacion,
-      estado: 'Rechazado'
-    }).then(() => setShouldReload(prev => !prev))
+  const handleRechazarInvitacion = async (idInvitacion) => {
+    console.log("ID invitation: " + idInvitacion)
+   await axios.delete(`http://localhost:3001/invitaciones/delete/${idInvitacion}`)
+   .then(() => setShouldReload(prev => !prev))
   };
 
   const handleCancelarInvitacion = (idInvitacion) => {
@@ -193,7 +192,7 @@ const MisSolicitudes = () => {
                 <TableCell className='py-1 px-0 flex gap-5 justify-center'>
                   {item.estado}
                   {item.estado === "Pendiente" && (
-                    <button onClick={() => handleCancelarInvitacion(item.id_invitacion)} className='botonCancelarSolicitud'>Cancelar solicitud</button>
+                    <button onClick={() => handleRechazarInvitacion(item.id_invitacion)} className='botonCancelarSolicitud'>Cancelar solicitud</button>
                   )}
                 </TableCell>
               </TableRow>
