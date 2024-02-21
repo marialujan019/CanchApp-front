@@ -13,16 +13,13 @@
 .edicionDireccionComplejo {
     display: flex;
 }
-.edicionComplejoTexto{
-    border-bottom: 2px solid black;
-}
-
 .edicionComplejoTexto {
+    border-bottom: 2px solid black;
     padding-right: 5px;
 }
 
 .botonSubirImagenComplejo {
-    background-color: #4CAF50; 
+    background-color: #4caf50;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -36,14 +33,13 @@
     border-radius: 8px;
     border: 2px solid #00b300;
 }
-.botoncd{
+.botoncd {
     transition-duration: 0.4s;
 }
 .botonSubirImagenComplejo:hover {
     background-color: white;
     color: #00b300;
 }
-  
 .iconoEditarTituloComplejo {
     color: black;
     text-shadow: none;

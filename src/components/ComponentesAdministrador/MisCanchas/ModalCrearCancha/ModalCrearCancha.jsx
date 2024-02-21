@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 
 const defaultImage = "/images/miscanchas/noImagen.jpg";
 
-const ModalCrearCancha = ({ show, onHide }) => {
+const ModalCrearCancha = ({ show, onHide, setCanchas }) => {
     const [nombre, setNombre] = useState("");
     const [techo, setTecho] = useState(false);
     const [fechaInicio, setFechaInicio] = useState("");
@@ -33,7 +33,10 @@ const ModalCrearCancha = ({ show, onHide }) => {
             hora_inicio: horaInicio,
             hora_fin: horaFin,
         };
-        console.log("Nuevo objeto:", nuevaCancha);
+        // Agrega la nueva cancha al arreglo existente
+        setCanchas((prevCanchas) => [...prevCanchas, nuevaCancha]);
+        setDraggedImage(null);
+        setTecho(false);
         onHide();
     };
 

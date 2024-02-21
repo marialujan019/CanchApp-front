@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-const ModalSubirImagen = ({ showModal, setShowModal }) => {
+const ModalSubirImagen = ({ showModal, setShowModal, handleAgregarImagen }) => {
     // Define las variables de estado para el modal
     const [draggedImage, setDraggedImage] = useState(null);
 
@@ -17,21 +17,19 @@ const ModalSubirImagen = ({ showModal, setShowModal }) => {
         const reader = new FileReader();
         reader.onload = () => {
             setDraggedImage(reader.result);
-            setShowModal(true);
         };
         reader.readAsDataURL(file);
     };
 
     const handleSubirImagenWrapper = () => {
-        handleSubirImagen();
-        setDraggedImage(null); // Elimina la imagen después de subirla
-        setShowModal(false); // Cierra el modal después de subir la imagen
+        if (draggedImage) {
+            handleAgregarImagen(draggedImage); // Agrega la imagen al arreglo
+            setDraggedImage(null); // Elimina la imagen después de subirla
+            setShowModal(false); // Cierra el modal después de subir la imagen
+            alert("Imagen subida con éxito");
+        }
     };
 
-    const handleSubirImagen = () => {
-        setShowModal(false);
-        alert("Imagen subida con éxito");
-    };
     return (
         <Modal show={showModal} onHide={() => setShowModal(false)}>
             <Modal.Header closeButton>
@@ -46,10 +44,12 @@ const ModalSubirImagen = ({ showModal, setShowModal }) => {
                     className='drag-drop-container'
                     style={{
                         width: "100%",
-                        maxHeight: "200px",
+                        height: "200px",
                         border: "2px dashed #ccc",
-                        textAlign: "center",
-                        overflow: "hidden", // Añadimos overflow: hidden aquí
+                        overflow: "hidden",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                     }}
                 >
                     {!draggedImage && "Arrastra y suelta una imagen aquí"}
@@ -58,6 +58,9 @@ const ModalSubirImagen = ({ showModal, setShowModal }) => {
                             style={{
                                 width: "100%",
                                 height: "100%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
                             }}
                         >
                             <img
@@ -66,7 +69,7 @@ const ModalSubirImagen = ({ showModal, setShowModal }) => {
                                 style={{
                                     maxWidth: "100%",
                                     maxHeight: "100%",
-                                    objectFit: "contain",
+                                    objectFit: "cover !important",
                                 }}
                             />
                         </div>

@@ -7,25 +7,33 @@ import ModalCrearCancha from "./ModalCrearCancha/ModalCrearCancha";
 
 const MisCanchas = () => {
     const [canchas, setCanchas] = useState(null);
+    const [canchasDuplicadas, setCanchasDuplicadas] = useState(null);
     const [showCrearCanchaModal, setShowCrearCanchaModal] = useState(false);
 
-    // Funcion para traer las canchas
     useEffect(() => {
         async function fetchCanchas() {
             const datosJson = await consultarBaseDeDatos(
                 "./json/canchasDeUnComplejo.json"
             );
             setCanchas(datosJson);
+            setCanchasDuplicadas([...datosJson]);
         }
 
         fetchCanchas();
     }, []);
 
+    useEffect(() => {
+        // Actualizar canchasDuplicadas cuando cambie el estado de canchas
+        if (canchas) {
+            setCanchasDuplicadas([...canchas]);
+        }
+    }, [canchas]);
+
     return (
         <div>
             <div className='cardsContainerMisCanchas'>
-                {canchas &&
-                    canchas.map((cancha) => (
+                {canchasDuplicadas &&
+                    canchasDuplicadas.map((cancha) => (
                         <CardCancha key={cancha.id_cancha} cancha={cancha} />
                     ))}
 
@@ -51,6 +59,7 @@ const MisCanchas = () => {
             <ModalCrearCancha
                 show={showCrearCanchaModal}
                 onHide={() => setShowCrearCanchaModal(false)}
+                setCanchas={setCanchas} // Pasar setCanchas como prop
             />
         </div>
     );

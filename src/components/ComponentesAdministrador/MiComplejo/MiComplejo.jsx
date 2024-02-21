@@ -5,27 +5,23 @@ import ModalSubirImagen from "../../ModalSubirImagen/ModalSubirImagen";
 import "./miComplejo.css";
 import { Button } from "@nextui-org/react";
 
-const images = [
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Cancha_sintetica.jpg/1200px-Cancha_sintetica.jpg",
-    "https://vallealto.mx/wp-content/uploads/2021/04/IMG_0181-scaled.jpg",
-    "https://obs.ucr.ac.cr/wp-content/uploads/2022/09/Cancha-de-Futbol.png",
-    "https://sport-12.com/wp-content/uploads/2022/02/Cancha-Chapultepec_cuadrado.jpg",
-    "https://pastosinteticoprecio.com/wp-content/uploads/2018/02/Construccion-de-Canchas-de-Futbol-7-1024x609.jpg",
-];
-
 const id_complejo = 1;
 
 const MiComplejo = () => {
     const [complejo, setComplejo] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [modoEdicion, setModoEdicion] = useState(false);
-    const [nuevoNombreComplejo, setNuevoNombreComplejo] = useState("");
-    const [nuevoDireccionComplejo, setNuevoDireccionComplejo] = useState("");
-    const [nuevoTelefonoComplejo, setNuevoTelefonoComplejo] = useState("");
-    const [nuevoDescripcionComplejo, setNuevoDescripcionComplejo] =
-        useState("");
+    const [nuevoComplejo, setNuevoComplejo] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(true);
+
+    const [images, setImages] = useState([
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Cancha_sintetica.jpg/1200px-Cancha_sintetica.jpg",
+        "https://vallealto.mx/wp-content/uploads/2021/04/IMG_0181-scaled.jpg",
+        "https://obs.ucr.ac.cr/wp-content/uploads/2022/09/Cancha-de-Futbol.png",
+        "https://sport-12.com/wp-content/uploads/2022/02/Cancha-Chapultepec_cuadrado.jpg",
+        "https://pastosinteticoprecio.com/wp-content/uploads/2018/02/Construccion-de-Canchas-de-Futbol-7-1024x609.jpg",
+    ]);
 
     useEffect(() => {
         async function fetchComplejo() {
@@ -33,10 +29,7 @@ const MiComplejo = () => {
                 "./json/complejo.json"
             );
             setComplejo(datosJson);
-            setNuevoNombreComplejo(datosJson.nombre_complejo);
-            setNuevoDireccionComplejo(datosJson.direccion);
-            setNuevoTelefonoComplejo(datosJson.telefono);
-            setNuevoDescripcionComplejo(datosJson.descripcion);
+            setNuevoComplejo(datosJson);
             setLoading(false);
         }
         fetchComplejo();
@@ -48,41 +41,20 @@ const MiComplejo = () => {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        switch (name) {
-            case "nombre_complejo":
-                setNuevoNombreComplejo(value);
-                break;
-            case "direccion":
-                setNuevoDireccionComplejo(value);
-                break;
-            case "telefono":
-                setNuevoTelefonoComplejo(value);
-                break;
-            case "descripcion":
-                setNuevoDescripcionComplejo(value);
-                break;
-            default:
-                break;
-        }
+        setNuevoComplejo({
+            ...nuevoComplejo,
+            [name]: value,
+        });
     };
 
     const handleGuardarCambios = () => {
-        const cambios = {
-            id_complejo: id_complejo,
-            nombreComplejo: nuevoNombreComplejo,
-            direccionComplejo: nuevoDireccionComplejo,
-            telefonoComplejo: nuevoTelefonoComplejo,
-            descripcionComplejo: nuevoDescripcionComplejo,
-        };
-        console.log("Cambios guardados:", cambios);
+        setComplejo(nuevoComplejo);
+        console.log("Cambios guardados:", nuevoComplejo);
         setModoEdicion(false);
     };
 
     const handleCancelarEdicion = () => {
-        setNuevoNombreComplejo(complejo.nombre_complejo);
-        setNuevoDireccionComplejo(complejo.direccion);
-        setNuevoTelefonoComplejo(complejo.telefono);
-        setNuevoDescripcionComplejo(complejo.descripcion);
+        setNuevoComplejo(complejo);
         setModoEdicion(false);
     };
 
@@ -97,6 +69,11 @@ const MiComplejo = () => {
     if (loading) {
         return <div>Cargando...</div>;
     }
+
+    const handleAgregarImagen = (image) => {
+        setImages([...images, image]);
+    };
+
     return (
         <div className='ComplejoContainer main'>
             <div className='complejoHeaderAdministrador'>
@@ -107,7 +84,7 @@ const MiComplejo = () => {
                                 <input
                                     type='text'
                                     name='nombre_complejo'
-                                    value={nuevoNombreComplejo}
+                                    value={nuevoComplejo.nombre_complejo}
                                     onChange={handleInputChange}
                                     className=' edicionComplejoTexto'
                                     size={complejo.nombre_complejo.length - 2}
@@ -126,7 +103,7 @@ const MiComplejo = () => {
                                     <input
                                         type='text'
                                         name='direccion'
-                                        value={nuevoDireccionComplejo}
+                                        value={nuevoComplejo.direccion}
                                         onChange={handleInputChange}
                                         className='edicionComplejoTexto'
                                     />
@@ -235,7 +212,7 @@ const MiComplejo = () => {
                                     <input
                                         type='text'
                                         name='descripcion'
-                                        value={nuevoDescripcionComplejo}
+                                        value={nuevoComplejo.descripcion}
                                         onChange={handleInputChange}
                                         className='edicionComplejoTexto'
                                     />
@@ -254,7 +231,7 @@ const MiComplejo = () => {
                                     <input
                                         type='text'
                                         name='telefono'
-                                        value={nuevoTelefonoComplejo}
+                                        value={nuevoComplejo.telefono}
                                         onChange={handleInputChange}
                                         className='edicionComplejoTexto'
                                     />
@@ -274,6 +251,7 @@ const MiComplejo = () => {
             <ModalSubirImagen
                 showModal={showModal}
                 setShowModal={setShowModal}
+                handleAgregarImagen={handleAgregarImagen}
             />
         </div>
     );
