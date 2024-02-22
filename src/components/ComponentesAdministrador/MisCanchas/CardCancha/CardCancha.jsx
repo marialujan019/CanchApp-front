@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const defaultImage = "/images/miscanchas/noImagen.jpg";
 
-const CardCancha = ({ cancha }) => {
+const CardCancha = ({ cancha, onDeleteCancha, onUpdateCancha }) => {
     const [canchaAEditar, setCanchaAEditar] = useState(null);
     const [showEditarCanchaModal, setShowEditarCanchaModal] = useState(false);
     const [showAgregarFechaModal, setShowAgregarFechaModal] = useState(false); // Nuevo estado para el modal de agregar fecha
@@ -25,9 +25,10 @@ const CardCancha = ({ cancha }) => {
             denyButtonText: `No`,
         }).then((result) => {
             if (result.isConfirmed) {
+                onDeleteCancha(cancha.id_cancha); // Usa onDeleteCancha pasando el id de la cancha a eliminar
                 Swal.fire({
                     icon: "success",
-                    title: `Se ha eliminado correctamente la reserva la ${cancha.nombre_cancha}, ${cancha.id_cancha}`,
+                    title: `La cancha ${cancha.nombre_cancha} ha sido eliminada correctamente.`,
                 });
             }
         });
@@ -75,6 +76,7 @@ const CardCancha = ({ cancha }) => {
                 show={showEditarCanchaModal}
                 onHide={() => setShowEditarCanchaModal(false)}
                 cancha={canchaAEditar}
+                UpdateCancha={onUpdateCancha}
             />
 
             <ModalAgregarFecha

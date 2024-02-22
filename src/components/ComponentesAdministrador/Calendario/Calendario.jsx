@@ -20,10 +20,14 @@ const Calendario = () => {
     const [fechas, setFechas] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [reservaData, setReservaData] = useState(null);
-    const [key, setKey] = useState(0);
 
+    const formatDate = (dateString) => {
+        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+        const selectedDate = new Date(dateString);
+        selectedDate.setDate(selectedDate.getDate() + 1);
+        return selectedDate.toLocaleDateString(undefined, options);
+    };
     useEffect(() => {
-        // Función para obtener las canchas de un complejo
         async function fetchCanchas() {
             const datosJson = await consultarBaseDeDatos(
                 "./json/canchasDeUnComplejo.json"
@@ -31,7 +35,6 @@ const Calendario = () => {
             setCanchas(datosJson);
         }
 
-        // Función para obtener las fechas actuales al cargar la página
         async function fetchFechaActual() {
             const fechaActual = new Date().toISOString().split("T")[0];
             setFechaSeleccionada(fechaActual);
@@ -39,10 +42,9 @@ const Calendario = () => {
         }
 
         fetchCanchas();
-        fetchFechaActual(); // Llamada para obtener la fecha actual al cargar la página
+        fetchFechaActual();
     }, []);
 
-    // Función para obtener las fechas según la fecha obtenida en el input calendario
     const fetchFechas = async (fecha) => {
         const jsonDataFechas = await consultarBaseDeDatos("./json/fechas.json");
         setFechas(jsonDataFechas);
@@ -53,17 +55,9 @@ const Calendario = () => {
         }
     };
 
-    // Función para obtener las fechas del input calendario
     const handleFechaSeleccionada = async (fecha) => {
         setFechaSeleccionada(fecha);
         await fetchFechas(fecha);
-    };
-
-    const formatDate = (dateString) => {
-        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-        const selectedDate = new Date(dateString);
-        selectedDate.setDate(selectedDate.getDate() + 1);
-        return selectedDate.toLocaleDateString(undefined, options);
     };
 
     const handleReservaClick = async (
@@ -72,14 +66,35 @@ const Calendario = () => {
         id_equipo,
         fechaSeleccionada
     ) => {
-        console.log(id_equipo);
         const datosJson = await consultarBaseDeDatos("./json/equipo.json");
         setReservaData({ hora, cancha, equipo: datosJson, fechaSeleccionada });
         setShowModal(true);
     };
 
-    const updateParent = () => {
-        setKey(key + 1);
+    const updateParent = (action, reserva) => {
+        if (action === "aceptar") {
+            const updatedFechas = { ...fechas };
+            const horaDisponibilidad =
+                updatedFechas.horario_disponibilidad[reserva.hora];
+            const index = horaDisponibilidad.peticiones.findIndex(
+                (peticion) => peticion.id_equipo === reserva.equipo.id_equipo
+            );
+            const reservaAceptada = horaDisponibilidad.peticiones.splice(
+                index,
+                1
+            )[0]; // Accede al primer elemento del array
+            horaDisponibilidad.aceptados.push(reservaAceptada);
+            setFechas(updatedFechas);
+        } else if (action === "eliminar") {
+            const updatedFechas = { ...fechas };
+            const horaDisponibilidad =
+                updatedFechas.horario_disponibilidad[reserva.hora];
+            const index = horaDisponibilidad.peticiones.findIndex(
+                (peticion) => peticion.id_equipo === reserva.equipo.id_equipo
+            );
+            horaDisponibilidad.peticiones.splice(index, 1);
+            setFechas(updatedFechas);
+        }
     };
 
     const handleClick = () => {
@@ -133,22 +148,7 @@ const Calendario = () => {
                     </button>
                 );
             } else if (reservaAceptada) {
-                return (
-                    <div>
-                        <p>Aceptado</p>
-                        <button
-                            className='complejoBotonReservar'
-                            onClick={() =>
-                                console.log(
-                                    "ID Equipo:",
-                                    reservaAceptada.id_equipo
-                                )
-                            }
-                        >
-                            Ver equipo
-                        </button>
-                    </div>
-                );
+                return <p>Aceptado</p>;
             } else {
                 return "No reservado";
             }

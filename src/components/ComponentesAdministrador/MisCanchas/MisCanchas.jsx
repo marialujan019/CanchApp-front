@@ -29,12 +29,32 @@ const MisCanchas = () => {
         }
     }, [canchas]);
 
+    const handleDeleteCancha = (idCancha) => {
+        const nuevasCanchas = canchas.filter(
+            (cancha) => cancha.id_cancha !== idCancha
+        );
+        setCanchas(nuevasCanchas); // Actualiza el estado con las canchas restantes
+    };
+    const handleUpdateCancha = (canchaEditada) => {
+        const nuevasCanchas = canchas.map((cancha) =>
+            cancha.id_cancha === canchaEditada.id_cancha
+                ? canchaEditada
+                : cancha
+        );
+        setCanchas(nuevasCanchas);
+    };
+
     return (
         <div>
             <div className='cardsContainerMisCanchas'>
                 {canchasDuplicadas &&
                     canchasDuplicadas.map((cancha) => (
-                        <CardCancha key={cancha.id_cancha} cancha={cancha} />
+                        <CardCancha
+                            key={cancha.id_cancha}
+                            cancha={cancha}
+                            onDeleteCancha={handleDeleteCancha}
+                            onUpdateCancha={handleUpdateCancha}
+                        />
                     ))}
 
                 <button onClick={() => setShowCrearCanchaModal(true)}>

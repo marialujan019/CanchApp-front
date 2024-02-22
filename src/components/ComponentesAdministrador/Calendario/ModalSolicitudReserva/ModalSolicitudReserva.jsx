@@ -1,15 +1,16 @@
+// Componente ModalSolicitudReserva.js
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { consultarBaseDeDatos } from "../../../utils/Funciones";
 import { User, Chip } from "@nextui-org/react";
+
 const ModalSolicitudReserva = ({ show, onHide, reservaData, updateParent }) => {
     const [jugadores, setJugadores] = useState([]);
     const [showModalJugadores, setShowModalJugadores] = useState(false);
     const [chipColor, setChipColor] = useState("success");
 
     const handleVerEquipoClick = async () => {
-        console.log("ID del equipo:", reservaData.equipo.id_equipo);
         const datosJugadores = await consultarBaseDeDatos(
             "../json/jugadoresDeUnEquipo.json"
         );
@@ -33,7 +34,7 @@ const ModalSolicitudReserva = ({ show, onHide, reservaData, updateParent }) => {
             denyButtonText: `No`,
         }).then((result) => {
             if (result.isConfirmed) {
-                updateParent();
+                updateParent("aceptar", reservaData);
                 onHide();
                 Swal.fire({
                     icon: "success",
@@ -53,7 +54,7 @@ const ModalSolicitudReserva = ({ show, onHide, reservaData, updateParent }) => {
             denyButtonText: `No`,
         }).then((result) => {
             if (result.isConfirmed) {
-                updateParent();
+                updateParent("eliminar", reservaData);
                 onHide();
                 Swal.fire({
                     icon: "error",

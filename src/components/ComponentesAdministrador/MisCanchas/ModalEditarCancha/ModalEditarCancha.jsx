@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 
 const defaultImage = "/images/miscanchas/noImagen.jpg";
 
-const ModalEditarCancha = ({ show, onHide, cancha }) => {
+const ModalEditarCancha = ({ show, onHide, cancha, UpdateCancha }) => {
     const [nuevoNombre, setNuevoNombre] = useState("");
     const [nuevoTecho, setNuevoTecho] = useState(false);
     const [nuevaImagen, setNuevaImagen] = useState(null);
@@ -42,7 +42,8 @@ const ModalEditarCancha = ({ show, onHide, cancha }) => {
             techo: nuevoTecho || cancha.techo,
             imagen: draggedImage || cancha.imagen,
         };
-        console.log("Nuevo objeto:", canchaEditada);
+
+        UpdateCancha(canchaEditada); // Actualizar la cancha en el estado global
         onHide();
     };
 
