@@ -18,13 +18,11 @@
     font-family: "bBigerOver";
 }
 
-
 .inicioColoreadoApp {
-    color: #0E690C;
+    color: #0e690c;
 }
 
 .inicioSeccionTitulo {
-
     font-size: 4rem;
     font-family: "bebas";
 }
@@ -56,11 +54,11 @@
     height: 80vh;
 }
 .inicioSeccion2ConocenosCentrado {
-    display: flex; 
+    display: flex;
     justify-content: center;
 }
 .inicioSeccion2Conocenos {
-    display: flex; 
+    display: flex;
 }
 .inicioSeccion2ConocenosTexto {
     width: 60%;
@@ -86,7 +84,7 @@
     padding: 10px;
 }
 .InicioTituloCard {
-    color:black;
+    color: black;
     font-family: "bebas";
     letter-spacing: 1px;
     font-size: 1.2rem;
@@ -112,4 +110,3 @@
     font-size: 2.5rem;
     font-family: "bebas";
 }
-

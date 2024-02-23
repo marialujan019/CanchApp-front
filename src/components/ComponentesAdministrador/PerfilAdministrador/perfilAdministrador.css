@@ -1,22 +1,97 @@
-.perfil-container {
+.container {
+    background-color: #0e690c;
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+.subContainer {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+        "userProfile timeline_about"
+        "work_skills timeline_about"
+        "work_skills timeline_about";
+    width: 90%;
+    box-shadow: -5px 0 5px rgba(85, 84, 84, 0.5),
+        -25px 0 25px rgba(0, 0, 0, 0.08);
+    height: 70vh;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Sombra más suave */
+    backdrop-filter: blur(10px); /* Aplica el desenfoque */
+    background-color: rgba(255, 255, 255, 0.705); /* Fondo semitransparente */
 }
 
-.imagen-circulo {
-    width: 100px;
-    height: 100px;
+.userProfile {
+    grid-area: userProfile;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.imagenPerfil {
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-    overflow: hidden;
-    margin-right: 20px; /* Espacio entre la imagen y los datos */
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.466); /* Agregamos una sombra suave */
+}
+.BotonPerfil {
+    margin-top: 20px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.336); /* Agregamos una sombra suave */
+    transition: all ease 0.3;
+}
+.BotonPerfil:hover {
+    background-color: #09bd96 !important;
+    color: white !important;
+    scale: 1.1;
+}
+.work_skills {
+    grid-area: work_skills;
 }
 
-.imagen-circulo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Para que la imagen se ajuste al círculo */
+.timeline_about {
+    grid-area: timeline_about;
+    box-shadow: 0 0 3px rgba(85, 84, 84, 0.5);
 }
 
-.perfil-datos {
-    /* Puedes agregar estilos adicionales según sea necesario */
+.timeline_about {
+    padding: 12px 20px;
+    color: black;
+}
+
+.perfil-cuenta {
+    margin-top: 50px;
+    margin-left: 40px;
+}
+
+.tituloPerfil {
+    font-family: "bebas";
+    font-size: 3rem;
+}
+.textoPerfil {
+    font-size: 1.2rem;
+    color: #202020;
+}
+
+.textoPerfilImportante {
+    color: black;
+    font-size: 1.2rem;
+    padding: 0 10px;
+}
+.contenedorTextoPerfil {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.editarPerfil {
+    font-size: 2.1rem;
+    margin-left: 30px;
+    border: 3px solid black;
+    border-radius: 50%;
 }

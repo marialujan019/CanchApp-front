@@ -113,8 +113,7 @@ const ModalSolicitudReserva = ({ show, onHide, reservaData, updateParent }) => {
                                         : handleVerEquipoClick
                                 }
                             >
-                                {reservaData.equipo.cant_jug}/
-                                {reservaData.equipo.max_jug}{" "}
+                                6/10{" "}
                                 {chipColor === "danger" ? (
                                     <i className='bi bi-eye-slash'></i>
                                 ) : (

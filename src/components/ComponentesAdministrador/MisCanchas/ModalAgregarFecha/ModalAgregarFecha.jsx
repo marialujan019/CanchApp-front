@@ -58,7 +58,7 @@ const ModalAgregarFecha = ({ show, onHide }) => {
             <Modal show={show} onHide={onHide} centered size='lg'>
                 <Modal.Body>
                     <h2 className='modalReservaTitulo'>
-                        Agrega los disponibles de la cancha
+                        Agrega las fechas disponibles de la cancha
                     </h2>
 
                     <div className='flex gap-2'>

@@ -51,6 +51,7 @@ function Perfil() {
                 console.error("Error al realizar la solicitud:", error);
             });
     }, [user.id, user.tipo]); // Dependencias añadidas aquí
+    console.log(user);
 
     console.log("Perfil: " + user.tipo);
     return (
@@ -61,7 +62,8 @@ function Perfil() {
                     nombre={user.nombre}
                     direccion={direccion}
                     telefono={telefono}
-                    contrasena={contrasena}
+                    contrasena={"Maria1234"}
+                    email={"emma@gmail.com"}
                 />
             ) : (
                 // Renderizar el perfil del jugador
